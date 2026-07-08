@@ -7,6 +7,8 @@
 		"upcomingEvents": "Upcoming Events",
 		"upcomingHeading": "What's Next",
 		"register": "Register",
+		"comingSoon": "Coming soon",
+
 		"pastEvents": "Past Events",
 		"pastEventsHeading": "Event Recaps",
 		"attendees": "{count} attendees",
@@ -31,6 +33,7 @@
 	},
 	"recap": {
 		"title": "Event recap",
+		"backToEvents": "Back to Event Recaps",
 		"speakers": "Speakers",
 		"projects": "Projects showcased",
 		"highlights": "Community feedback",

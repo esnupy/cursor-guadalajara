@@ -22,19 +22,21 @@ function buildHomeJsonLd() {
     url: siteConfig.cursorCommunityUrl,
   };
 
-  const eventItems = upcomingEvents.map((event) => ({
-    "@type": "Event",
-    name: event.title,
-    startDate: event.date,
-    location: {
-      "@type": "Place",
-      name: event.location,
-    },
-    organizer: org,
-    ...(event.lumaUrl ? { url: event.lumaUrl } : {}),
-    eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-    eventStatus: "https://schema.org/EventScheduled",
-  }));
+  const eventItems = upcomingEvents
+    .filter((event) => Boolean(event.date))
+    .map((event) => ({
+      "@type": "Event",
+      name: event.title,
+      startDate: event.date,
+      location: {
+        "@type": "Place",
+        name: event.location,
+      },
+      organizer: org,
+      ...(event.lumaUrl ? { url: event.lumaUrl } : {}),
+      eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+      eventStatus: "https://schema.org/EventScheduled",
+    }));
 
   return {
     "@context": "https://schema.org",

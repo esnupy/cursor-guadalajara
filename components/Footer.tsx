@@ -7,7 +7,7 @@ import { ExternalLink } from 'lucide-react';
 import { useI18n } from '@/lib/i18n';
 import { siteConfig } from '@/content/site.config';
 import { upcomingEvents } from '@/content/events';
-import Partners from '@/components/Partners';
+// import Partners from '@/components/Partners';
 
 const Footer: React.FC = () => {
 	const { t } = useI18n();
@@ -21,7 +21,7 @@ const Footer: React.FC = () => {
 			transition={{ duration: 0.5 }}
 			className="mt-24 pt-8 border-t border-cursor-border"
 		>
-			<Partners />
+			{/* <Partners /> */}
 
 			<div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 items-start">
 				{/* Branding */}
@@ -76,17 +76,16 @@ const Footer: React.FC = () => {
 
 				{/* CTA */}
 				<div className="md:text-right">
-					{nextEvent?.lumaUrl && (
-						<a
-							href={nextEvent.lumaUrl}
-							target="_blank"
-							rel="noopener noreferrer"
-							className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#f54e00] text-white rounded-md hover:bg-[#e04500] transition-colors text-sm font-medium"
-						>
-							{t('footer.joinNext')}
-							<ExternalLink className="w-3.5 h-3.5" />
-						</a>
-					)}
+					<a
+						href={nextEvent?.lumaUrl || siteConfig.lumaUrl}
+						target="_blank"
+						rel="noopener noreferrer"
+						className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#f54e00] text-white rounded-md hover:bg-[#e04500] transition-colors text-sm font-medium"
+						aria-label={t('footer.joinNext')}
+					>
+						{t('footer.joinNext')}
+						<ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
+					</a>
 				</div>
 			</div>
 

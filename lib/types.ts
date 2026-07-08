@@ -4,7 +4,8 @@ export interface CursorEvent {
 	id: string;
 	title: string;
 	titleLocal?: string;
-	date: string;
+	/** ISO date (YYYY-MM-DD). Optional when the date is still TBD. */
+	date?: string;
 	displayDate: string;
 	attendees?: number;
 	location: string;
