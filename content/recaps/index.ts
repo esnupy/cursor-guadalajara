@@ -1,6 +1,6 @@
-import { exampleEventRecap } from '@/content/recaps/example-event';
+import { cafeCursorGuadalajaraRecap } from '@/content/recaps/cafe-cursor-guadalajara';
 import { RecapData } from '@/lib/types';
 
 export const recapsBySlug: Record<string, RecapData> = {
-	[exampleEventRecap.slug]: exampleEventRecap,
+	[cafeCursorGuadalajaraRecap.slug]: cafeCursorGuadalajaraRecap,
 };

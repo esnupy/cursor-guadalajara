@@ -3,7 +3,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { Mic, Lightbulb, MessageSquareQuote, Link as LinkIcon } from 'lucide-react';
+import Link from 'next/link';
+import { ArrowLeft, Mic, Lightbulb, MessageSquareQuote, Link as LinkIcon } from 'lucide-react';
 import PhotoGallery from '@/components/PhotoGallery';
 import { RecapData } from '@/lib/types';
 import { useI18n } from '@/lib/i18n';
@@ -22,6 +23,15 @@ const EventRecap: React.FC<EventRecapProps> = ({ recap }) => {
 			transition={{ duration: 0.5 }}
 			className="mb-8"
 		>
+			<Link
+				href="/#recaps"
+				className="inline-flex items-center gap-2 text-sm text-cursor-text-muted hover:text-cursor-text transition-colors mb-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cursor-text/40 rounded-sm"
+				aria-label={t('recap.backToEvents')}
+			>
+				<ArrowLeft className="w-4 h-4" aria-hidden="true" />
+				{t('recap.backToEvents')}
+			</Link>
+
 			<div className="bg-[#1B1913] border border-cursor-border rounded-lg p-8">
 				<h2 className="text-xl font-semibold text-cursor-text mb-2">{recap.title}</h2>
 				<p className="text-cursor-text-muted text-sm mb-6">{recap.date}</p>

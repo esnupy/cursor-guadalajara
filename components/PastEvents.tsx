@@ -83,7 +83,7 @@ const PastEvents: React.FC = () => {
 													/>
 												</div>
 												{hasGallery &&
-													event.galleryImages!.slice(0, 2).map((img, i) => (
+													event.galleryImages!.slice(0, 4).map((img, i) => (
 														<div key={i} className="relative">
 															<Image
 																src={img}

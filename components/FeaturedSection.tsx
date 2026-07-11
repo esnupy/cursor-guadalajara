@@ -31,10 +31,14 @@ const FeaturedSection: React.FC = () => {
 
 				<Link
 					href={featuredResource.href}
+					{...(featuredResource.href.startsWith('http')
+						? { target: '_blank', rel: 'noopener noreferrer' }
+						: {})}
 					className="inline-flex items-center gap-2 px-4 py-2 bg-cursor-text text-cursor-bg rounded-md hover:bg-cursor-text-muted transition-colors text-sm font-medium"
+					aria-label={featuredResource.ctaLabel || t('home.viewSlides')}
 				>
 					{featuredResource.ctaLabel || t('home.viewSlides')}
-					<ArrowRight className="w-4 h-4" />
+					<ArrowRight className="w-4 h-4" aria-hidden="true" />
 				</Link>
 			</div>
 		</motion.section>

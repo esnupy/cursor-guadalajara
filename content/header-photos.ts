@@ -1,12 +1,11 @@
 import { HeaderPhoto } from '@/lib/types';
 
-// REPLACE: Use real event/city images that represent your local community.
-// This layout uses explicit grid coordinates (1-indexed) for deterministic placement.
+// Guadalajara community event photos for the hero bento grid.
 // Desktop grid: 4 columns x 4 rows (16 cells).
 export const headerPhotos: HeaderPhoto[] = [
 	{
-		src: '/images/events/cursor-event-01.jpg',
-		alt: 'Cursor community event group photo',
+		src: '/images/events/dsc04984.jpg',
+		alt: 'Cursor Guadalajara community collaborating around a table',
 		row: 1,
 		col: 1,
 		rowSpan: 2,
@@ -14,38 +13,38 @@ export const headerPhotos: HeaderPhoto[] = [
 		mobile: { row: 1, col: 1, rowSpan: 2, colSpan: 2 },
 	},
 	{
-		src: '/images/events/cursor-event-02.jpg',
-		alt: 'Cursor meetup participants working together',
+		src: '/images/events/dsc04979.jpg',
+		alt: 'Cafe Cursor cups with the event logo',
 		row: 1,
 		col: 3,
 		mobile: { row: 3, col: 1 },
 	},
 	{
-		src: '/images/events/cursor-event-04.jpg',
-		alt: 'Cursor community photo from event',
+		src: '/images/events/dsc05031.jpg',
+		alt: 'Attendees chatting at the meetup cafe',
 		row: 1,
 		col: 4,
 		rowSpan: 2,
 		mobileHidden: true,
 	},
 	{
-		src: '/images/events/cursor-event-03.jpg',
-		alt: 'Cursor workshop moment during session',
+		src: '/images/events/dsc04994.jpg',
+		alt: 'Cursor stickers on the event table',
 		row: 2,
 		col: 3,
 		mobile: { row: 3, col: 2 },
 	},
 	{
-		src: '/images/events/cursor-event-05.jpg',
-		alt: 'Cursor meetup attendees in discussion',
+		src: '/images/events/dsc04988.jpg',
+		alt: 'Participants working together on laptops and a tablet',
 		row: 3,
 		col: 1,
 		rowSpan: 2,
 		mobileHidden: true,
 	},
 	{
-		src: '/images/events/cursor-event-07.jpg',
-		alt: 'Cursor community moment from social share',
+		src: '/images/events/dsc05026.jpg',
+		alt: 'Overview of the Cursor meetup in Guadalajara',
 		row: 3,
 		col: 2,
 		rowSpan: 2,
@@ -53,8 +52,8 @@ export const headerPhotos: HeaderPhoto[] = [
 		mobileHidden: true,
 	},
 	{
-		src: '/images/events/cursor-event-06.jpg',
-		alt: 'Cursor event participants and speakers',
+		src: '/images/events/dsc05021.jpg',
+		alt: 'Builders coding at a long table during the event',
 		row: 3,
 		col: 4,
 		rowSpan: 2,

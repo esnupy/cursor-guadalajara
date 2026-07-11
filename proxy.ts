@@ -3,10 +3,11 @@ import type { NextRequest } from 'next/server';
 
 export function proxy(request: NextRequest) {
 	const nonce = crypto.randomUUID();
+	const isDev = process.env.NODE_ENV === 'development';
 
 	const csp = [
 		`default-src 'self'`,
-		`script-src 'self' 'nonce-${nonce}' 'strict-dynamic' https://va.vercel-scripts.com`,
+		`script-src 'self' 'nonce-${nonce}' 'strict-dynamic' https://va.vercel-scripts.com${isDev ? " 'unsafe-eval'" : ''}`,
 		`style-src 'self' 'unsafe-inline'`,
 		`img-src 'self' https://images.unsplash.com https://images.lumacdn.com https://luma.com https://lu.ma data: blob:`,
 		`font-src 'self'`,

@@ -1,11 +1,13 @@
 import { MetadataRoute } from 'next';
 import { recapsBySlug } from '@/content/recaps';
 
+import { siteConfig } from '@/content/site.config';
+
 const BASE_URL =
 	process.env.NEXT_PUBLIC_SITE_URL ||
 	(process.env.VERCEL_PROJECT_PRODUCTION_URL
 		? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-		: 'https://example.com');
+		: siteConfig.siteUrl);
 
 export default function sitemap(): MetadataRoute.Sitemap {
 	const recapEntries = Object.values(recapsBySlug).map((recap) => ({
