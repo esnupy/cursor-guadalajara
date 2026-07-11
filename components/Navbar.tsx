@@ -82,8 +82,7 @@ export default function Navbar() {
             />
             <span className="font-cursor text-lg md:text-xl font-semibold tracking-tight text-cursor-text">
               {siteConfig.communityName}
-              {siteConfig.communityNameLocal &&
-              siteConfig.communityNameLocal !== siteConfig.communityName ? (
+              {siteConfig.communityNameLocal ? (
                 <span className="font-thai font-bold tracking-wide text-xl md:text-2xl text-cursor-text-secondary ml-2">
                   {siteConfig.communityNameLocal}
                 </span>

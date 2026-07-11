@@ -1,7 +1,7 @@
 // REPLACE: Update these values for your local Cursor community.
 // REPLACE: Keep links and names community-specific.
 export const siteConfig = {
-  communityName: "Guadalajara",
+  communityName: "Community",
   communityNameLocal: "Guadalajara",
   city: "Guadalajara",
   country: "Mexico",
