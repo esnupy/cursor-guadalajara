@@ -51,16 +51,16 @@ stacks become a second, invisible design system that fights shadcn.
 
 ## Concrete defaults
 
-| Need                         | Use                                   |
-| ---------------------------- | ------------------------------------- |
-| CTA / icon / nav control     | `Button` (+ `variant` / `size`)       |
-| Event / partner / info panel | `Card` (+ CardHeader/Title/Content/…) |
-| Action inside a card         | `.link` inline text — never `Button`  |
-| Content / section link       | `.link` + arrow icon (see `links.md`) |
+| Need                         | Use                                        |
+| ---------------------------- | ------------------------------------------ |
+| CTA / icon / nav control     | `Button` (+ `variant` / `size`)            |
+| Event / partner / info panel | `Card` (+ CardHeader/Title/Content/…)      |
+| Action inside a card         | `.link` inline text — never `Button`       |
+| Content / section link       | `.link` + arrow icon (see `links.md`)      |
 | Status / recommended mark    | `Badge` (brand orange only per `color.md`) |
-| Locale or exclusive choice   | `ToggleGroup`                         |
-| Hairline rule                | `Separator`                           |
-| class merging                | `cn()` from `@/lib/utils` — always    |
+| Locale or exclusive choice   | `ToggleGroup`                              |
+| Hairline rule                | `Separator`                                |
+| class merging                | `cn()` from `@/lib/utils` — always         |
 
 Icons: `@phosphor-icons/react` (per `components.json`). Always import the
 `*Icon` suffix (e.g. `ArrowRightIcon`, not `ArrowRight`) and use

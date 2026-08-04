@@ -1,8 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import Link from 'next/link';
-import { ArrowRightIcon } from '@phosphor-icons/react';
+import { ArrowUpRightIcon } from '@phosphor-icons/react';
 import { featuredResource } from '@/content/featured';
 import { Card, CardContent } from '@/components/ui/card';
 import { useBrandMotion } from '@/lib/motion';
@@ -24,15 +23,16 @@ export default function FeaturedSection() {
 						<h2 className="mb-1 leading-tight tracking-tight">{featuredResource.title}</h2>
 						<p className="mb-6 leading-relaxed text-muted-foreground">{featuredResource.description}</p>
 
-						<Link
+						<a
 							href={featuredResource.href}
-							{...(featuredResource.href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+							target="_blank"
+							rel="noopener noreferrer"
 							aria-label={featuredResource.ctaLabel || 'Ver slides'}
 							className="link"
 						>
 							{featuredResource.ctaLabel || 'Ver slides'}
-							<ArrowRightIcon weight="regular" className="size-4" aria-hidden="true" />
-						</Link>
+							<ArrowUpRightIcon weight="regular" className="size-4" aria-hidden="true" />
+						</a>
 					</div>
 					<Image
 						width={533}

@@ -1,7 +1,6 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ArrowRightIcon } from '@phosphor-icons/react';
 import CursorLockupSwap from '@/components/icons/CursorLockupSwap';
 import { siteConfig } from '@/content/site.config';
 import { upcomingEvents } from '@/content/events';
@@ -71,7 +70,6 @@ export default function Footer() {
 							aria-label="Únete al próximo evento"
 						>
 							Únete al próximo evento
-							<ArrowRightIcon weight="regular" className="size-3.5" aria-hidden="true" />
 						</a>
 					</Button>
 				</div>

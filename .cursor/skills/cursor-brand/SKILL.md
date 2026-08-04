@@ -54,7 +54,7 @@ the case.
 ## Routing table
 
 | Task touches…                                          | Read                                          |
-|--------------------------------------------------------|-----------------------------------------------|
+| ------------------------------------------------------ | --------------------------------------------- |
 | Components, shadcn, buttons, badges, where styles live | `references/components.md`                    |
 | Cards, card CTAs, interactive cards                    | `references/cards.md` + `references/links.md` |
 | Links (content, section, in-card)                      | `references/links.md`                         |

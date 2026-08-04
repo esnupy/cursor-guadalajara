@@ -3,7 +3,14 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowLeftIcon, LightbulbIcon, LinkIcon, MicrophoneIcon, QuotesIcon } from '@phosphor-icons/react';
+import {
+	ArrowLeftIcon,
+	ArrowUpRightIcon,
+	LightbulbIcon,
+	LinkIcon,
+	MicrophoneIcon,
+	QuotesIcon,
+} from '@phosphor-icons/react';
 import PhotoGallery from '@/components/PhotoGallery';
 import { RecapData } from '@/lib/types';
 import { Card, CardContent } from '@/components/ui/card';
@@ -32,14 +39,10 @@ export default function EventRecap({ recap }: EventRecapProps) {
 					{recap.host ? (
 						<div className="mb-6 flex items-center gap-2 text-muted-foreground">
 							<span>Lugar</span>
-							<a
-								href={recap.host.url || '#'}
-								target="_blank"
-								rel="noopener noreferrer"
-								className="inline-flex items-center gap-1.5 text-cursor-accent hover:underline"
-							>
+							<a href={recap.host.url || '#'} target="_blank" rel="noopener noreferrer" className="link">
 								<Image src={recap.host.logo} alt={recap.host.name} width={18} height={18} className="rounded-full" />
 								{recap.host.name}
+								<ArrowUpRightIcon weight="regular" className="size-4" aria-hidden="true" />
 							</a>
 						</div>
 					) : null}
@@ -69,13 +72,9 @@ export default function EventRecap({ recap }: EventRecapProps) {
 											) : null}
 											<div className="min-w-0">
 												{speaker.url ? (
-													<a
-														href={speaker.url}
-														target="_blank"
-														rel="noopener noreferrer"
-														className="text-cursor-accent hover:underline"
-													>
+													<a href={speaker.url} target="_blank" rel="noopener noreferrer" className="link">
 														{speaker.name}
+														<ArrowUpRightIcon weight="regular" className="size-4" aria-hidden="true" />
 													</a>
 												) : (
 													<p>{speaker.name}</p>
@@ -101,13 +100,9 @@ export default function EventRecap({ recap }: EventRecapProps) {
 									<Card key={project.name} size="sm">
 										<CardContent className="pt-6">
 											{project.url ? (
-												<a
-													href={project.url}
-													target="_blank"
-													rel="noopener noreferrer"
-													className="text-cursor-accent hover:underline"
-												>
+												<a href={project.url} target="_blank" rel="noopener noreferrer" className="link">
 													{project.name}
+													<ArrowUpRightIcon weight="regular" className="size-4" aria-hidden="true" />
 												</a>
 											) : (
 												<p>{project.name}</p>
@@ -151,14 +146,9 @@ export default function EventRecap({ recap }: EventRecapProps) {
 							<ul className="space-y-2">
 								{recap.resources.map((resource) => (
 									<li key={resource.url}>
-										<a
-											href={resource.url}
-											target="_blank"
-											rel="noopener noreferrer"
-											className="inline-flex items-center gap-1.5 text-cursor-accent hover:underline"
-										>
+										<a href={resource.url} target="_blank" rel="noopener noreferrer" className="link">
 											{resource.label}
-											<LinkIcon weight="regular" className="size-3 text-muted-foreground" />
+											<ArrowUpRightIcon weight="regular" className="size-4" aria-hidden="true" />
 										</a>
 									</li>
 								))}
@@ -175,6 +165,7 @@ export default function EventRecap({ recap }: EventRecapProps) {
 							{recap.photoCredits.map((credit, index) => (
 								<span key={`${credit.name}-${index}`}>
 									{credit.url ? (
+										// prose inline exception — no .link / arrow in comma-separated credits
 										<a
 											href={credit.url}
 											target="_blank"
