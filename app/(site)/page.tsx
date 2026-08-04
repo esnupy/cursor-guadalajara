@@ -8,7 +8,6 @@ import FeaturedSection from '@/components/FeaturedSection';
 import UpcomingEvents from '@/components/UpcomingEvents';
 import PastEvents from '@/components/PastEvents';
 import GlobalEvents from '@/components/GlobalEvents';
-import Footer from '@/components/Footer';
 import JsonLd from '@/components/JsonLd';
 import { siteConfig } from '@/content/site.config';
 import { upcomingEvents } from '@/content/events';
@@ -54,7 +53,6 @@ const Home: React.FC = () => (
 			<UpcomingEvents />
 			<PastEvents />
 			<GlobalEvents />
-			<Footer />
 		</div>
 	</main>
 );

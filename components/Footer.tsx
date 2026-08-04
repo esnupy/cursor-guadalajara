@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { useBrandMotion } from '@/lib/motion';
 import Link from 'next/link';
 import ThemeToggle from '@/components/ThemeToggle';
+import { ArrowUpRightIcon } from '@phosphor-icons/react';
 
 export default function Footer() {
 	const nextEvent = upcomingEvents[0];
@@ -66,7 +67,7 @@ export default function Footer() {
 							rel="noopener noreferrer"
 							aria-label="Únete al próximo evento"
 						>
-							Únete al próximo evento
+							Únete al próximo evento <ArrowUpRightIcon size={20} />
 						</a>
 					</Button>
 				</div>
