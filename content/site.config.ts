@@ -12,7 +12,7 @@ export const siteConfig = {
 	lumaUrl: 'https://luma.com/cursor-guadalajara-mexico',
 	lumaCalendarEmbedUrl: 'https://luma.com/embed/calendar/cal-y1yDitWo6HJIow6/events?lt=dark',
 	cursorCommunityUrl: 'https://cursor.com/community',
-	footerTagline: 'Hecho con Cursor por embajadores en todo el mundo',
+	footerTagline: 'Hecho con Cursor por embajadores de todo el mundo',
 };
 
 export type SiteConfig = typeof siteConfig;

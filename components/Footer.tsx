@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ArrowRightIcon, ArrowSquareOutIcon } from '@phosphor-icons/react';
+import { ArrowRightIcon } from '@phosphor-icons/react';
 import CursorLockupSwap from '@/components/icons/CursorLockupSwap';
 import { siteConfig } from '@/content/site.config';
 import { upcomingEvents } from '@/content/events';

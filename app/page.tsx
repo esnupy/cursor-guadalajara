@@ -13,7 +13,6 @@ import Footer from '@/components/Footer';
 import JsonLd from '@/components/JsonLd';
 import { siteConfig } from '@/content/site.config';
 import { upcomingEvents } from '@/content/events';
-import LumaCalendar from '@/components/LumaCalendar';
 
 function buildHomeJsonLd() {
 	const org = {

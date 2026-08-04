@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ArrowRightIcon, ArrowSquareOutIcon } from '@phosphor-icons/react';
+import { ArrowRightIcon } from '@phosphor-icons/react';
 import { upcomingEvents } from '@/content/events';
 import type { CursorEvent } from '@/lib/types';
 import { Card, CardContent } from '@/components/ui/card';
