@@ -30,8 +30,8 @@ export default function PhotoGallery({ photos, embedded = false }: PhotoGalleryP
 		<>
 			<div className="mb-6 flex items-baseline justify-between gap-4">
 				<div>
-					<h2 className={embedded ? 'text-lg tracking-tight' : 'text-xl tracking-tight'}>Fotos</h2>
-					<p className="mt-1 text-sm text-muted-foreground">{photos.length} fotos del evento</p>
+					<h2 className={embedded ? 'text-2xl tracking-tight' : 'text-2xl tracking-tight'}>Fotos</h2>
+					<p className="text-2xl text-muted-foreground">{photos.length} fotos del evento</p>
 				</div>
 			</div>
 
@@ -45,7 +45,7 @@ export default function PhotoGallery({ photos, embedded = false }: PhotoGalleryP
 					>
 						<Button
 							variant="outline"
-							className="relative aspect-square h-auto w-full overflow-hidden p-0"
+							className="relative aspect-square h-auto w-full overflow-hidden p-0 rounded-[4px]"
 							onClick={() => {
 								setCurrentIndex(index);
 								setIsFullscreen(true);

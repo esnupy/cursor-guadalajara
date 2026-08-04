@@ -2,7 +2,7 @@ import { RecapData } from '@/lib/types';
 
 export const cafeCursorGuadalajaraRecap: RecapData = {
 	slug: 'cafe-cursor-guadalajara',
-	title: 'Cafe Cursor Guadalajara — Resumen',
+	title: 'Café Cursor Guadalajara',
 	date: '25 de abril de 2026 · 10:00–16:00',
 	attendees: 55,
 	summary: [
@@ -15,28 +15,7 @@ export const cafeCursorGuadalajaraRecap: RecapData = {
 		logo: '/images/events/dsc04979.jpg',
 		url: 'https://maps.google.com/?q=Ventura+Café+Guadalajara',
 	},
-	highlights: [
-		{
-			quote:
-				'Llegué sin un plan claro y salí con una funcionalidad casi lista. Lo mejor fue preguntar a la gente de la mesa de al lado cómo estructuran sus prompts.',
-			author: 'Asistente del bloque de mañana',
-		},
-		{
-			quote:
-				'No es un meetup típico de slides. Es café, laptops y gente que realmente está construyendo. Guadalajara se siente muy viva.',
-			author: 'Participante del bloque de tarde',
-		},
-		{
-			quote:
-				'Solo pasé un rato y terminé hablando media hora sobre agentes y revisiones de código. Me registré para el siguiente sin pensarlo dos veces.',
-			author: 'Visitante Drop-By',
-		},
-		{
-			quote:
-				'Los créditos de Cursor más un café de cortesía quitan la fricción. Te sientas, abres el editor y entras en modo build de inmediato.',
-			author: 'Miembros de la comunidad',
-		},
-	],
+	highlights: [],
 	resources: [
 		{ label: 'Comunidad Cursor Guadalajara', url: 'https://luma.com/cursor-guadalajara-mexico' },
 		{ label: 'Comunidad Cursor', url: 'https://cursor.com/community' },

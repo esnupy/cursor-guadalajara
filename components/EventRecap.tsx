@@ -20,21 +20,19 @@ export default function EventRecap({ recap }: EventRecapProps) {
 
 	return (
 		<motion.section initial={slideUp.initial} animate={slideUp.animate} transition={transition} className="mb-8">
-			<Button variant="ghost" asChild className="mb-6 h-auto p-0 text-muted-foreground">
-				<Link href="/#recaps" aria-label="Volver a resúmenes">
-					<ArrowLeftIcon weight="regular" className="size-4" aria-hidden="true" />
-					Volver a resúmenes
-				</Link>
-			</Button>
+			<Link href="/#recaps" aria-label="Volver a resúmenes" className="link mb-6">
+				<ArrowLeftIcon weight="regular" className="size-4" aria-hidden="true" />
+				Volver a resúmenes
+			</Link>
 
-			<Card>
+			<Card className="text-2xl">
 				<CardContent className="pt-8">
-					<h2 className="mb-2 text-xl tracking-tight">{recap.title}</h2>
-					<p className="mb-6 text-sm text-muted-foreground">{recap.date}</p>
+					<h2 className="mb-1 tracking-tight">{recap.title}</h2>
+					<p className="mb-6 text-muted-foreground">{recap.date}</p>
 
 					{recap.host ? (
-						<div className="mb-6 flex items-center gap-2 text-sm text-muted-foreground">
-							<span>Organizado por</span>
+						<div className="mb-6 flex items-center gap-2 text-muted-foreground">
+							<span>Lugar</span>
 							<a
 								href={recap.host.url || '#'}
 								target="_blank"
@@ -47,19 +45,19 @@ export default function EventRecap({ recap }: EventRecapProps) {
 						</div>
 					) : null}
 
-					{recap.attendees ? <p className="mb-4 text-lg leading-relaxed">{recap.attendees} asistentes</p> : null}
-					<div className="space-y-3 text-sm leading-relaxed text-muted-foreground">
+					{recap.attendees ? <p className="mb-4 text-xl leading-relaxed">{recap.attendees} asistentes</p> : null}
+					<div className="space-y-3 leading-relaxed text-muted-foreground text-xl">
 						{recap.summary.map((paragraph, index) => (
 							<p key={index}>{paragraph}</p>
 						))}
 					</div>
 
 					{recap.speakers && recap.speakers.length > 0 ? (
-						<div className="mt-6 pt-6">
+						<div className="mt-6 pt-6 text-xl">
 							<Separator className="mb-6" />
 							<div className="mb-4 flex items-center gap-2">
 								<MicrophoneIcon weight="regular" className="size-4 text-muted-foreground" />
-								<h3 className="text-sm">Ponentes</h3>
+								<h3>Ponentes</h3>
 							</div>
 							<div className="grid gap-3 sm:grid-cols-2">
 								{recap.speakers.map((speaker) => (
@@ -76,14 +74,14 @@ export default function EventRecap({ recap }: EventRecapProps) {
 														href={speaker.url}
 														target="_blank"
 														rel="noopener noreferrer"
-														className="text-sm text-cursor-accent hover:underline"
+														className="text-cursor-accent hover:underline"
 													>
 														{speaker.name}
 													</a>
 												) : (
-													<p className="text-sm">{speaker.name}</p>
+													<p>{speaker.name}</p>
 												)}
-												<p className="mt-0.5 text-xs text-muted-foreground">{speaker.topic}</p>
+												<p className="mt-0.5 text-muted-foreground">{speaker.topic}</p>
 											</div>
 										</CardContent>
 									</Card>
@@ -93,11 +91,11 @@ export default function EventRecap({ recap }: EventRecapProps) {
 					) : null}
 
 					{recap.projects && recap.projects.length > 0 ? (
-						<div className="mt-6 pt-6">
+						<div className="mt-6 pt-6 text-xl">
 							<Separator className="mb-6" />
 							<div className="mb-4 flex items-center gap-2">
 								<LightbulbIcon weight="regular" className="size-4 text-muted-foreground" />
-								<h3 className="text-sm">Proyectos presentados</h3>
+								<h3>Proyectos presentados</h3>
 							</div>
 							<div className="grid gap-3 sm:grid-cols-2">
 								{recap.projects.map((project) => (
@@ -108,17 +106,15 @@ export default function EventRecap({ recap }: EventRecapProps) {
 													href={project.url}
 													target="_blank"
 													rel="noopener noreferrer"
-													className="text-sm text-cursor-accent hover:underline"
+													className="text-cursor-accent hover:underline"
 												>
 													{project.name}
 												</a>
 											) : (
-												<p className="text-sm">{project.name}</p>
+												<p>{project.name}</p>
 											)}
-											<p className="mt-1 text-xs text-muted-foreground">{project.description}</p>
-											{project.author ? (
-												<p className="mt-1.5 text-xs text-muted-foreground/70">por {project.author}</p>
-											) : null}
+											<p className="mt-1 text-muted-foreground">{project.description}</p>
+											{project.author ? <p className="mt-1.5 text-muted-foreground/70">por {project.author}</p> : null}
 										</CardContent>
 									</Card>
 								))}
@@ -127,18 +123,18 @@ export default function EventRecap({ recap }: EventRecapProps) {
 					) : null}
 
 					{recap.highlights && recap.highlights.length > 0 ? (
-						<div className="mt-6 pt-6">
+						<div className="mt-6 pt-6 text-xl">
 							<Separator className="mb-6" />
 							<div className="mb-4 flex items-center gap-2">
 								<QuotesIcon weight="regular" className="size-4 text-muted-foreground" />
-								<h3 className="text-sm">Comentarios de la comunidad</h3>
+								<h3>Comentarios de la comunidad</h3>
 							</div>
 							<div className="space-y-3">
 								{recap.highlights.map((highlight, index) => (
 									<blockquote key={index} className="rounded-r-md border-l-2 border-primary/40 bg-muted px-4 py-3">
-										<p className="text-sm italic text-foreground/90">&ldquo;{highlight.quote}&rdquo;</p>
+										<p className="italic text-foreground/90">&ldquo;{highlight.quote}&rdquo;</p>
 										{highlight.author ? (
-											<p className="mt-1.5 text-xs text-muted-foreground/70">&mdash; {highlight.author}</p>
+											<p className="mt-1.5 text-muted-foreground/70">&mdash; {highlight.author}</p>
 										) : null}
 									</blockquote>
 								))}
@@ -151,7 +147,7 @@ export default function EventRecap({ recap }: EventRecapProps) {
 							<Separator className="mb-6" />
 							<div className="mb-4 flex items-center gap-2">
 								<LinkIcon weight="regular" className="size-4 text-muted-foreground" />
-								<h3 className="text-sm">Recursos</h3>
+								<h3>Recursos</h3>
 							</div>
 							<ul className="space-y-2">
 								{recap.resources.map((resource) => (
@@ -160,7 +156,7 @@ export default function EventRecap({ recap }: EventRecapProps) {
 											href={resource.url}
 											target="_blank"
 											rel="noopener noreferrer"
-											className="inline-flex items-center gap-1.5 text-sm text-cursor-accent hover:underline"
+											className="inline-flex items-center gap-1.5 text-cursor-accent hover:underline"
 										>
 											{resource.label}
 											<LinkIcon weight="regular" className="size-3 text-muted-foreground" />
@@ -174,7 +170,7 @@ export default function EventRecap({ recap }: EventRecapProps) {
 					<PhotoGallery photos={recap.photos} embedded />
 
 					{recap.photoCredits && recap.photoCredits.length > 0 ? (
-						<div className="mt-6 pt-6 text-sm text-muted-foreground">
+						<div className="mt-6 pt-6 text-muted-foreground text-xl">
 							<Separator className="mb-6" />
 							<span className="mr-1">Créditos de fotos:</span>
 							{recap.photoCredits.map((credit, index) => (
