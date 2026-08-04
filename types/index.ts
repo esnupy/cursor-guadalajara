@@ -1,4 +1,4 @@
 export interface IconProps extends React.ComponentProps<'svg'> {
-  size?: number;
-  color?: string;
+	size?: number;
+	color?: string;
 }

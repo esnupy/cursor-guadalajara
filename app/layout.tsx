@@ -1,14 +1,12 @@
 import type { Metadata } from 'next';
 import { headers } from 'next/headers';
 import { Analytics } from '@vercel/analytics/react';
-import { Geist } from 'next/font/google';
 import { ThemeFavicon } from '@/components/ThemeFavicon';
 import { ThemeProvider } from '@/components/theme-provider';
 import { siteConfig } from '@/content/site.config';
+import { cursorGothic, cursorMono } from '@/lib/fonts';
 import { cn } from '@/lib/utils';
 import './globals.css';
-
-const geist = Geist({ subsets: ['latin'], variable: '--font-sans' });
 
 export const metadata: Metadata = {
 	metadataBase: new URL(siteConfig.siteUrl),
@@ -62,7 +60,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 	await headers();
 
 	return (
-		<html lang="es-MX" className={cn('font-sans', geist.variable)} suppressHydrationWarning>
+		<html lang="es-MX" className={cn('font-sans', cursorGothic.variable, cursorMono.variable)} suppressHydrationWarning>
 			<body className="antialiased">
 				{/* External self-hosted script: allowed by script-src 'self' without a CSP nonce. */}
 				<script async src="/theme-favicon.bootstrap.js" />

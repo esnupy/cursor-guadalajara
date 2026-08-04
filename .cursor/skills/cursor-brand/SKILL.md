@@ -166,11 +166,11 @@ Setting tracking / line-height?
 ├── Larger display type → tighter tracking + tighter line-height
 └── Body / UI → normal tracking; comfortable line-height
 
-Font available?
-├── Cursor Gothic in the project → use it
-└── Not available → current `--font-sans` stack (do not swap in Inter/Roboto/
-                    “AI default” faces). Helvetica only as last-resort fallback
-                    outside the app (docs, slides exports).
+Fonts (wired in `lib/fonts.ts` via `next/font/local`, WOFF2 in `app/fonts/`)
+├── UI / marketing / body → Cursor Gothic (`font-sans`, `--font-sans`)
+├── Code / prompts / technical strings → Cursor Mono (`font-mono`, `--font-mono`)
+└── Outside the app (Google Docs, slide exports) → Helvetica as last-resort fallback
+    only — never swap Inter/Roboto/“AI default” faces into the site.
 ```
 
 Headings, labels, and titles use **sentence case**. Capitalize proper nouns only.
@@ -204,7 +204,7 @@ Logo + text lockup
 ```
 Need a Cursor mark?
 ├── Official lockup/avatar assets only — never redraw or “improve” the cube
-├── Default → `/components/icons/CursorLogo.tsx` 
+├── Default → `/components/icons/CursorLogo.tsx`
 ├── Large Lockup (logo + wordmark) → `/components/icons/CursorLockupSwap.tsx`
 ├── Profile/social → prefer light avatar; circle crop when the platform circles
 ├── Favicon → light or dark to match user theme
@@ -258,6 +258,8 @@ Writing UI or marketing copy?
 | Page surfaces              | `background`, `card`, `muted`            | random off-whites               |
 | Secondary text             | `muted-foreground`                       | smaller type + dimmer color     |
 | Light / dark               | `.dark` tokens; both supported           | hard-coded only-dark UI         |
+| UI typeface                | Cursor Gothic (`font-sans`)              | Geist, Inter, system-ui stacks  |
+| Code typeface              | Cursor Mono (`font-mono`)                | generic `ui-monospace` only     |
 
 \* `warning` may share the orange hex today — still reserve `--cursor-accent` for
 brand emphasis (sparse labels + in-content links), not for every alert.
@@ -275,4 +277,5 @@ brand emphasis (sparse labels + in-content links), not for every alert.
 - [ ] Motion uses ease-out spring; reduced-motion respected
 - [ ] Logo is official asset; cube has ≥ ½-width clearance
 - [ ] Copy does not claim official Cursor Inc. voice or ownership
+- [ ] UI text uses Cursor Gothic; code blocks use Cursor Mono (`font-mono`)
 - [ ] Light and dark both still work for the changed surface
