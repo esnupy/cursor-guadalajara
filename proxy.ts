@@ -4,6 +4,7 @@ import type { NextRequest } from 'next/server';
 export function proxy(request: NextRequest) {
 	const nonce = crypto.randomUUID();
 	const isDev = process.env.NODE_ENV === 'development';
+	const neonAuthOrigin = process.env.NEON_AUTH_BASE_URL ? new URL(process.env.NEON_AUTH_BASE_URL).origin : '';
 
 	const csp = [
 		`default-src 'self'`,
@@ -11,7 +12,7 @@ export function proxy(request: NextRequest) {
 		`style-src 'self' 'unsafe-inline'`,
 		`img-src 'self' https://images.unsplash.com https://images.lumacdn.com https://*.public.blob.vercel-storage.com https://luma.com https://lu.ma data: blob:`,
 		`font-src 'self'`,
-		`connect-src 'self' https://vitals.vercel-insights.com https://luma.com https://lu.ma`,
+		`connect-src 'self' https://vitals.vercel-insights.com https://luma.com https://lu.ma${neonAuthOrigin ? ` ${neonAuthOrigin}` : ''}`,
 		`frame-src https://luma.com https://lu.ma`,
 		`frame-ancestors 'none'`,
 		`object-src 'none'`,

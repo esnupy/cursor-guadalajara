@@ -2,7 +2,7 @@
 
 **Date:** 2026-08-04  
 **Branch:** `feat/admin-dashboard`  
-**Status:** Approved for implementation planning  
+**Status:** Approved for implementation planning
 
 ## Goal
 
@@ -10,20 +10,20 @@ Build the first admin dashboard module: **access management**. Integrate a Neon 
 
 ## Decisions (locked)
 
-| Topic | Choice |
-| --- | --- |
-| Auth | Neon Auth (Better Auth–compatible), GitHub OAuth |
-| Authorization model | App-owned `access_grants` table (Approach 1) |
-| Neon project | New dedicated project `cursor-guadalajara` |
-| Branches | `main` (production), `development` (local) |
-| Local auth | Bypass GitHub; `DEV_USER_EMAIL` auto-login **or** email form |
-| Whitelist UI | Full CRUD for `super_admin`, `ambassador`, `guest` |
-| Non-whitelisted GitHub user | Reject immediately — no durable app session |
-| Email matching | Any **verified** GitHub email may match a grant |
-| Seed | `juanda.martinezn@gmail.com` → `super_admin` on **both** branches |
-| ORM | Drizzle + SQL migrations |
-| Admin client data | TanStack Query |
-| Admin chrome | shadcn **Sidebar** |
+| Topic                       | Choice                                                            |
+| --------------------------- | ----------------------------------------------------------------- |
+| Auth                        | Neon Auth (Better Auth–compatible), GitHub OAuth                  |
+| Authorization model         | App-owned `access_grants` table (Approach 1)                      |
+| Neon project                | New dedicated project `cursor-guadalajara`                        |
+| Branches                    | `main` (production), `development` (local)                        |
+| Local auth                  | Bypass GitHub; `DEV_USER_EMAIL` auto-login **or** email form      |
+| Whitelist UI                | Full CRUD for `super_admin`, `ambassador`, `guest`                |
+| Non-whitelisted GitHub user | Reject immediately — no durable app session                       |
+| Email matching              | Any **verified** GitHub email may match a grant                   |
+| Seed                        | `juanda.martinezn@gmail.com` → `super_admin` on **both** branches |
+| ORM                         | Drizzle + SQL migrations                                          |
+| Admin client data           | TanStack Query                                                    |
+| Admin chrome                | shadcn **Sidebar**                                                |
 
 ## Architecture
 
@@ -57,14 +57,14 @@ Local email / DEV_USER_EMAIL ─┤
 
 ### Table: `access_grants`
 
-| Column | Type | Notes |
-| --- | --- | --- |
-| `id` | `uuid` PK | Default `gen_random_uuid()` |
-| `email` | `citext` UNIQUE | Normalized lowercase; match key |
-| `role` | `access_role` | See enum above |
-| `created_at` | `timestamptz` | Default `now()` |
-| `updated_at` | `timestamptz` | Default `now()` |
-| `created_by_email` | `text` NULL | Actor email, or `'seed'` for bootstrap |
+| Column             | Type            | Notes                                  |
+| ------------------ | --------------- | -------------------------------------- |
+| `id`               | `uuid` PK       | Default `gen_random_uuid()`            |
+| `email`            | `citext` UNIQUE | Normalized lowercase; match key        |
+| `role`             | `access_role`   | See enum above                         |
+| `created_at`       | `timestamptz`   | Default `now()`                        |
+| `updated_at`       | `timestamptz`   | Default `now()`                        |
+| `created_by_email` | `text` NULL     | Actor email, or `'seed'` for bootstrap |
 
 Neon Auth owns the `neon_auth` schema (users/sessions). Application code must not mutate that schema for roles.
 
@@ -107,9 +107,9 @@ Preconditions: `NODE_ENV=development` **and** `AUTH_DEV_BYPASS=true`. Production
 
 ```ts
 type AdminSession = {
-  email: string;
-  role: 'super_admin' | 'ambassador' | 'guest';
-  authSource: 'neon' | 'dev';
+	email: string;
+	role: 'super_admin' | 'ambassador' | 'guest';
+	authSource: 'neon' | 'dev';
 };
 ```
 
@@ -119,11 +119,11 @@ Authorization is re-checked server-side from `access_grants` on sensitive action
 
 ### Routes
 
-| Route | Purpose | Access |
-| --- | --- | --- |
-| `/admin` | Dashboard home; lists modules available to the current role | Any granted role |
-| `/admin/access` | Access management CRUD | `super_admin` only |
-| `/admin/login` | Local email login | Dev bypass only; prod redirects to GitHub |
+| Route           | Purpose                                                     | Access                                    |
+| --------------- | ----------------------------------------------------------- | ----------------------------------------- |
+| `/admin`        | Dashboard home; lists modules available to the current role | Any granted role                          |
+| `/admin/access` | Access management CRUD                                      | `super_admin` only                        |
+| `/admin/login`  | Local email login                                           | Dev bypass only; prod redirects to GitHub |
 
 Future modules: `/admin/<module>` (stubs / registry entries only in this pass).
 
@@ -166,24 +166,24 @@ Public marketing site under `app/` (non-admin) remains content-driven; unchanged
 
 ## Environment variables
 
-| Variable | Local | Production |
-| --- | --- | --- |
-| `DATABASE_URL` | `development` branch | `main` branch |
-| Neon Auth URL + credentials | `development` Auth | `main` Auth |
-| GitHub OAuth credentials | Optional / unused when bypass on | Required |
-| `AUTH_DEV_BYPASS` | `true` to enable bypass | unset / false |
-| `DEV_USER_EMAIL` | Optional auto-login email | ignored |
+| Variable                    | Local                            | Production    |
+| --------------------------- | -------------------------------- | ------------- |
+| `DATABASE_URL`              | `development` branch             | `main` branch |
+| Neon Auth URL + credentials | `development` Auth               | `main` Auth   |
+| GitHub OAuth credentials    | Optional / unused when bypass on | Required      |
+| `AUTH_DEV_BYPASS`           | `true` to enable bypass          | unset / false |
+| `DEV_USER_EMAIL`            | Optional auto-login email        | ignored       |
 
 ## Error handling
 
-| Case | Behavior |
-| --- | --- |
-| OAuth OK, no grant | Reject; no durable session; not-approved message |
-| Grant revoked mid-session | Next gated request fails; forced out |
-| Duplicate email | Validation error |
-| Last super_admin delete/demote | Blocked |
-| Unknown email on local login | Not-approved |
-| Bypass attempted in prod | Impossible (env gates) |
+| Case                           | Behavior                                         |
+| ------------------------------ | ------------------------------------------------ |
+| OAuth OK, no grant             | Reject; no durable session; not-approved message |
+| Grant revoked mid-session      | Next gated request fails; forced out             |
+| Duplicate email                | Validation error                                 |
+| Last super_admin delete/demote | Blocked                                          |
+| Unknown email on local login   | Not-approved                                     |
+| Bypass attempted in prod       | Impossible (env gates)                           |
 
 ## Testing
 
