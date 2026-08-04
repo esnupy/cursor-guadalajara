@@ -1,9 +1,9 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import Image from 'next/image';
 import { ListIcon, XIcon } from '@phosphor-icons/react';
 import ThemeToggle from '@/components/ThemeToggle';
+import CursorLockupSwap from '@/components/icons/CursorLockupSwap';
 import { Button } from '@/components/ui/button';
 import { siteConfig } from '@/content/site.config';
 import { cn } from '@/lib/utils';
@@ -71,17 +71,15 @@ export default function Navbar() {
 					scrolled ? 'border-border bg-background/90 shadow-sm' : 'border-transparent bg-background/80',
 				)}
 			>
-				<div className="flex h-14 items-center justify-between px-6 md:px-12 lg:px-16">
-					<a href="#" className="flex items-center gap-3">
-						<Image src="/cursor-logo.svg" alt="Cursor" width={120} height={32} priority className="h-6 w-auto md:h-8" />
-						<span className="text-lg font-semibold tracking-tight text-foreground md:text-xl">
-							{siteConfig.communityName}
-							{siteConfig.communityNameLocal ? (
-								<span className="ml-2 text-xl font-bold tracking-wide text-muted-foreground md:text-2xl">
-									{siteConfig.communityNameLocal}
-								</span>
-							) : null}
-						</span>
+				<div className="flex h-14 items-center justify-between px-[clamp(1.25rem,4vw,4rem)]">
+					<a href="#" className="flex items-center gap-1.5">
+						<CursorLockupSwap size={28} className="h-6 w-auto shrink-0 md:h-7" aria-hidden />
+						<span className="text-lg tracking-tight text-foreground md:text-xl">Community</span>
+						{siteConfig.communityNameLocal ? (
+							<span className="text-lg tracking-tight text-muted-foreground md:text-xl">
+								{siteConfig.communityNameLocal}
+							</span>
+						) : null}
 					</a>
 
 					<div className="hidden items-center gap-4 sm:flex">
@@ -129,7 +127,7 @@ export default function Navbar() {
 
 			{mobileOpen && (
 				<div className="fixed inset-0 top-14 z-30 bg-background/95 backdrop-blur-md sm:hidden">
-					<div className="flex flex-col items-center gap-6 pt-12">
+					<div className="flex flex-col items-start gap-6 px-[clamp(1.25rem,4vw,4rem)] pt-12">
 						{NAV_LINKS.map(({ href, label }) => (
 							<a
 								key={href}

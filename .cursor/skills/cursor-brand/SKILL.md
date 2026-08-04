@@ -95,7 +95,7 @@ stacks become a second, invisible design system that fights shadcn.
 ### Concrete defaults
 
 | Need                         | Use                                   |
-|------------------------------|---------------------------------------|
+| ---------------------------- | ------------------------------------- |
 | CTA / icon / nav control     | `Button` (+ `variant` / `size`)       |
 | Event / partner / info panel | `Card` (+ CardHeader/Title/Content/…) |
 | Status / recommended mark    | `Badge` (brand orange only per Color) |
@@ -250,7 +250,7 @@ Writing UI or marketing copy?
 ## Token map (this repo)
 
 | Brand intent               | Use                                      | Do not use as brand orange      |
-|----------------------------|------------------------------------------|---------------------------------|
+| -------------------------- | ---------------------------------------- | ------------------------------- |
 | Brand orange (sparse)      | `--cursor-accent` / `#f54e00`            | `accent`, `primary`, `warning`* |
 | Inline content text links  | `cursor-accent` text color               | `primary`, header/footer styles |
 | Nav / header / footer link | `foreground` / `muted-foreground`        | `cursor-accent`                 |

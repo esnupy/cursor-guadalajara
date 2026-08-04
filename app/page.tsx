@@ -19,7 +19,7 @@ function buildHomeJsonLd() {
 	const org = {
 		'@type': 'Organization',
 		name: siteConfig.communityName,
-		url: siteConfig.cursorCommunityUrl,
+		url: siteConfig.siteUrl,
 	};
 
 	const eventItems = upcomingEvents
@@ -50,7 +50,7 @@ const Home: React.FC = () => (
 		<Navbar />
 		<HeroHeader />
 
-		<div className="max-w-5xl mx-auto px-6 py-16 md:py-24">
+		<div className="max-w-5xl mx-auto px-[clamp(1.25rem,4vw,4rem)] py-16 md:py-24">
 			<AmbassadorSection />
 			<SectionDivider />
 			<FeaturedSection />

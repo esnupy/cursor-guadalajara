@@ -7,6 +7,7 @@ import { CaretLeftIcon, CaretRightIcon, XIcon } from '@phosphor-icons/react';
 import { GalleryPhoto } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import { EASE_OUT_SPRING, useBrandMotion } from '@/lib/motion';
 
 interface PhotoGalleryProps {
 	photos: GalleryPhoto[];
@@ -16,47 +17,50 @@ interface PhotoGalleryProps {
 export default function PhotoGallery({ photos, embedded = false }: PhotoGalleryProps) {
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const [isFullscreen, setIsFullscreen] = useState(false);
+	const { slideUp, transition, prefersReducedMotion } = useBrandMotion();
 
 	if (photos.length === 0) {
 		return null;
 	}
 
 	const currentPhoto = photos[currentIndex];
+	const motionTransition = { duration: transition.duration || 0.25, ease: EASE_OUT_SPRING };
 
 	const content = (
 		<>
 			<div className="mb-6 flex items-baseline justify-between gap-4">
 				<div>
-					<h2 className={embedded ? 'text-lg font-semibold text-foreground' : 'text-xl font-semibold text-foreground'}>
-						Fotos
-					</h2>
+					<h2 className={embedded ? 'text-lg tracking-tight' : 'text-xl tracking-tight'}>Fotos</h2>
 					<p className="mt-1 text-sm text-muted-foreground">{photos.length} fotos del evento</p>
 				</div>
 			</div>
 
 			<div className="grid grid-cols-2 gap-4 md:grid-cols-3">
 				{photos.map((photo, index) => (
-					<motion.button
+					<motion.div
 						key={`${photo.src}-${index}`}
-						type="button"
-						initial={{ opacity: 0, scale: 0.98 }}
+						initial={prefersReducedMotion ? false : { opacity: 0, scale: 0.98 }}
 						animate={{ opacity: 1, scale: 1 }}
-						transition={{ duration: 0.25, delay: Math.min(index * 0.02, 0.25) }}
-						className="relative aspect-square overflow-hidden rounded-lg border border-border bg-muted text-left"
-						onClick={() => {
-							setCurrentIndex(index);
-							setIsFullscreen(true);
-						}}
-						aria-label={`Abrir foto ${index + 1}`}
+						transition={{ ...motionTransition, delay: prefersReducedMotion ? 0 : Math.min(index * 0.02, 0.25) }}
 					>
-						<Image
-							src={photo.src}
-							alt={photo.alt}
-							fill
-							className="object-cover transition-transform duration-300 hover:scale-105"
-							sizes="(max-width: 768px) 50vw, 33vw"
-						/>
-					</motion.button>
+						<Button
+							variant="outline"
+							className="relative aspect-square h-auto w-full overflow-hidden p-0"
+							onClick={() => {
+								setCurrentIndex(index);
+								setIsFullscreen(true);
+							}}
+							aria-label={`Abrir foto ${index + 1}`}
+						>
+							<Image
+								src={photo.src}
+								alt={photo.alt}
+								fill
+								className="object-cover transition-transform duration-300 hover:scale-105 motion-reduce:transform-none"
+								sizes="(max-width: 768px) 50vw, 33vw"
+							/>
+						</Button>
+					</motion.div>
 				))}
 			</div>
 
@@ -67,10 +71,10 @@ export default function PhotoGallery({ photos, embedded = false }: PhotoGalleryP
 						onClick={() => setIsFullscreen(false)}
 					>
 						<motion.div
-							initial={{ opacity: 0, scale: 0.98 }}
+							initial={prefersReducedMotion ? false : { opacity: 0, scale: 0.98 }}
 							animate={{ opacity: 1, scale: 1 }}
-							exit={{ opacity: 0, scale: 0.98 }}
-							transition={{ duration: 0.2 }}
+							exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.98 }}
+							transition={motionTransition}
 							className="relative max-h-[90vh] w-full max-w-6xl"
 							onClick={(event) => event.stopPropagation()}
 						>
@@ -88,10 +92,10 @@ export default function PhotoGallery({ photos, embedded = false }: PhotoGalleryP
 								<AnimatePresence mode="wait">
 									<motion.div
 										key={currentIndex}
-										initial={{ opacity: 0, x: 40 }}
+										initial={prefersReducedMotion ? false : { opacity: 0, x: 40 }}
 										animate={{ opacity: 1, x: 0 }}
-										exit={{ opacity: 0, x: -40 }}
-										transition={{ duration: 0.2 }}
+										exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, x: -40 }}
+										transition={motionTransition}
 										className="relative size-full"
 									>
 										<Image src={currentPhoto.src} alt={currentPhoto.alt} fill className="object-contain" sizes="90vw" />
@@ -100,9 +104,9 @@ export default function PhotoGallery({ photos, embedded = false }: PhotoGalleryP
 							</div>
 
 							<Card>
-								<CardContent className="py-4 text-center">
-									<p className="font-medium text-foreground">
-										Foto {currentIndex + 1} de {photos.length}
+								<CardContent className="py-4 text-left">
+									<p className="font-mono text-sm text-muted-foreground">
+										{currentIndex + 1} / {photos.length}
 									</p>
 								</CardContent>
 							</Card>
@@ -142,9 +146,9 @@ export default function PhotoGallery({ photos, embedded = false }: PhotoGalleryP
 
 	return (
 		<motion.section
-			initial={{ opacity: 0, y: 20 }}
-			animate={{ opacity: 1, y: 0 }}
-			transition={{ duration: 0.5, delay: 0.1 }}
+			initial={slideUp.initial}
+			animate={slideUp.animate}
+			transition={{ ...transition, delay: transition.duration ? 0.1 : 0 }}
 			className="mb-8"
 		>
 			<Card>

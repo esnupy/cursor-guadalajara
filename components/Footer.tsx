@@ -1,22 +1,24 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 import { ArrowSquareOutIcon } from '@phosphor-icons/react';
+import CursorLockupSwap from '@/components/icons/CursorLockupSwap';
 import { siteConfig } from '@/content/site.config';
 import { upcomingEvents } from '@/content/events';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import { useBrandMotion } from '@/lib/motion';
 
 export default function Footer() {
 	const nextEvent = upcomingEvents[0];
+	const { fadeIn, transition } = useBrandMotion();
 
 	return (
 		<motion.footer
-			initial={{ opacity: 0 }}
-			whileInView={{ opacity: 1 }}
+			initial={fadeIn.initial}
+			whileInView={fadeIn.animate}
 			viewport={{ once: true, margin: '-50px' }}
-			transition={{ duration: 0.5 }}
+			transition={transition}
 			className="mt-24 pt-8"
 		>
 			<Separator className="mb-10" />
@@ -24,7 +26,7 @@ export default function Footer() {
 			<div className="grid grid-cols-1 items-start gap-8 md:grid-cols-3 md:gap-12">
 				<div>
 					<div className="mb-2 flex items-center gap-2">
-						<Image src="/cursor-logo.svg" alt="Cursor" width={90} height={24} className="h-5 w-auto" />
+						<CursorLockupSwap size={22} className="h-5 w-auto" aria-hidden />
 						<span className="text-sm text-muted-foreground">{siteConfig.communityNameLocal}</span>
 					</div>
 					<p className="text-sm leading-relaxed text-muted-foreground">{siteConfig.footerTagline}</p>
@@ -60,7 +62,7 @@ export default function Footer() {
 					</a>
 				</div>
 
-				<div className="md:text-right">
+				<div>
 					<Button asChild>
 						<a
 							href={nextEvent?.lumaUrl || siteConfig.lumaUrl}
@@ -75,7 +77,7 @@ export default function Footer() {
 				</div>
 			</div>
 
-			<p className="mt-10 pb-6 text-center text-xs text-muted-foreground/70">{siteConfig.footerTagline}</p>
+			<p className="mt-10 pb-6 text-left text-xs text-muted-foreground/70">{siteConfig.footerTagline}</p>
 		</motion.footer>
 	);
 }

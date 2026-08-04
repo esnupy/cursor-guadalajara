@@ -62,12 +62,12 @@ export default function DiagramSlide({ src, alt, caption }: DiagramSlideProps) {
 	}, [src, validationError]);
 
 	if (isLoading) {
-		return <div className="animate-pulse py-12 text-center text-muted-foreground">Loading diagram...</div>;
+		return <div className="animate-pulse py-12 text-left text-muted-foreground">Loading diagram…</div>;
 	}
 
 	if (error) {
 		return (
-			<div className="rounded border border-destructive/30 bg-destructive/10 p-4 text-center text-destructive">
+			<div className="rounded border border-destructive/30 bg-destructive/10 p-4 text-left text-destructive">
 				<p>Error loading diagram</p>
 				<p className="mt-2 text-sm">{error}</p>
 			</div>
@@ -75,7 +75,7 @@ export default function DiagramSlide({ src, alt, caption }: DiagramSlideProps) {
 	}
 
 	if (!svgContent) {
-		return <div className="py-12 text-center text-muted-foreground">{alt}</div>;
+		return <div className="py-12 text-left text-muted-foreground">{alt}</div>;
 	}
 
 	const modifiedSvg = svgContent.replace(
@@ -88,7 +88,7 @@ export default function DiagramSlide({ src, alt, caption }: DiagramSlideProps) {
 	});
 
 	return (
-		<div className="flex flex-col items-center justify-center space-y-6">
+		<div className="flex flex-col items-start space-y-6">
 			<div className="w-full max-w-4xl">
 				<div
 					className="w-full overflow-hidden rounded-md border border-border"
@@ -96,7 +96,7 @@ export default function DiagramSlide({ src, alt, caption }: DiagramSlideProps) {
 					dangerouslySetInnerHTML={{ __html: sanitizedSvg }}
 				/>
 			</div>
-			{caption ? <p className="max-w-3xl text-center text-lg text-muted-foreground">{caption}</p> : null}
+			{caption ? <p className="max-w-3xl text-left text-lg text-muted-foreground">{caption}</p> : null}
 		</div>
 	);
 }

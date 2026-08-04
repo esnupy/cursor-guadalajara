@@ -7,8 +7,11 @@ import type { CursorEvent } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { useBrandMotion } from '@/lib/motion';
 
 export default function UpcomingEvents() {
+	const { slideUp, transition, prefersReducedMotion } = useBrandMotion();
+
 	if (upcomingEvents.length === 0) {
 		return null;
 	}
@@ -26,7 +29,7 @@ export default function UpcomingEvents() {
 		}
 
 		return (
-			<Badge variant="outline" className="px-5 py-2.5 text-sm" aria-label={`${event.title}: Próximamente`}>
+			<Badge variant="outline" size="lg" aria-label={`${event.title}: Próximamente`}>
 				Próximamente
 			</Badge>
 		);
@@ -35,14 +38,14 @@ export default function UpcomingEvents() {
 	return (
 		<motion.section
 			id="upcoming"
-			initial={{ opacity: 0, y: 20 }}
-			whileInView={{ opacity: 1, y: 0 }}
+			initial={slideUp.initial}
+			whileInView={slideUp.animate}
 			viewport={{ once: true, margin: '-50px' }}
-			transition={{ duration: 0.5 }}
+			transition={transition}
 			className="mb-16 scroll-mt-20"
 		>
-			<p className="mb-2 text-xs font-medium uppercase tracking-wider text-muted-foreground">Próximos eventos</p>
-			<h2 className="mb-6 text-2xl font-bold text-foreground md:text-3xl">Qué sigue</h2>
+			<p className="mb-2 text-sm text-muted-foreground">Próximos eventos</p>
+			<h2 className="mb-6 text-2xl tracking-tight md:text-3xl">Qué sigue</h2>
 
 			<div className="flex flex-col gap-6">
 				{upcomingEvents.map((event, index) => {
@@ -51,23 +54,25 @@ export default function UpcomingEvents() {
 					return (
 						<motion.div
 							key={event.id}
-							initial={{ opacity: 0, y: 10 }}
-							whileInView={{ opacity: 1, y: 0 }}
+							initial={slideUp.initial}
+							whileInView={slideUp.animate}
 							viewport={{ once: true, margin: '-50px' }}
-							transition={{ duration: 0.4, delay: index * 0.08 }}
+							transition={{ ...transition, delay: transition.duration ? index * 0.08 : 0 }}
 						>
-							<Card className="border-l-2 border-l-primary">
+							<Card variant="accentEdge">
 								<CardContent className="pt-6">
 									<div className="mb-2 flex items-center gap-2 text-sm text-muted-foreground">
 										<span className="relative flex size-2.5">
-											<span className="absolute inline-flex size-full animate-ping rounded-full bg-primary opacity-75" />
-											<span className="relative inline-flex size-2.5 rounded-full bg-primary" />
+											{!prefersReducedMotion ? (
+												<span className="absolute inline-flex size-full animate-ping rounded-full bg-cursor-accent opacity-75" />
+											) : null}
+											<span className="relative inline-flex size-2.5 rounded-full bg-cursor-accent" />
 										</span>
 										<span>{event.displayDate}</span>
 										<span className="text-muted-foreground/50">&middot;</span>
 										<span>{city}</span>
 									</div>
-									<h3 className="mb-3 text-2xl font-bold text-foreground">{event.title}</h3>
+									<h3 className="mb-3 text-2xl tracking-tight">{event.title}</h3>
 									{renderCta(event)}
 								</CardContent>
 							</Card>

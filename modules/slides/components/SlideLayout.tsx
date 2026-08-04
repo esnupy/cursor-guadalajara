@@ -78,7 +78,7 @@ export default function SlideLayout({
 
 	return (
 		<div className="flex min-h-screen flex-col bg-background text-foreground">
-			<main className="flex flex-1 items-start justify-center overflow-y-auto p-6 pt-8 pb-32 md:p-10 md:pb-36">
+			<main className="flex flex-1 items-start justify-start overflow-y-auto p-6 pt-8 pb-32 md:p-10 md:pb-36">
 				<div className="w-full max-w-6xl pb-16">{children}</div>
 			</main>
 
@@ -96,22 +96,23 @@ export default function SlideLayout({
 
 					<div className="flex items-center gap-2">
 						{Array.from({ length: totalSlides }, (_, i) => i + 1).map((slideId) => (
-							<button
+							<Button
 								key={slideId}
-								type="button"
+								variant="ghost"
+								size="icon-xs"
 								onClick={() => goToSlide(slideId)}
 								className={cn(
-									'h-2 rounded-full transition-all',
+									'rounded-full p-0',
 									slideId === currentSlide
-										? 'w-8 bg-foreground'
-										: 'w-2 bg-muted-foreground/40 hover:bg-muted-foreground',
+										? 'w-8 bg-foreground hover:bg-foreground'
+										: 'size-2 bg-muted-foreground/40 hover:bg-muted-foreground',
 								)}
 								aria-label={`Ir a diapositiva ${slideId}`}
 							/>
 						))}
 					</div>
 
-					<div className="hidden text-sm text-muted-foreground md:block">
+					<div className="hidden font-mono text-sm text-muted-foreground md:block">
 						{currentSlide} / {totalSlides}
 					</div>
 

@@ -8,6 +8,7 @@ import { ambassadors } from '@/content/ambassadors';
 import { siteConfig } from '@/content/site.config';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import { useBrandMotion } from '@/lib/motion';
 
 type BrandIconProps = {
 	iconPath: string;
@@ -33,22 +34,24 @@ function SocialIcon({ kind }: SocialIconProps) {
 }
 
 export default function AmbassadorSection() {
+	const { slideUp, transition } = useBrandMotion();
+
 	if (ambassadors.length === 0) {
 		return null;
 	}
 
 	return (
 		<motion.section
-			initial={{ opacity: 0, y: 20 }}
-			whileInView={{ opacity: 1, y: 0 }}
+			initial={slideUp.initial}
+			whileInView={slideUp.animate}
 			viewport={{ once: true, margin: '-50px' }}
-			transition={{ duration: 0.5 }}
+			transition={transition}
 			className="mb-16"
 		>
-			<p className="mb-2 text-xs font-medium uppercase tracking-wider text-muted-foreground">
-				Embajadores de Cursor {siteConfig.communityName}
+			<p className="mb-2 text-sm text-muted-foreground">
+				Embajadores de la comunidad de Cursor en {siteConfig.communityNameLocal}
 			</p>
-			<h2 className="mb-6 text-2xl font-bold text-foreground md:text-3xl">Conoce al equipo</h2>
+			<h2 className="mb-6 text-2xl tracking-tight md:text-3xl">Conoce al equipo</h2>
 
 			<div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
 				{ambassadors.map((ambassador, index) => {
@@ -62,12 +65,12 @@ export default function AmbassadorSection() {
 					return (
 						<motion.article
 							key={ambassador.name}
-							initial={{ opacity: 0, y: 10 }}
-							whileInView={{ opacity: 1, y: 0 }}
+							initial={slideUp.initial}
+							whileInView={slideUp.animate}
 							viewport={{ once: true, margin: '-50px' }}
-							transition={{ duration: 0.3, delay: index * 0.07 }}
+							transition={{ ...transition, delay: transition.duration ? index * 0.07 : 0 }}
 						>
-							<Card className="group transition-colors hover:border-primary/30">
+							<Card variant="interactive">
 								<CardContent className="pt-6">
 									<div className="flex items-center gap-4">
 										<div className="relative size-20 overflow-hidden rounded-full border-2 border-border">
@@ -75,12 +78,12 @@ export default function AmbassadorSection() {
 												src={ambassador.photo}
 												alt={ambassador.name}
 												fill
-												className="object-cover grayscale transition duration-500 group-hover:grayscale-0"
+												className="object-cover grayscale transition duration-500 group-hover/card:grayscale-0 motion-reduce:grayscale-0"
 												sizes="80px"
 											/>
 										</div>
 										<div>
-											<p className="font-medium text-foreground">{ambassador.name}</p>
+											<p>{ambassador.name}</p>
 											{ambassador.role ? <p className="text-sm text-muted-foreground">{ambassador.role}</p> : null}
 										</div>
 									</div>

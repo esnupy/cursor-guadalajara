@@ -2,15 +2,20 @@
 
 import { motion } from 'framer-motion';
 import BentoGrid from '@/components/BentoGrid';
+import CursorLockupSwap from '@/components/icons/CursorLockupSwap';
 import { headerPhotos } from '@/content/header-photos';
+import { siteConfig } from '@/content/site.config';
+import { springTransitionSlow, useBrandMotion } from '@/lib/motion';
 
 export default function HeroHeader() {
+	const { fadeIn, transition } = useBrandMotion();
+
 	return (
 		<motion.div
-			initial={{ opacity: 0 }}
-			animate={{ opacity: 1 }}
-			transition={{ duration: 0.6, delay: 0.2 }}
-			className="h-[calc(100svh-56px)] overflow-hidden border-t border-border"
+			{...fadeIn}
+			animate={fadeIn.animate}
+			transition={{ ...springTransitionSlow, delay: transition.duration ? 0.2 : 0 }}
+			className="relative h-[calc(100svh-56px)] overflow-hidden border-t border-border"
 			style={{
 				maskImage: 'linear-gradient(to bottom, black 85%, transparent)',
 				WebkitMaskImage: 'linear-gradient(to bottom, black 85%, transparent)',

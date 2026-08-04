@@ -1,14 +1,45 @@
 import * as React from 'react';
+import { cva, type VariantProps } from 'class-variance-authority';
 
 import { cn } from '@/lib/utils';
 
-function Card({ className, size = 'default', ...props }: React.ComponentProps<'div'> & { size?: 'default' | 'sm' }) {
+const cardVariants = cva(
+	'group/card flex flex-col gap-(--card-spacing) overflow-hidden rounded-xl bg-card py-(--card-spacing) text-sm text-card-foreground ring-1 ring-foreground/10 [--card-spacing:--spacing(4)] has-data-[slot=card-footer]:pb-0 has-[>img:first-child]:pt-0 data-[size=sm]:[--card-spacing:--spacing(3)] data-[size=sm]:has-data-[slot=card-footer]:pb-0 *:[img:first-child]:rounded-t-xl *:[img:last-child]:rounded-b-xl',
+	{
+		variants: {
+			variant: {
+				default: '',
+				interactive: 'transition-colors hover:ring-primary/50',
+				accentEdge: 'border-l-2 border-l-cursor-accent',
+				flushMobile: 'max-sm:rounded-none',
+			},
+		},
+		defaultVariants: {
+			variant: 'default',
+		},
+	},
+);
+
+function Card({
+	className,
+	size = 'default',
+	variant = 'default',
+	flushOnMobile = false,
+	...props
+}: React.ComponentProps<'div'> &
+	VariantProps<typeof cardVariants> & {
+		size?: 'default' | 'sm';
+		flushOnMobile?: boolean;
+	}) {
 	return (
 		<div
 			data-slot="card"
 			data-size={size}
+			data-variant={variant}
 			className={cn(
-				'group/card flex flex-col gap-(--card-spacing) overflow-hidden rounded-xl bg-card py-(--card-spacing) text-sm text-card-foreground ring-1 ring-foreground/10 [--card-spacing:--spacing(4)] has-data-[slot=card-footer]:pb-0 has-[>img:first-child]:pt-0 data-[size=sm]:[--card-spacing:--spacing(3)] data-[size=sm]:has-data-[slot=card-footer]:pb-0 *:[img:first-child]:rounded-t-xl *:[img:last-child]:rounded-b-xl',
+				cardVariants({ variant }),
+				'data-[size=sm]:[--card-spacing:--spacing(3)] data-[size=sm]:has-data-[slot=card-footer]:pb-0',
+				flushOnMobile && 'max-sm:rounded-none',
 				className,
 			)}
 			{...props}
@@ -67,4 +98,4 @@ function CardFooter({ className, ...props }: React.ComponentProps<'div'>) {
 	);
 }
 
-export { Card, CardHeader, CardFooter, CardTitle, CardAction, CardDescription, CardContent };
+export { Card, CardHeader, CardFooter, CardTitle, CardAction, CardDescription, CardContent, cardVariants };

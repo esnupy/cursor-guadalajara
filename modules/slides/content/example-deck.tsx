@@ -5,10 +5,10 @@ import { Slide } from '@/modules/slides/types';
 export const exampleDeck: Slide[] = [
 	{
 		id: 1,
-		title: 'Seminar Slides Starter',
+		title: 'Seminar slides starter',
 		content: (
 			<div className="space-y-6">
-				<h1 className="text-4xl md:text-5xl font-bold">Seminar Slides for the Event (Template)</h1>
+				<h1 className="text-4xl tracking-tight md:text-5xl">Seminar slides for the event (template)</h1>
 				<p className="text-lg text-muted-foreground">
 					This optional slide engine can be enabled by any ambassador community.
 				</p>
@@ -17,14 +17,14 @@ export const exampleDeck: Slide[] = [
 	},
 	{
 		id: 2,
-		title: 'Prompt Pattern',
+		title: 'Prompt pattern',
 		content: (
 			<PromptBlock prompt="Build a reusable event card component from this mockup and wire it to the events config file." />
 		),
 	},
 	{
 		id: 3,
-		title: 'Code Pattern',
+		title: 'Code pattern',
 		content: (
 			<CodeBlock
 				code={`export const events = [

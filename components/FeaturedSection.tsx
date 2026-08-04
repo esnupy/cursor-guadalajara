@@ -5,23 +5,27 @@ import Link from 'next/link';
 import { ArrowRightIcon } from '@phosphor-icons/react';
 import { featuredResource } from '@/content/featured';
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
+import { useBrandMotion } from '@/lib/motion';
 
 export default function FeaturedSection() {
+	const { slideUp, transition } = useBrandMotion();
+
 	return (
 		<motion.section
-			initial={{ opacity: 0, y: 20 }}
-			animate={{ opacity: 1, y: 0 }}
-			transition={{ duration: 0.5, delay: 0.2 }}
+			initial={slideUp.initial}
+			animate={slideUp.animate}
+			transition={{ ...transition, delay: transition.duration ? 0.2 : 0 }}
 			className="mb-16"
 		>
 			<Card>
 				<CardContent className="pt-6">
-					<p className="mb-4 text-xs uppercase tracking-wider text-muted-foreground">Destacado</p>
+					<Badge variant="brand" className="mb-4">
+						Destacado
+					</Badge>
 
-					<h2 className="mb-1 text-3xl font-bold tracking-tight text-foreground md:text-4xl">
-						{featuredResource.title}
-					</h2>
+					<h2 className="mb-1 text-3xl leading-tight tracking-tight md:text-4xl">{featuredResource.title}</h2>
 					<p className="mb-6 leading-relaxed text-muted-foreground">{featuredResource.description}</p>
 
 					<Button asChild variant="secondary">

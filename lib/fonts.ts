@@ -23,7 +23,7 @@ export const cursorGothic = localFont({
 			style: 'italic',
 		},
 	],
-	variable: '--font-sans',
+	variable: '--font-cursor-gothic',
 	display: 'swap',
 });
 
@@ -45,6 +45,6 @@ export const cursorMono = localFont({
 			style: 'normal',
 		},
 	],
-	variable: '--font-mono',
+	variable: '--font-cursor-mono',
 	display: 'swap',
 });

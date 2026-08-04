@@ -20,7 +20,7 @@ export default async function SlidePage({ params }: SlidePageProps) {
 		<SlideLayout currentSlide={id} totalSlides={totalExampleSlides}>
 			<div className="space-y-8">
 				<header>
-					<h1 className="text-2xl md:text-3xl font-bold">{slide.title}</h1>
+					<h1 className="text-2xl tracking-tight md:text-3xl">{slide.title}</h1>
 				</header>
 				<SlideContent slide={slide} />
 			</div>
