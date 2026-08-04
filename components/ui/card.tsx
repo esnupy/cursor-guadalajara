@@ -11,6 +11,7 @@ const cardVariants = cva(
 				default: '',
 				interactive: 'transition-colors hover:ring-primary/50',
 				flushMobile: 'max-sm:rounded-none',
+				ghost: 'bg-transparent py-0 ring-0 [--card-spacing:--spacing(3)]',
 			},
 		},
 		defaultVariants: {

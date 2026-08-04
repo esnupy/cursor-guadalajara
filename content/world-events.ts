@@ -1,5 +1,11 @@
 import { WorldEventPhoto } from '@/lib/types';
 
+export const globalEventsSection = {
+	title: 'Café Cursor alrededor del mundo',
+	description:
+		'Usuarios de Cursor construyen juntos en todo el mundo. Aunque vivimos en distintas zonas horarias, somos una sola comunidad.',
+} as const;
+
 export const worldEventPhotos: WorldEventPhoto[] = [
 	{
 		src: '/images/events/cursor-event-02.jpg',
