@@ -33,7 +33,7 @@ export default function GlobalEvents() {
 			className="mb-16"
 		>
 			<h2 className="mb-1 text-2xl tracking-tight">{globalEventsSection.title}</h2>
-			<p className="mb-6 max-w-2xl text-muted-foreground">{globalEventsSection.description}</p>
+			<p className="mb-6 max-w-2xl text-2xl text-muted-foreground">{globalEventsSection.description}</p>
 
 			<div className="grid grid-cols-2 gap-6 md:grid-cols-3">
 				{photos.map((photo, index) => (
