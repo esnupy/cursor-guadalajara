@@ -53,6 +53,7 @@
 	--color-foreground: var(--foreground);
 	--color-background: var(--background);
 	--color-cursor-accent: var(--cursor-accent);
+	--radius-card: 0.25rem;
 	--radius-sm: calc(var(--radius) * 0.6);
 	--radius-md: calc(var(--radius) * 0.8);
 	--radius-lg: var(--radius);

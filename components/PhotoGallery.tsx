@@ -45,7 +45,7 @@ export default function PhotoGallery({ photos, embedded = false }: PhotoGalleryP
 					>
 						<Button
 							variant="outline"
-							className="relative aspect-square h-auto w-full overflow-hidden p-0 rounded-[4px]"
+							className="relative aspect-square h-auto w-full overflow-hidden p-0 rounded-card"
 							onClick={() => {
 								setCurrentIndex(index);
 								setIsFullscreen(true);

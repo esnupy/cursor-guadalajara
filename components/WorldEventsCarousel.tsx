@@ -34,7 +34,7 @@ export default function WorldEventsCarousel() {
 					>
 						<Button
 							variant="outline"
-							className="group relative aspect-square h-auto w-full overflow-hidden p-0 rounded-[4px]"
+							className="group relative aspect-square h-auto w-full overflow-hidden p-0 rounded-card"
 							onClick={() => {
 								setCurrentIndex(index);
 								setIsFullscreen(true);

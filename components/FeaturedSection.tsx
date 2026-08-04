@@ -38,7 +38,7 @@ export default function FeaturedSection() {
 						width={533}
 						height={800}
 						src="https://n6j6oimzljzhdeal.public.blob.vercel-storage.com/landing/DSC05014-highres-1785867702029.webp"
-						className="aspect-9/16 w-107.5 object-cover rounded-[4px]"
+						className="aspect-9/16 w-107.5 object-cover rounded-card"
 						alt="Comunidad Cursor Guadalajara"
 						unoptimized
 					/>
