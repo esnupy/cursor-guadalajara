@@ -8,8 +8,6 @@ import FeaturedSection from '@/components/FeaturedSection';
 import UpcomingEvents from '@/components/UpcomingEvents';
 import PastEvents from '@/components/PastEvents';
 import GlobalEvents from '@/components/GlobalEvents';
-import SectionDivider from '@/components/SectionDivider';
-import Footer from '@/components/Footer';
 import JsonLd from '@/components/JsonLd';
 import { siteConfig } from '@/content/site.config';
 import { upcomingEvents } from '@/content/events';
@@ -49,17 +47,12 @@ const Home: React.FC = () => (
 		<Navbar />
 		<HeroHeader />
 
-		<div className="max-w-5xl mx-auto px-[clamp(1.25rem,4vw,4rem)] py-16 md:py-24">
+		<div className="mx-auto max-w-5xl">
 			<AmbassadorSection />
-			<SectionDivider />
 			<FeaturedSection />
-			<SectionDivider />
 			<UpcomingEvents />
-			<SectionDivider />
 			<PastEvents />
-			<SectionDivider />
 			<GlobalEvents />
-			<Footer />
 		</div>
 	</main>
 );

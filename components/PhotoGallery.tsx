@@ -7,14 +7,14 @@ import { CaretLeftIcon, CaretRightIcon, XIcon } from '@phosphor-icons/react';
 import { GalleryPhoto } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
 import { EASE_OUT_SPRING, useBrandMotion } from '@/lib/motion';
 
 interface PhotoGalleryProps {
 	photos: GalleryPhoto[];
-	embedded?: boolean;
 }
 
-export default function PhotoGallery({ photos, embedded = false }: PhotoGalleryProps) {
+export default function PhotoGallery({ photos }: PhotoGalleryProps) {
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const [isFullscreen, setIsFullscreen] = useState(false);
 	const { slideUp, transition, prefersReducedMotion } = useBrandMotion();
@@ -26,13 +26,16 @@ export default function PhotoGallery({ photos, embedded = false }: PhotoGalleryP
 	const currentPhoto = photos[currentIndex];
 	const motionTransition = { duration: transition.duration || 0.25, ease: EASE_OUT_SPRING };
 
-	const content = (
-		<>
-			<div className="mb-6 flex items-baseline justify-between gap-4">
-				<div>
-					<h2 className={embedded ? 'text-2xl tracking-tight' : 'text-2xl tracking-tight'}>Fotos</h2>
-					<p className="text-2xl text-muted-foreground">{photos.length} fotos del evento</p>
-				</div>
+	return (
+		<motion.section
+			initial={slideUp.initial}
+			whileInView={slideUp.animate}
+			viewport={{ once: true, margin: '-50px' }}
+			transition={transition}
+		>
+			<div className="mb-6">
+				<h2 className="mb-1 text-2xl tracking-tight">Galería de fotos</h2>
+				<p className="text-xl text-muted-foreground">{photos.length} fotos del evento</p>
 			</div>
 
 			<div className="grid grid-cols-2 gap-4 md:grid-cols-3">
@@ -40,26 +43,31 @@ export default function PhotoGallery({ photos, embedded = false }: PhotoGalleryP
 					<motion.div
 						key={`${photo.src}-${index}`}
 						initial={prefersReducedMotion ? false : { opacity: 0, scale: 0.98 }}
-						animate={{ opacity: 1, scale: 1 }}
+						whileInView={{ opacity: 1, scale: 1 }}
+						viewport={{ once: true, margin: '-50px' }}
 						transition={{ ...motionTransition, delay: prefersReducedMotion ? 0 : Math.min(index * 0.02, 0.25) }}
 					>
-						<Button
-							variant="outline"
-							className="relative aspect-square h-auto w-full overflow-hidden p-0 rounded-[4px]"
+						<button
+							type="button"
 							onClick={() => {
 								setCurrentIndex(index);
 								setIsFullscreen(true);
 							}}
-							aria-label={`Abrir foto ${index + 1}`}
+							aria-label={`Abrir foto ${index + 1}: ${photo.alt}`}
+							className={cn(
+								'group relative aspect-square w-full cursor-pointer overflow-hidden rounded-card',
+								'ring-1 ring-foreground/10 transition-[ring-color,transform] hover:ring-primary/50',
+								'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+							)}
 						>
 							<Image
 								src={photo.src}
 								alt={photo.alt}
 								fill
-								className="object-cover transition-transform duration-300 hover:scale-105 motion-reduce:transform-none"
+								className="object-cover transition-transform duration-300 group-hover:scale-105 motion-reduce:transform-none"
 								sizes="(max-width: 768px) 50vw, 33vw"
 							/>
-						</Button>
+						</button>
 					</motion.div>
 				))}
 			</div>
@@ -137,23 +145,6 @@ export default function PhotoGallery({ photos, embedded = false }: PhotoGalleryP
 					</div>
 				) : null}
 			</AnimatePresence>
-		</>
-	);
-
-	if (embedded) {
-		return <div className="mt-6 border-t border-border pt-6">{content}</div>;
-	}
-
-	return (
-		<motion.section
-			initial={slideUp.initial}
-			animate={slideUp.animate}
-			transition={{ ...transition, delay: transition.duration ? 0.1 : 0 }}
-			className="mb-8"
-		>
-			<Card>
-				<CardContent className="pt-8">{content}</CardContent>
-			</Card>
 		</motion.section>
 	);
 }

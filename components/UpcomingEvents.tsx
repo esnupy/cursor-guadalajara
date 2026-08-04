@@ -1,13 +1,11 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ArrowRightIcon } from '@phosphor-icons/react';
+import { ArrowUpRightIcon } from '@phosphor-icons/react';
 import { upcomingEvents } from '@/content/events';
 import type { CursorEvent } from '@/lib/types';
 import { Card, CardContent } from '@/components/ui/card';
 import { useBrandMotion } from '@/lib/motion';
-import Link from 'next/link';
-
 export default function UpcomingEvents() {
 	const { slideUp, transition } = useBrandMotion();
 
@@ -18,7 +16,7 @@ export default function UpcomingEvents() {
 	const renderCta = (event: CursorEvent) => {
 		if (event.lumaUrl) {
 			return (
-				<Link
+				<a
 					href={event.lumaUrl}
 					target="_blank"
 					rel="noopener noreferrer"
@@ -26,8 +24,8 @@ export default function UpcomingEvents() {
 					className="link"
 				>
 					Regístrate
-					<ArrowRightIcon weight="regular" className="size-3.5" aria-hidden="true" />
-				</Link>
+					<ArrowUpRightIcon weight="regular" className="size-3.5" aria-hidden="true" />
+				</a>
 			);
 		}
 
@@ -41,7 +39,7 @@ export default function UpcomingEvents() {
 			whileInView={slideUp.animate}
 			viewport={{ once: true, margin: '-50px' }}
 			transition={transition}
-			className="mb-16 scroll-mt-20"
+			className="scroll-mt-20 px-5 py-12 md:py-17"
 		>
 			<p className="mb-1 text-2xl text-foreground">Próximos eventos</p>
 			<h2 className="mb-6 text-2xl text-muted-foreground tracking-tight">Qué sigue?</h2>

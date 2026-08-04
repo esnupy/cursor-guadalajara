@@ -23,14 +23,14 @@ export default function PastEvents() {
 			whileInView={slideUp.animate}
 			viewport={{ once: true, margin: '-50px' }}
 			transition={transition}
-			className="mb-16 scroll-mt-20"
+			className="scroll-mt-20 px-5 py-12 md:py-17"
 		>
 			<p className="mb-1 text-2xl">Nuestros eventos pasados</p>
 			<h2 className="mb-6 text-2xl tracking-tight text-muted-foreground">
 				Resúmenes de lo que vivimos junto con la comunidad.
 			</h2>
 
-			<div className="-mx-3 space-y-6 sm:mx-0">
+			<div className="space-y-6">
 				{pastEvents.map((event, index) => {
 					if (!event.recapPath) return null;
 

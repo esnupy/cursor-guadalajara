@@ -4,13 +4,14 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 
 const cardVariants = cva(
-	'group/card flex flex-col gap-(--card-spacing) overflow-hidden rounded-[4px] bg-card py-(--card-spacing) text-base text-card-foreground ring-1 ring-foreground/10 [--card-spacing:--spacing(4)] has-data-[slot=card-footer]:pb-0 has-[>img:first-child]:pt-0 data-[size=sm]:[--card-spacing:--spacing(3)] data-[size=sm]:has-data-[slot=card-footer]:pb-0 ',
+	'group/card flex flex-col gap-(--card-spacing) overflow-hidden rounded-card bg-card py-(--card-spacing) text-base text-card-foreground ring-1 ring-foreground/10 [--card-spacing:--spacing(4)] has-data-[slot=card-footer]:pb-0 has-[>img:first-child]:pt-0 data-[size=sm]:[--card-spacing:--spacing(3)] data-[size=sm]:has-data-[slot=card-footer]:pb-0 ',
 	{
 		variants: {
 			variant: {
 				default: '',
 				interactive: 'transition-colors hover:ring-primary/50',
 				flushMobile: 'max-sm:rounded-none',
+				ghost: 'bg-transparent py-0 ring-0 [--card-spacing:--spacing(3)]',
 			},
 		},
 		defaultVariants: {

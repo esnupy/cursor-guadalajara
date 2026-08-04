@@ -1,8 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import Link from 'next/link';
-import { ArrowRightIcon } from '@phosphor-icons/react';
+import { ArrowUpRightIcon } from '@phosphor-icons/react';
 import { featuredResource } from '@/content/featured';
 import { Card, CardContent } from '@/components/ui/card';
 import { useBrandMotion } from '@/lib/motion';
@@ -16,7 +15,7 @@ export default function FeaturedSection() {
 			initial={slideUp.initial}
 			animate={slideUp.animate}
 			transition={{ ...transition, delay: transition.duration ? 0.2 : 0 }}
-			className="mb-16"
+			className="px-5 py-12 md:py-17"
 		>
 			<Card>
 				<CardContent className="text-xl md:grid md:grid-cols-2 md:grid-rows-1 flex flex-col gap-6">
@@ -24,21 +23,22 @@ export default function FeaturedSection() {
 						<h2 className="mb-1 leading-tight tracking-tight">{featuredResource.title}</h2>
 						<p className="mb-6 leading-relaxed text-muted-foreground">{featuredResource.description}</p>
 
-						<Link
+						<a
 							href={featuredResource.href}
-							{...(featuredResource.href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+							target="_blank"
+							rel="noopener noreferrer"
 							aria-label={featuredResource.ctaLabel || 'Ver slides'}
 							className="link"
 						>
 							{featuredResource.ctaLabel || 'Ver slides'}
-							<ArrowRightIcon weight="regular" className="size-4" aria-hidden="true" />
-						</Link>
+							<ArrowUpRightIcon weight="regular" className="size-4" aria-hidden="true" />
+						</a>
 					</div>
 					<Image
 						width={533}
 						height={800}
 						src="https://n6j6oimzljzhdeal.public.blob.vercel-storage.com/landing/DSC05014-highres-1785867702029.webp"
-						className="aspect-9/16 w-107.5 object-cover rounded-[4px]"
+						className="aspect-9/16 w-107.5 object-cover rounded-card"
 						alt="Comunidad Cursor Guadalajara"
 						unoptimized
 					/>

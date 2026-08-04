@@ -3,6 +3,7 @@ import { headers } from 'next/headers';
 import { Analytics } from '@vercel/analytics/react';
 import { ThemeFavicon } from '@/components/ThemeFavicon';
 import { ThemeProvider } from '@/components/theme-provider';
+import { TooltipProvider } from '@/components/ui/tooltip';
 import { siteConfig } from '@/content/site.config';
 import { cursorGothic, cursorMono } from '@/lib/fonts';
 import { cn } from '@/lib/utils';
@@ -65,8 +66,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 				{/* External self-hosted script: allowed by script-src 'self' without a CSP nonce. */}
 				<script async src="/theme-favicon.bootstrap.js" />
 				<ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-					<ThemeFavicon />
-					{children}
+					<TooltipProvider>
+						<ThemeFavicon />
+						{children}
+					</TooltipProvider>
 				</ThemeProvider>
 				<Analytics />
 			</body>

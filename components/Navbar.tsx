@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { ListIcon, XIcon } from '@phosphor-icons/react';
+import { ArrowUpRightIcon, ListIcon, XIcon } from '@phosphor-icons/react';
 import CursorLockupSwap from '@/components/icons/CursorLockupSwap';
 import { Button } from '@/components/ui/button';
 import { siteConfig } from '@/content/site.config';
@@ -100,7 +100,7 @@ export default function Navbar() {
 						})}
 						<Button asChild size="sm">
 							<a href={siteConfig.lumaUrl} target="_blank" rel="noopener noreferrer">
-								Únete
+								Únete <ArrowUpRightIcon size={20} />
 							</a>
 						</Button>
 					</div>
@@ -137,7 +137,7 @@ export default function Navbar() {
 						))}
 						<Button asChild>
 							<a href={siteConfig.lumaUrl} target="_blank" rel="noopener noreferrer" onClick={closeMobile}>
-								Únete
+								Únete <ArrowUpRightIcon size={28} />
 							</a>
 						</Button>
 					</div>
