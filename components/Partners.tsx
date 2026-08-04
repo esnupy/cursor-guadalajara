@@ -2,21 +2,16 @@
 
 import Image from 'next/image';
 import { partners } from '@/content/partners';
-import { useI18n } from '@/lib/i18n';
 import { Card, CardContent } from '@/components/ui/card';
 
 export default function Partners() {
-	const { t } = useI18n();
-
 	if (partners.length === 0) {
 		return null;
 	}
 
 	return (
 		<div className="mb-8">
-			<h3 className="mb-4 text-xs font-medium uppercase tracking-wider text-muted-foreground">
-				{t('footer.hostingPartners')}
-			</h3>
+			<h3 className="mb-4 text-xs font-medium uppercase tracking-wider text-muted-foreground">Partners anfitriones</h3>
 			<div className="grid grid-cols-2 gap-3 md:grid-cols-4">
 				{partners.map((partner) => (
 					<a key={partner.name} href={partner.url} target="_blank" rel="noopener noreferrer" className="group">

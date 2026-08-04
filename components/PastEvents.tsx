@@ -5,7 +5,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRightIcon, CalendarIcon, UsersIcon } from '@phosphor-icons/react';
 import { pastEvents } from '@/content/events';
-import { useI18n } from '@/lib/i18n';
 import { Card, CardContent } from '@/components/ui/card';
 
 const containerVariants = {
@@ -19,8 +18,6 @@ const itemVariants = {
 };
 
 export default function PastEvents() {
-	const { t, locale } = useI18n();
-
 	if (pastEvents.length === 0) {
 		return null;
 	}
@@ -34,8 +31,8 @@ export default function PastEvents() {
 			transition={{ duration: 0.5 }}
 			className="mb-16 scroll-mt-20"
 		>
-			<p className="mb-2 text-xs font-medium uppercase tracking-wider text-muted-foreground">{t('home.pastEvents')}</p>
-			<h2 className="mb-6 text-2xl font-bold text-foreground md:text-3xl">{t('home.pastEventsHeading')}</h2>
+			<p className="mb-2 text-xs font-medium uppercase tracking-wider text-muted-foreground">Eventos pasados</p>
+			<h2 className="mb-6 text-2xl font-bold text-foreground md:text-3xl">Resúmenes</h2>
 
 			<motion.div
 				variants={containerVariants}
@@ -47,14 +44,11 @@ export default function PastEvents() {
 				{pastEvents.map((event) => {
 					if (!event.recapPath) return null;
 
-					const displayDate = new Date(`${event.date}T00:00:00`).toLocaleDateString(
-						locale === 'en' ? 'en-US' : locale,
-						{
-							year: 'numeric',
-							month: 'long',
-							day: 'numeric',
-						},
-					);
+					const displayDate = new Date(`${event.date}T00:00:00`).toLocaleDateString('es-MX', {
+						year: 'numeric',
+						month: 'long',
+						day: 'numeric',
+					});
 
 					const hasGallery = event.galleryImages && event.galleryImages.length > 0;
 
@@ -112,12 +106,12 @@ export default function PastEvents() {
 											{event.attendees ? (
 												<div className="flex items-center gap-1.5">
 													<UsersIcon weight="regular" className="size-4" />
-													<span>{t('home.attendees', { count: String(event.attendees) })}</span>
+													<span>{event.attendees} asistentes</span>
 												</div>
 											) : null}
 										</div>
 										<div className="flex items-center gap-2 text-sm text-primary">
-											<span>{t('home.viewRecap')}</span>
+											<span>Ver resumen</span>
 											<ArrowRightIcon
 												weight="regular"
 												className="size-4 transition-transform duration-200 ease-out group-hover:translate-x-1"

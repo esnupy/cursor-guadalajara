@@ -5,12 +5,12 @@ import { RecapData } from '@/lib/types';
 // include only the ones relevant to your event.
 export const exampleEventRecap: RecapData = {
 	slug: 'example-event',
-	title: 'Cafe Cursor YourCity - Recap',
-	date: 'February 14, 2026',
+	title: 'Cafe Cursor TuCiudad — Resumen',
+	date: '14 de febrero de 2026',
 	attendees: 38,
 	summary: [
-		'Builders joined for a collaborative, practical day of AI-assisted development with Cursor.',
-		'People shared workflows, paired on projects, and exchanged tips that can be reused by future communities.',
+		'Builders se reunieron para un día colaborativo y práctico de desarrollo asistido por IA con Cursor.',
+		'La gente compartió flujos de trabajo, hizo pair programming en proyectos e intercambió tips que otras comunidades pueden reutilizar.',
 	],
 	host: {
 		name: 'Host Venue',
@@ -22,13 +22,13 @@ export const exampleEventRecap: RecapData = {
 	speakers: [
 		{
 			name: 'Jane Doe',
-			topic: 'Building full-stack apps with Cursor and Claude',
+			topic: 'Construir apps full-stack con Cursor y Claude',
 			photo: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200&auto=format&fit=crop',
 			url: 'https://example.com/jane',
 		},
 		{
 			name: 'Alex Chen',
-			topic: 'From zero to deployed: a live coding session',
+			topic: 'De cero a deployado: sesión de live coding',
 		},
 	],
 
@@ -36,13 +36,14 @@ export const exampleEventRecap: RecapData = {
 	projects: [
 		{
 			name: 'CursorBot',
-			description: 'A Slack bot built entirely with Cursor that answers team questions using internal docs.',
+			description:
+				'Un bot de Slack construido enteramente con Cursor que responde preguntas del equipo usando docs internos.',
 			author: 'Jane Doe',
 			url: 'https://github.com/example/cursorbot',
 		},
 		{
 			name: 'LocalMenu',
-			description: 'A restaurant menu app scaffolded live during the event in under 30 minutes.',
+			description: 'Una app de menú de restaurante scaffolded en vivo durante el evento en menos de 30 minutos.',
 			author: 'Alex Chen',
 		},
 	],
@@ -50,33 +51,33 @@ export const exampleEventRecap: RecapData = {
 	// Highlights — memorable quotes, feedback, or stories from attendees
 	highlights: [
 		{
-			quote: 'I shipped more in this 3-hour session than in my last sprint.',
-			author: 'An attendee',
+			quote: 'Saqué más en esta sesión de 3 horas que en mi último sprint.',
+			author: 'Un asistente',
 		},
 		{
-			quote: "Best community event I've been to — everyone was building, not just watching.",
+			quote: 'El mejor evento de comunidad al que he ido — todos estaban construyendo, no solo mirando.',
 		},
 	],
 
 	// Resources — slides, repos, or links shared during the event
 	resources: [
-		{ label: 'Workshop slides', url: 'https://example.com/slides' },
-		{ label: 'Starter template repo', url: 'https://github.com/example/starter' },
+		{ label: 'Slides del taller', url: 'https://example.com/slides' },
+		{ label: 'Repositorio starter', url: 'https://github.com/example/starter' },
 	],
 
-	photoCredits: [{ name: 'Community Volunteer' }, { name: 'Photo Partner', url: 'https://example.com/' }],
+	photoCredits: [{ name: 'Voluntario de la comunidad' }, { name: 'Socio de fotos', url: 'https://example.com/' }],
 	photos: [
 		{
 			src: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1200&auto=format&fit=crop',
-			alt: 'Community members coding together',
+			alt: 'Miembros de la comunidad programando juntos',
 		},
 		{
 			src: 'https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=1200&auto=format&fit=crop',
-			alt: 'Event attendees during workshop',
+			alt: 'Asistentes durante el taller',
 		},
 		{
 			src: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=1200&auto=format&fit=crop',
-			alt: 'Organizer speaking to participants',
+			alt: 'Organizador hablando con los participantes',
 		},
 	],
 };

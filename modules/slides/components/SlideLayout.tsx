@@ -88,10 +88,10 @@ export default function SlideLayout({
 						variant="secondary"
 						onClick={() => goToSlide(currentSlide - 1)}
 						disabled={currentSlide === 1}
-						aria-label="Previous slide"
+						aria-label="Diapositiva anterior"
 					>
 						<CaretLeftIcon weight="regular" className="size-5" />
-						<span className="hidden md:inline">Previous</span>
+						<span className="hidden md:inline">Anterior</span>
 					</Button>
 
 					<div className="flex items-center gap-2">
@@ -106,7 +106,7 @@ export default function SlideLayout({
 										? 'w-8 bg-foreground'
 										: 'w-2 bg-muted-foreground/40 hover:bg-muted-foreground',
 								)}
-								aria-label={`Go to slide ${slideId}`}
+								aria-label={`Ir a diapositiva ${slideId}`}
 							/>
 						))}
 					</div>
@@ -119,9 +119,9 @@ export default function SlideLayout({
 						variant="secondary"
 						onClick={() => goToSlide(currentSlide + 1)}
 						disabled={currentSlide >= totalSlides}
-						aria-label="Next slide"
+						aria-label="Diapositiva siguiente"
 					>
-						<span className="hidden md:inline">Next</span>
+						<span className="hidden md:inline">Siguiente</span>
 						<CaretRightIcon weight="regular" className="size-5" />
 					</Button>
 				</div>

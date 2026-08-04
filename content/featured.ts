@@ -2,8 +2,9 @@ import { FeaturedResource } from '@/lib/types';
 
 // REPLACE: Customize the featured card text and destination for your community.
 export const featuredResource: FeaturedResource = {
-	title: 'WhatsApp Group — Cursor Guadalajara',
-	description: 'Join the local community: event updates, Cursor tips, and networking with builders in Guadalajara.',
+	title: 'Grupo de WhatsApp — Cursor Guadalajara',
+	description:
+		'Únete a la comunidad local: avisos de eventos, tips de Cursor y networking con builders en Guadalajara.',
 	href: 'https://chat.whatsapp.com/FfI60LkkoZD0DEWx0SeZ3Z?mode=gi_t',
-	ctaLabel: 'Join WhatsApp',
+	ctaLabel: 'Únete a WhatsApp',
 };

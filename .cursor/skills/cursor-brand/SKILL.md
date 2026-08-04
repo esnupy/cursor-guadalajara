@@ -4,13 +4,14 @@ description: >-
   Apply Cursor brand guidelines and shadcn/ui-first composition when creating or
   refactoring UI on this community site. Use whenever building, restyling, or
   reviewing components, pages, layout, typography, color, motion, copy, logos,
-  photography, theme (light/dark), buttons, cards, badges, or any interactive
-  control — even if the user does not say "brand" or "shadcn". Also use when
-  choosing accent vs neutral treatment, deciding whether to add a custom
-  component vs a shadcn primitive, where to put shared styles (edit
-  components/ui vs call-site className), writing marketing headings, or aligning
-  visuals with cursor.com. Sources: docs/cursor-brand-guidelines.md,
-  components/ui/*, components.json.
+  photography, theme (light/dark), buttons, cards, badges, icons, or any
+  interactive control — even if the user does not say "brand" or "shadcn". Also
+  use when choosing Phosphor icons (regular *Icon imports), accent vs neutral
+  treatment, styling in-content inline links with cursor-accent, deciding
+  whether to add a custom component vs a shadcn primitive, where to put shared
+  styles (edit components/ui vs call-site className), writing marketing
+  headings, or aligning visuals with cursor.com. Sources:
+  docs/cursor-brand-guidelines.md, components/ui/*, components.json.
 ---
 
 # Cursor Brand (Community Site)
@@ -94,7 +95,7 @@ stacks become a second, invisible design system that fights shadcn.
 ### Concrete defaults
 
 | Need                         | Use                                   |
-| ---------------------------- | ------------------------------------- |
+|------------------------------|---------------------------------------|
 | CTA / icon / nav control     | `Button` (+ `variant` / `size`)       |
 | Event / partner / info panel | `Card` (+ CardHeader/Title/Content/…) |
 | Status / recommended mark    | `Badge` (brand orange only per Color) |
@@ -119,6 +120,14 @@ Is this a primary button, large CTA, or large filled surface?
 │         Never fill with brand orange. Neutrals keep the accent rare enough
 │         to stay sharp when it does appear.
 └── No
+    ├── Is this an inline text link inside content
+    │   (paragraph, list item, recap body, resource line — text that reads
+    │   as part of a sentence or content block)?
+    │   └── Yes → always `cursor-accent` (text color). Standard treatment for
+    │             in-content links so they read as intentional brand marks
+    │             without becoming CTAs.
+    │             Does NOT apply to header, footer, nav, or chrome links —
+    │             those stay neutrals (`foreground` / `muted-foreground`).
     ├── Does one item need to stand out from siblings (e.g. “Recommended”)?
     │   └── Yes → brand orange (`cursor-accent`) on a small label/mark only
     └── Default → neutrals. Prefer secondary text color over a second size
@@ -237,23 +246,26 @@ Writing UI or marketing copy?
 
 ## Token map (this repo)
 
-| Brand intent          | Use                                      | Do not use as brand orange      |
-| --------------------- | ---------------------------------------- | ------------------------------- |
-| Brand orange (sparse) | `--cursor-accent` / `#f54e00`            | `accent`, `primary`, `warning`* |
-| Neutral CTA / button  | `primary`, `secondary`, foreground fills | `--cursor-accent` fills         |
-| Page surfaces         | `background`, `card`, `muted`            | random off-whites               |
-| Secondary text        | `muted-foreground`                       | smaller type + dimmer color     |
-| Light / dark          | `.dark` tokens; both supported           | hard-coded only-dark UI         |
+| Brand intent               | Use                                      | Do not use as brand orange      |
+|----------------------------|------------------------------------------|---------------------------------|
+| Brand orange (sparse)      | `--cursor-accent` / `#f54e00`            | `accent`, `primary`, `warning`* |
+| Inline content text links  | `cursor-accent` text color               | `primary`, header/footer styles |
+| Nav / header / footer link | `foreground` / `muted-foreground`        | `cursor-accent`                 |
+| Neutral CTA / button       | `primary`, `secondary`, foreground fills | `--cursor-accent` fills         |
+| Page surfaces              | `background`, `card`, `muted`            | random off-whites               |
+| Secondary text             | `muted-foreground`                       | smaller type + dimmer color     |
+| Light / dark               | `.dark` tokens; both supported           | hard-coded only-dark UI         |
 
 \* `warning` may share the orange hex today — still reserve `--cursor-accent` for
-brand emphasis, not for every alert.
+brand emphasis (sparse labels + in-content links), not for every alert.
 
 ## Pre-ship checklist
 
 - [ ] Used or added a `components/ui` primitive before any custom control chrome
 - [ ] Shared look edited in the ui primitive — not copy-pasted call-site stacks
 - [ ] Call-site `className` is layout/exception only
-- [ ] Buttons/large CTAs are neutral — orange only on small intentional accents
+- [ ] Buttons/large CTAs are neutral — orange only on sparse labels + in-content links
+- [ ] Inline content links use `cursor-accent`; header/footer/nav links stay neutral
 - [ ] Hierarchy uses one parameter (prefer color before size)
 - [ ] Headings are sentence case; smart quotes; spaced em dashes
 - [ ] Layout defaults top-left; margins ~3–5%; gutters slightly tight

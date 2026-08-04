@@ -10,16 +10,16 @@ This is a Mexican community site. Drop locale switching and translation lookup e
 
 ## Decisions
 
-| Topic | Choice |
-| ----- | ------ |
-| Approach | Inline Spanish in components + translate content files in place |
-| Scope | UI chrome + editable content (`events`, `featured`, `ambassadors`, `world-events`, `recaps`, site config copy) |
-| Tone | Informal **tú** (Únete, Regístrate, etc.) |
-| Dead UI | Delete unused `MatchmakingSection` and `PhotoDisclaimer` |
-| Slides editorial | Out of scope (a11y chrome only if English) |
-| Locale machinery | Delete provider, dictionaries, LanguageToggle — no replacement copy module |
-| Document language | Fixed `es-MX` on `<html lang>`; keep OG `locale: 'es_MX'` |
-| Dates | Format with `es-MX` (no locale from context) |
+| Topic             | Choice                                                                                                         |
+| ----------------- | -------------------------------------------------------------------------------------------------------------- |
+| Approach          | Inline Spanish in components + translate content files in place                                                |
+| Scope             | UI chrome + editable content (`events`, `featured`, `ambassadors`, `world-events`, `recaps`, site config copy) |
+| Tone              | Informal **tú** (Únete, Regístrate, etc.)                                                                      |
+| Dead UI           | Delete unused `MatchmakingSection` and `PhotoDisclaimer`                                                       |
+| Slides editorial  | Out of scope (a11y chrome only if English)                                                                     |
+| Locale machinery  | Delete provider, dictionaries, LanguageToggle — no replacement copy module                                     |
+| Document language | Fixed `es-MX` on `<html lang>`; keep OG `locale: 'es_MX'`                                                      |
+| Dates             | Format with `es-MX` (no locale from context)                                                                   |
 
 ## Architecture
 
@@ -39,11 +39,11 @@ This is a Mexican community site. Drop locale switching and translation lookup e
 
 ### String ownership
 
-| Kind | Where it lives |
-| ---- | -------------- |
-| UI chrome | Spanish string literals in the components that render them |
-| Editorial content | Spanish strings inside `content/*.ts` and `content/recaps/*.ts` |
-| Shared dates | `toLocaleDateString('es-MX', …)` (and equivalent) at call sites that previously used `locale` from `useI18n` |
+| Kind              | Where it lives                                                                                               |
+| ----------------- | ------------------------------------------------------------------------------------------------------------ |
+| UI chrome         | Spanish string literals in the components that render them                                                   |
+| Editorial content | Spanish strings inside `content/*.ts` and `content/recaps/*.ts`                                              |
+| Shared dates      | `toLocaleDateString('es-MX', …)` (and equivalent) at call sites that previously used `locale` from `useI18n` |
 
 ### Docs
 
@@ -76,31 +76,31 @@ Interpolation that used `t('key', { count })` becomes normal template literals o
 
 ### Representative chrome (direction; finalize during implementation)
 
-| Area | es-MX direction |
-| ---- | --------------- |
-| Nav CTA | Únete |
-| Upcoming | Próximos eventos / Qué sigue |
-| Register / Coming soon | Regístrate / Próximamente |
-| Past / Recaps | Eventos pasados / Resúmenes |
-| Attendees | `{count} asistentes` |
-| Ambassadors | Embajadores de Cursor {community} / Conoce al equipo |
-| Footer | Partners anfitriones, Comunidad Cursor, Todos los eventos en Luma, etc. |
-| Recap chrome | Volver a resúmenes, Ponentes, Proyectos, Comentarios, Recursos, Fotos |
-| Gallery a11y | Abrir foto, Cerrar, Anterior, Siguiente |
-| World events | Cafe Cursor alrededor del mundo + short community blurb |
+| Area                   | es-MX direction                                                         |
+| ---------------------- | ----------------------------------------------------------------------- |
+| Nav CTA                | Únete                                                                   |
+| Upcoming               | Próximos eventos / Qué sigue                                            |
+| Register / Coming soon | Regístrate / Próximamente                                               |
+| Past / Recaps          | Eventos pasados / Resúmenes                                             |
+| Attendees              | `{count} asistentes`                                                    |
+| Ambassadors            | Embajadores de Cursor {community} / Conoce al equipo                    |
+| Footer                 | Partners anfitriones, Comunidad Cursor, Todos los eventos en Luma, etc. |
+| Recap chrome           | Volver a resúmenes, Ponentes, Proyectos, Comentarios, Recursos, Fotos   |
+| Gallery a11y           | Abrir foto, Cerrar, Anterior, Siguiente                                 |
+| World events           | Cafe Cursor alrededor del mundo + short community blurb                 |
 
 ## Content translation
 
 Translate in place; keep file shapes unchanged.
 
-| Source | What changes |
-| ------ | ------------ |
-| `content/events.ts` | Titles, `displayDate`, locations (where English today) |
-| `content/featured.ts` | Title, description, CTA (e.g. Únete a WhatsApp) |
-| `content/ambassadors.ts` | Roles → natural es-MX; keep names and handles |
-| `content/world-events.ts` | Date labels and image alts |
-| `content/recaps/*.ts` | Narrative body, speaker titles/bios if English, projects, highlights, resource labels |
-| `content/site.config.ts` | Confirm / fix `siteDescription` and `footerTagline` as good es-MX |
+| Source                    | What changes                                                                          |
+| ------------------------- | ------------------------------------------------------------------------------------- |
+| `content/events.ts`       | Titles, `displayDate`, locations (where English today)                                |
+| `content/featured.ts`     | Title, description, CTA (e.g. Únete a WhatsApp)                                       |
+| `content/ambassadors.ts`  | Roles → natural es-MX; keep names and handles                                         |
+| `content/world-events.ts` | Date labels and image alts                                                            |
+| `content/recaps/*.ts`     | Narrative body, speaker titles/bios if English, projects, highlights, resource labels |
+| `content/site.config.ts`  | Confirm / fix `siteDescription` and `footerTagline` as good es-MX                     |
 
 ### Keep untranslated (proper nouns)
 

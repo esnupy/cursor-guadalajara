@@ -3,15 +3,12 @@
 import { motion } from 'framer-motion';
 import { ArrowSquareOutIcon } from '@phosphor-icons/react';
 import { upcomingEvents } from '@/content/events';
-import { useI18n } from '@/lib/i18n';
 import type { CursorEvent } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
 export default function UpcomingEvents() {
-	const { t } = useI18n();
-
 	if (upcomingEvents.length === 0) {
 		return null;
 	}
@@ -20,13 +17,8 @@ export default function UpcomingEvents() {
 		if (event.lumaUrl) {
 			return (
 				<Button asChild>
-					<a
-						href={event.lumaUrl}
-						target="_blank"
-						rel="noopener noreferrer"
-						aria-label={`${t('home.register')}: ${event.title}`}
-					>
-						{t('home.register')}
+					<a href={event.lumaUrl} target="_blank" rel="noopener noreferrer" aria-label={`Regístrate: ${event.title}`}>
+						Regístrate
 						<ArrowSquareOutIcon weight="regular" className="size-3.5" aria-hidden="true" />
 					</a>
 				</Button>
@@ -34,8 +26,8 @@ export default function UpcomingEvents() {
 		}
 
 		return (
-			<Badge variant="outline" className="px-5 py-2.5 text-sm" aria-label={`${event.title}: ${t('home.comingSoon')}`}>
-				{t('home.comingSoon')}
+			<Badge variant="outline" className="px-5 py-2.5 text-sm" aria-label={`${event.title}: Próximamente`}>
+				Próximamente
 			</Badge>
 		);
 	};
@@ -49,10 +41,8 @@ export default function UpcomingEvents() {
 			transition={{ duration: 0.5 }}
 			className="mb-16 scroll-mt-20"
 		>
-			<p className="mb-2 text-xs font-medium uppercase tracking-wider text-muted-foreground">
-				{t('home.upcomingEvents')}
-			</p>
-			<h2 className="mb-6 text-2xl font-bold text-foreground md:text-3xl">{t('home.upcomingHeading')}</h2>
+			<p className="mb-2 text-xs font-medium uppercase tracking-wider text-muted-foreground">Próximos eventos</p>
+			<h2 className="mb-6 text-2xl font-bold text-foreground md:text-3xl">Qué sigue</h2>
 
 			<div className="flex flex-col gap-6">
 				{upcomingEvents.map((event, index) => {

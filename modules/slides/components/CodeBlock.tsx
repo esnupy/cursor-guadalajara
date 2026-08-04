@@ -28,7 +28,7 @@ export default function CodeBlock({ code }: CodeBlockProps) {
 				size="icon-sm"
 				onClick={handleCopy}
 				className="absolute top-4 right-4 opacity-0 transition-opacity group-hover:opacity-100"
-				aria-label="Copy code"
+				aria-label="Copiar código"
 			>
 				{isCopied ? (
 					<CheckIcon weight="regular" className="size-5 text-primary" />

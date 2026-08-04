@@ -34,7 +34,7 @@ Open `http://localhost:3000`.
 
 This template is content-first. Most customization is done by editing files in `content/`.
 
-- `content/site.config.ts`: global site settings (community name, city/country, URLs, locales, footer text).
+- `content/site.config.ts`: global site settings (community name, city/country, URLs, footer text).
 - `content/header-photos.ts`: hero bento images (`src`, `alt`, `span`, `mobileHidden`).
 - `content/featured.ts`: featured card text + CTA.
 - `content/events.ts`: upcoming/past events and recap links.
@@ -42,8 +42,8 @@ This template is content-first. Most customization is done by editing files in `
 - `content/partners.ts`: host/sponsor logos and URLs.
 - `content/world-events.ts`: world carousel entries.
 - `content/recaps/*.ts`: recap documents rendered by slug.
-- `content/locales/*.json`: translation dictionaries.
-- `content/locales/index.ts`: locale bundle registry consumed by `lib/i18n.tsx`.
+
+This site is **Spanish-only (es-MX)**. UI chrome lives in `components/`; editorial content lives in `content/`. Document language is set via `<html lang="es-MX">` in `app/layout.tsx`.
 
 ## Customization Guide
 
@@ -53,7 +53,6 @@ Edit `content/site.config.ts`:
 
 - `communityName`, `communityNameLocal`, `city`, `country`
 - `lumaUrl`, `cursorCommunityUrl`
-- `defaultLocale`, `locales`
 - `footerTagline`
 
 ### 2) Hero bento grid
@@ -107,45 +106,6 @@ Local SVG logos in `public/images/partners/` are recommended.
 Edit `content/world-events.ts` entries (`src`, `location`, `date`, `alt`).
 
 `components/WorldEventsCarousel.tsx` renders this list directly.
-
-## Locale / i18n
-
-### Current model
-
-- Runtime provider: `lib/i18n.tsx`
-- Dictionaries: `content/locales/*.json`
-- Bundle registry: `content/locales/index.ts`
-- Config gate: `siteConfig.locales`
-
-Language toggle appears when `siteConfig.locales.length > 1`.
-
-### Add a second locale
-
-1. Create `content/locales/xx.json` (for example `th.json`).
-2. Register it in `content/locales/index.ts`.
-3. Add `'xx'` to `siteConfig.locales`.
-4. Optionally set `defaultLocale` to `'xx'`.
-
-Example `content/locales/index.ts`:
-
-```ts
-import en from './en.json';
-import th from './th.json';
-
-export const localeBundles = {
-	en,
-	th,
-} as const;
-```
-
-### Translation keys and params
-
-Use `t('path.to.key', params)` from `useI18n()`.
-
-- Dot-path keys: `t('home.upcomingEvents')`
-- Parameter replacement: `t('home.attendees', { count: '42' })` for strings like `"{count} attendees"`
-
-If a key is missing, the function returns the key path (useful for spotting missing translations).
 
 ## Add or Remove Sections
 

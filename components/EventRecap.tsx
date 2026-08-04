@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { ArrowLeftIcon, LightbulbIcon, LinkIcon, MicrophoneIcon, QuotesIcon } from '@phosphor-icons/react';
 import PhotoGallery from '@/components/PhotoGallery';
 import { RecapData } from '@/lib/types';
-import { useI18n } from '@/lib/i18n';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
@@ -16,8 +15,6 @@ interface EventRecapProps {
 }
 
 export default function EventRecap({ recap }: EventRecapProps) {
-	const { t } = useI18n();
-
 	return (
 		<motion.section
 			initial={{ opacity: 0, y: 20 }}
@@ -26,9 +23,9 @@ export default function EventRecap({ recap }: EventRecapProps) {
 			className="mb-8"
 		>
 			<Button variant="link" asChild className="mb-6 h-auto p-0 text-muted-foreground">
-				<Link href="/#recaps" aria-label={t('recap.backToEvents')}>
+				<Link href="/#recaps" aria-label="Volver a resúmenes">
 					<ArrowLeftIcon weight="regular" className="size-4" aria-hidden="true" />
-					{t('recap.backToEvents')}
+					Volver a resúmenes
 				</Link>
 			</Button>
 
@@ -39,7 +36,7 @@ export default function EventRecap({ recap }: EventRecapProps) {
 
 					{recap.host ? (
 						<div className="mb-6 flex items-center gap-2 text-sm text-muted-foreground">
-							<span>{t('home.hostedBy')}</span>
+							<span>Organizado por</span>
 							<a
 								href={recap.host.url || '#'}
 								target="_blank"
@@ -53,9 +50,7 @@ export default function EventRecap({ recap }: EventRecapProps) {
 					) : null}
 
 					{recap.attendees ? (
-						<p className="mb-4 text-lg leading-relaxed text-foreground">
-							{t('home.attendees', { count: String(recap.attendees) })}
-						</p>
+						<p className="mb-4 text-lg leading-relaxed text-foreground">{recap.attendees} asistentes</p>
 					) : null}
 					<div className="space-y-3 text-sm leading-relaxed text-muted-foreground">
 						{recap.summary.map((paragraph, index) => (
@@ -68,7 +63,7 @@ export default function EventRecap({ recap }: EventRecapProps) {
 							<Separator className="mb-6" />
 							<div className="mb-4 flex items-center gap-2">
 								<MicrophoneIcon weight="regular" className="size-4 text-primary" />
-								<h3 className="text-sm font-medium text-foreground">{t('recap.speakers')}</h3>
+								<h3 className="text-sm font-medium text-foreground">Ponentes</h3>
 							</div>
 							<div className="grid gap-3 sm:grid-cols-2">
 								{recap.speakers.map((speaker) => (
@@ -106,7 +101,7 @@ export default function EventRecap({ recap }: EventRecapProps) {
 							<Separator className="mb-6" />
 							<div className="mb-4 flex items-center gap-2">
 								<LightbulbIcon weight="regular" className="size-4 text-primary" />
-								<h3 className="text-sm font-medium text-foreground">{t('recap.projects')}</h3>
+								<h3 className="text-sm font-medium text-foreground">Proyectos presentados</h3>
 							</div>
 							<div className="grid gap-3 sm:grid-cols-2">
 								{recap.projects.map((project) => (
@@ -126,9 +121,7 @@ export default function EventRecap({ recap }: EventRecapProps) {
 											)}
 											<p className="mt-1 text-xs text-muted-foreground">{project.description}</p>
 											{project.author ? (
-												<p className="mt-1.5 text-xs text-muted-foreground/70">
-													{t('recap.by')} {project.author}
-												</p>
+												<p className="mt-1.5 text-xs text-muted-foreground/70">por {project.author}</p>
 											) : null}
 										</CardContent>
 									</Card>
@@ -142,7 +135,7 @@ export default function EventRecap({ recap }: EventRecapProps) {
 							<Separator className="mb-6" />
 							<div className="mb-4 flex items-center gap-2">
 								<QuotesIcon weight="regular" className="size-4 text-primary" />
-								<h3 className="text-sm font-medium text-foreground">{t('recap.highlights')}</h3>
+								<h3 className="text-sm font-medium text-foreground">Comentarios de la comunidad</h3>
 							</div>
 							<div className="space-y-3">
 								{recap.highlights.map((highlight, index) => (
@@ -162,7 +155,7 @@ export default function EventRecap({ recap }: EventRecapProps) {
 							<Separator className="mb-6" />
 							<div className="mb-4 flex items-center gap-2">
 								<LinkIcon weight="regular" className="size-4 text-primary" />
-								<h3 className="text-sm font-medium text-foreground">{t('recap.resources')}</h3>
+								<h3 className="text-sm font-medium text-foreground">Recursos</h3>
 							</div>
 							<ul className="space-y-2">
 								{recap.resources.map((resource) => (
@@ -187,7 +180,7 @@ export default function EventRecap({ recap }: EventRecapProps) {
 					{recap.photoCredits && recap.photoCredits.length > 0 ? (
 						<div className="mt-6 pt-6 text-sm text-muted-foreground">
 							<Separator className="mb-6" />
-							<span className="mr-1">Photo credits:</span>
+							<span className="mr-1">Créditos de fotos:</span>
 							{recap.photoCredits.map((credit, index) => (
 								<span key={`${credit.name}-${index}`}>
 									{credit.url ? (

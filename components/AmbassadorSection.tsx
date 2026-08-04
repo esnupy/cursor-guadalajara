@@ -6,7 +6,6 @@ import { GlobeIcon, LinkedinLogoIcon } from '@phosphor-icons/react';
 import { siGithub, siX } from 'simple-icons';
 import { ambassadors } from '@/content/ambassadors';
 import { siteConfig } from '@/content/site.config';
-import { useI18n } from '@/lib/i18n';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 
@@ -34,8 +33,6 @@ function SocialIcon({ kind }: SocialIconProps) {
 }
 
 export default function AmbassadorSection() {
-	const { t } = useI18n();
-
 	if (ambassadors.length === 0) {
 		return null;
 	}
@@ -49,9 +46,9 @@ export default function AmbassadorSection() {
 			className="mb-16"
 		>
 			<p className="mb-2 text-xs font-medium uppercase tracking-wider text-muted-foreground">
-				{t('ambassadors.title', { communityName: siteConfig.communityName })}
+				Embajadores de Cursor {siteConfig.communityName}
 			</p>
-			<h2 className="mb-6 text-2xl font-bold text-foreground md:text-3xl">{t('ambassadors.heading')}</h2>
+			<h2 className="mb-6 text-2xl font-bold text-foreground md:text-3xl">Conoce al equipo</h2>
 
 			<div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
 				{ambassadors.map((ambassador, index) => {

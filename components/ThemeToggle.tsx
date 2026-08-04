@@ -13,7 +13,7 @@ export default function ThemeToggle() {
 			size="icon-sm"
 			className="relative"
 			onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
-			aria-label="Toggle theme"
+			aria-label="Cambiar tema"
 		>
 			<SunIcon
 				weight="regular"

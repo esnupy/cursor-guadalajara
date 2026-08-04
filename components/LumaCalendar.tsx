@@ -19,7 +19,7 @@ export default function LumaCalendar({ className, height = 450 }: LumaCalendarPr
 			allowFullScreen
 			aria-hidden="false"
 			tabIndex={0}
-			title={`${siteConfig.communityName} — upcoming events calendar`}
+			title={`${siteConfig.communityName} — calendario de próximos eventos`}
 			className={cn('block rounded-md border border-border', className)}
 		/>
 	);

@@ -2,7 +2,7 @@ import { Ambassador } from '@/lib/types';
 
 export const ambassadors: Ambassador[] = [
 	{
-		name: 'Alejandro Renteria',
+		name: 'Alejandro Rentería',
 		role: 'Angular Developer',
 		photo: '/images/ambassadors/1744411351568.jpeg',
 		links: {
@@ -20,10 +20,13 @@ export const ambassadors: Ambassador[] = [
 	},
 	{
 		name: 'Juan Daniel Martinez',
-		role: 'Front End Wizard',
+		role: 'Design Engineer',
 		photo: '/images/ambassadors/1750368147551.jpeg',
 		links: {
 			linkedin: 'https://www.linkedin.com/in/juandadev/',
+			x: 'https://x.com/juandadotdev',
+			website: 'https://www.juanda.dev/',
+			github: 'https://github.com/juandadev',
 		},
 	},
 ];

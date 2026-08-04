@@ -5,7 +5,7 @@ import { HeaderPhoto } from '@/lib/types';
 export const headerPhotos: HeaderPhoto[] = [
 	{
 		src: '/images/events/dsc04984.jpg',
-		alt: 'Cursor Guadalajara community collaborating around a table',
+		alt: 'Comunidad de Cursor Guadalajara colaborando alrededor de una mesa',
 		row: 1,
 		col: 1,
 		rowSpan: 2,
@@ -14,14 +14,14 @@ export const headerPhotos: HeaderPhoto[] = [
 	},
 	{
 		src: '/images/events/dsc04979.jpg',
-		alt: 'Cafe Cursor cups with the event logo',
+		alt: 'Tazas de Cafe Cursor con el logo del evento',
 		row: 1,
 		col: 3,
 		mobile: { row: 3, col: 1 },
 	},
 	{
 		src: '/images/events/dsc05031.jpg',
-		alt: 'Attendees chatting at the meetup cafe',
+		alt: 'Asistentes conversando en el café del meetup',
 		row: 1,
 		col: 4,
 		rowSpan: 2,
@@ -29,14 +29,14 @@ export const headerPhotos: HeaderPhoto[] = [
 	},
 	{
 		src: '/images/events/dsc04994.jpg',
-		alt: 'Cursor stickers on the event table',
+		alt: 'Stickers de Cursor en la mesa del evento',
 		row: 2,
 		col: 3,
 		mobile: { row: 3, col: 2 },
 	},
 	{
 		src: '/images/events/dsc04988.jpg',
-		alt: 'Participants working together on laptops and a tablet',
+		alt: 'Participantes trabajando juntos en laptops y una tablet',
 		row: 3,
 		col: 1,
 		rowSpan: 2,
@@ -44,7 +44,7 @@ export const headerPhotos: HeaderPhoto[] = [
 	},
 	{
 		src: '/images/events/dsc05026.jpg',
-		alt: 'Overview of the Cursor meetup in Guadalajara',
+		alt: 'Vista general del meetup de Cursor en Guadalajara',
 		row: 3,
 		col: 2,
 		rowSpan: 2,
@@ -53,7 +53,7 @@ export const headerPhotos: HeaderPhoto[] = [
 	},
 	{
 		src: '/images/events/dsc05021.jpg',
-		alt: 'Builders coding at a long table during the event',
+		alt: 'Builders programando en una mesa larga durante el evento',
 		row: 3,
 		col: 4,
 		rowSpan: 2,

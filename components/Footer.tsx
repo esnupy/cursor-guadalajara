@@ -3,14 +3,12 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { ArrowSquareOutIcon } from '@phosphor-icons/react';
-import { useI18n } from '@/lib/i18n';
 import { siteConfig } from '@/content/site.config';
 import { upcomingEvents } from '@/content/events';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 
 export default function Footer() {
-	const { t } = useI18n();
 	const nextEvent = upcomingEvents[0];
 
 	return (
@@ -29,9 +27,7 @@ export default function Footer() {
 						<Image src="/cursor-logo.svg" alt="Cursor" width={90} height={24} className="h-5 w-auto" />
 						<span className="text-sm text-muted-foreground">{siteConfig.communityNameLocal}</span>
 					</div>
-					<p className="text-sm leading-relaxed text-muted-foreground">
-						{siteConfig.footerTagline || t('footer.madeWith')}
-					</p>
+					<p className="text-sm leading-relaxed text-muted-foreground">{siteConfig.footerTagline}</p>
 				</div>
 
 				<div className="flex flex-col gap-2.5">
@@ -41,7 +37,7 @@ export default function Footer() {
 						rel="noopener noreferrer"
 						className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
 					>
-						{t('footer.allEvents')}
+						Todos los eventos en Luma
 						<ArrowSquareOutIcon weight="regular" className="size-3" />
 					</a>
 					<a
@@ -50,7 +46,7 @@ export default function Footer() {
 						rel="noopener noreferrer"
 						className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
 					>
-						{t('footer.community')}
+						Comunidad Cursor
 						<ArrowSquareOutIcon weight="regular" className="size-3" />
 					</a>
 					<a
@@ -59,7 +55,7 @@ export default function Footer() {
 						rel="noopener noreferrer"
 						className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
 					>
-						{t('footer.followUs')}
+						Sigue a Cursor en X
 						<ArrowSquareOutIcon weight="regular" className="size-3" />
 					</a>
 				</div>
@@ -70,18 +66,16 @@ export default function Footer() {
 							href={nextEvent?.lumaUrl || siteConfig.lumaUrl}
 							target="_blank"
 							rel="noopener noreferrer"
-							aria-label={t('footer.joinNext')}
+							aria-label="Únete al próximo evento"
 						>
-							{t('footer.joinNext')}
+							Únete al próximo evento
 							<ArrowSquareOutIcon weight="regular" className="size-3.5" aria-hidden="true" />
 						</a>
 					</Button>
 				</div>
 			</div>
 
-			<p className="mt-10 pb-6 text-center text-xs text-muted-foreground/70">
-				{siteConfig.footerTagline || t('footer.madeWith')}
-			</p>
+			<p className="mt-10 pb-6 text-center text-xs text-muted-foreground/70">{siteConfig.footerTagline}</p>
 		</motion.footer>
 	);
 }

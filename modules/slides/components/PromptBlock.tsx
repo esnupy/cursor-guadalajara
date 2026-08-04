@@ -34,7 +34,7 @@ export default function PromptBlock({ prompt, label = 'Try this in Cursor' }: Pr
 					size="icon-sm"
 					onClick={handleCopy}
 					className="absolute top-4 right-4 z-10 opacity-0 transition-opacity group-hover:opacity-100"
-					aria-label="Copy prompt"
+					aria-label="Copiar prompt"
 				>
 					{isCopied ? (
 						<CheckIcon weight="regular" className="size-5 text-primary" />

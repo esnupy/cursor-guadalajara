@@ -4,16 +4,16 @@ import { CursorEvent } from '@/lib/types';
 export const events: CursorEvent[] = [
 	{
 		id: 'cursor-workshop-first-mvp-2026-08',
-		title: 'Cursor Workshop: How to Build Your First MVP',
+		title: 'Taller de Cursor: Cómo construir tu primer MVP',
 		date: '2026-08-08',
-		displayDate: 'August 8, 2026',
+		displayDate: '8 de agosto de 2026',
 		location: 'Guadalajara, Jalisco',
 		status: 'upcoming',
 	},
 	{
 		id: 'cursor-meetup-guadalajara-2026',
 		title: 'Cursor Meetup Guadalajara',
-		displayDate: 'Later this year',
+		displayDate: 'Más adelante este año',
 		location: 'Guadalajara, Jalisco',
 		status: 'upcoming',
 	},
@@ -21,7 +21,7 @@ export const events: CursorEvent[] = [
 		id: 'cafe-cursor-guadalajara-2026-04',
 		title: 'Cafe Cursor Guadalajara',
 		date: '2026-04-25',
-		displayDate: 'April 25, 2026',
+		displayDate: '25 de abril de 2026',
 		attendees: 55,
 		location: 'Ventura Café, Guadalajara, Jalisco',
 		recapPath: '/recaps/cafe-cursor-guadalajara',

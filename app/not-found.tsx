@@ -8,9 +8,9 @@ export default function NotFound() {
 		<main className="flex min-h-screen flex-col items-center justify-center bg-background px-6 text-foreground">
 			<Image src="/cursor-logo.svg" alt="Cursor" width={120} height={32} className="mb-12 h-8 w-auto opacity-40" />
 			<h1 className="mb-4 text-6xl font-bold tracking-tight text-muted-foreground/50 md:text-8xl">404</h1>
-			<p className="mb-8 text-lg text-muted-foreground">This page doesn&apos;t exist.</p>
+			<p className="mb-8 text-lg text-muted-foreground">Esta página no existe.</p>
 			<Button asChild>
-				<Link href="/">Back to {siteConfig.communityName}</Link>
+				<Link href="/">Volver a {siteConfig.communityName}</Link>
 			</Button>
 		</main>
 	);

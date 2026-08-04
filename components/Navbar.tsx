@@ -3,16 +3,14 @@
 import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import { ListIcon, XIcon } from '@phosphor-icons/react';
-import { useI18n } from '@/lib/i18n';
-import LanguageToggle from '@/components/LanguageToggle';
 import ThemeToggle from '@/components/ThemeToggle';
 import { Button } from '@/components/ui/button';
 import { siteConfig } from '@/content/site.config';
 import { cn } from '@/lib/utils';
 
 const NAV_LINKS = [
-	{ href: '#upcoming', key: 'home.upcomingEvents' },
-	{ href: '#recaps', key: 'home.pastEvents' },
+	{ href: '#upcoming', label: 'Próximos eventos' },
+	{ href: '#recaps', label: 'Eventos pasados' },
 ] as const;
 
 function useScrollState() {
@@ -45,7 +43,6 @@ function useScrollState() {
 }
 
 export default function Navbar() {
-	const { t } = useI18n();
 	const { scrolled, activeSection } = useScrollState();
 	const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -88,7 +85,7 @@ export default function Navbar() {
 					</a>
 
 					<div className="hidden items-center gap-4 sm:flex">
-						{NAV_LINKS.map(({ href, key }) => {
+						{NAV_LINKS.map(({ href, label }) => {
 							const sectionId = href.replace('#', '');
 							const isActive = activeSection === sectionId;
 							return (
@@ -100,25 +97,26 @@ export default function Navbar() {
 										isActive ? 'font-medium text-foreground' : 'text-muted-foreground hover:text-foreground',
 									)}
 								>
-									{t(key)}
+									{label}
 								</a>
 							);
 						})}
 						<Button asChild size="sm">
 							<a href={siteConfig.lumaUrl} target="_blank" rel="noopener noreferrer">
-								{t('nav.joinUs')}
+								Únete
 							</a>
 						</Button>
-						<div className="flex items-center gap-1">
-							<ThemeToggle />
-							<LanguageToggle />
-						</div>
+						<ThemeToggle />
 					</div>
 
 					<div className="flex items-center gap-1 sm:hidden">
 						<ThemeToggle />
-						<LanguageToggle />
-						<Button variant="ghost" size="icon-sm" onClick={() => setMobileOpen(!mobileOpen)} aria-label="Toggle menu">
+						<Button
+							variant="ghost"
+							size="icon-sm"
+							onClick={() => setMobileOpen(!mobileOpen)}
+							aria-label={mobileOpen ? 'Cerrar menú' : 'Abrir menú'}
+						>
 							{mobileOpen ? (
 								<XIcon weight="regular" className="size-5" />
 							) : (
@@ -132,19 +130,19 @@ export default function Navbar() {
 			{mobileOpen && (
 				<div className="fixed inset-0 top-14 z-30 bg-background/95 backdrop-blur-md sm:hidden">
 					<div className="flex flex-col items-center gap-6 pt-12">
-						{NAV_LINKS.map(({ href, key }) => (
+						{NAV_LINKS.map(({ href, label }) => (
 							<a
 								key={href}
 								href={href}
 								onClick={closeMobile}
 								className="text-lg text-muted-foreground transition-colors hover:text-foreground"
 							>
-								{t(key)}
+								{label}
 							</a>
 						))}
 						<Button asChild>
 							<a href={siteConfig.lumaUrl} target="_blank" rel="noopener noreferrer" onClick={closeMobile}>
-								{t('nav.joinUs')}
+								Únete
 							</a>
 						</Button>
 					</div>

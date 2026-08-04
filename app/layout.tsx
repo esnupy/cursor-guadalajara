@@ -4,7 +4,6 @@ import { Analytics } from '@vercel/analytics/react';
 import { Geist } from 'next/font/google';
 import { ThemeFavicon } from '@/components/ThemeFavicon';
 import { ThemeProvider } from '@/components/theme-provider';
-import { I18nProvider } from '@/lib/i18n';
 import { siteConfig } from '@/content/site.config';
 import { cn } from '@/lib/utils';
 import './globals.css';
@@ -63,13 +62,13 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 	await headers();
 
 	return (
-		<html lang={siteConfig.defaultLocale} className={cn('font-sans', geist.variable)} suppressHydrationWarning>
+		<html lang="es-MX" className={cn('font-sans', geist.variable)} suppressHydrationWarning>
 			<body className="antialiased">
 				{/* External self-hosted script: allowed by script-src 'self' without a CSP nonce. */}
 				<script async src="/theme-favicon.bootstrap.js" />
 				<ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
 					<ThemeFavicon />
-					<I18nProvider>{children}</I18nProvider>
+					{children}
 				</ThemeProvider>
 				<Analytics />
 			</body>

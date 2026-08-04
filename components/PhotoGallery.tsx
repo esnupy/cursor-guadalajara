@@ -5,7 +5,6 @@ import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CaretLeftIcon, CaretRightIcon, XIcon } from '@phosphor-icons/react';
 import { GalleryPhoto } from '@/lib/types';
-import { useI18n } from '@/lib/i18n';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 
@@ -15,7 +14,6 @@ interface PhotoGalleryProps {
 }
 
 export default function PhotoGallery({ photos, embedded = false }: PhotoGalleryProps) {
-	const { t } = useI18n();
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const [isFullscreen, setIsFullscreen] = useState(false);
 
@@ -30,11 +28,9 @@ export default function PhotoGallery({ photos, embedded = false }: PhotoGalleryP
 			<div className="mb-6 flex items-baseline justify-between gap-4">
 				<div>
 					<h2 className={embedded ? 'text-lg font-semibold text-foreground' : 'text-xl font-semibold text-foreground'}>
-						{t('recap.galleryTitle')}
+						Fotos
 					</h2>
-					<p className="mt-1 text-sm text-muted-foreground">
-						{t('recap.gallerySubtitle', { count: String(photos.length) })}
-					</p>
+					<p className="mt-1 text-sm text-muted-foreground">{photos.length} fotos del evento</p>
 				</div>
 			</div>
 
@@ -51,7 +47,7 @@ export default function PhotoGallery({ photos, embedded = false }: PhotoGalleryP
 							setCurrentIndex(index);
 							setIsFullscreen(true);
 						}}
-						aria-label={t('recap.openPhoto', { index: String(index + 1) })}
+						aria-label={`Abrir foto ${index + 1}`}
 					>
 						<Image
 							src={photo.src}
@@ -83,7 +79,7 @@ export default function PhotoGallery({ photos, embedded = false }: PhotoGalleryP
 								size="icon"
 								className="absolute top-4 right-4 z-10"
 								onClick={() => setIsFullscreen(false)}
-								aria-label={t('recap.closeGallery')}
+								aria-label="Cerrar galería"
 							>
 								<XIcon weight="regular" className="size-5" />
 							</Button>
@@ -106,7 +102,7 @@ export default function PhotoGallery({ photos, embedded = false }: PhotoGalleryP
 							<Card>
 								<CardContent className="py-4 text-center">
 									<p className="font-medium text-foreground">
-										{t('recap.photoLabel', { index: String(currentIndex + 1), total: String(photos.length) })}
+										Foto {currentIndex + 1} de {photos.length}
 									</p>
 								</CardContent>
 							</Card>
@@ -118,7 +114,7 @@ export default function PhotoGallery({ photos, embedded = false }: PhotoGalleryP
 										size="icon"
 										className="absolute top-1/2 left-4 -translate-y-1/2"
 										onClick={() => setCurrentIndex((prev) => (prev - 1 + photos.length) % photos.length)}
-										aria-label={t('recap.prevPhoto')}
+										aria-label="Foto anterior"
 									>
 										<CaretLeftIcon weight="regular" className="size-6" />
 									</Button>
@@ -127,7 +123,7 @@ export default function PhotoGallery({ photos, embedded = false }: PhotoGalleryP
 										size="icon"
 										className="absolute top-1/2 right-4 -translate-y-1/2"
 										onClick={() => setCurrentIndex((prev) => (prev + 1) % photos.length)}
-										aria-label={t('recap.nextPhoto')}
+										aria-label="Foto siguiente"
 									>
 										<CaretRightIcon weight="regular" className="size-6" />
 									</Button>

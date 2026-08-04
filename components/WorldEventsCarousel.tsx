@@ -69,7 +69,7 @@ export default function WorldEventsCarousel() {
 								size="icon"
 								className="absolute top-4 right-4 z-10"
 								onClick={() => setIsFullscreen(false)}
-								aria-label="Close"
+								aria-label="Cerrar"
 							>
 								<XIcon weight="regular" className="size-5" />
 							</Button>
@@ -103,7 +103,7 @@ export default function WorldEventsCarousel() {
 										size="icon"
 										className="absolute top-1/2 left-4 -translate-y-1/2"
 										onClick={() => setCurrentIndex((prev) => (prev - 1 + photos.length) % photos.length)}
-										aria-label="Previous photo"
+										aria-label="Foto anterior"
 									>
 										<CaretLeftIcon weight="regular" className="size-6" />
 									</Button>
@@ -112,7 +112,7 @@ export default function WorldEventsCarousel() {
 										size="icon"
 										className="absolute top-1/2 right-4 -translate-y-1/2"
 										onClick={() => setCurrentIndex((prev) => (prev + 1) % photos.length)}
-										aria-label="Next photo"
+										aria-label="Foto siguiente"
 									>
 										<CaretRightIcon weight="regular" className="size-6" />
 									</Button>

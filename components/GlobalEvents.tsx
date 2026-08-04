@@ -2,12 +2,9 @@
 
 import { motion } from 'framer-motion';
 import WorldEventsCarousel from '@/components/WorldEventsCarousel';
-import { useI18n } from '@/lib/i18n';
 import { Card, CardContent } from '@/components/ui/card';
 
 export default function GlobalEvents() {
-	const { t } = useI18n();
-
 	return (
 		<motion.section
 			initial={{ opacity: 0, y: 20 }}
@@ -18,8 +15,11 @@ export default function GlobalEvents() {
 		>
 			<Card>
 				<CardContent className="pt-6">
-					<h2 className="mb-2 text-xl font-semibold text-foreground md:text-2xl">{t('worldEvents.title')}</h2>
-					<p className="mb-6 text-sm text-muted-foreground md:text-base">{t('worldEvents.description')}</p>
+					<h2 className="mb-2 text-xl font-semibold text-foreground md:text-2xl">Cafe Cursor alrededor del mundo</h2>
+					<p className="mb-6 text-sm text-muted-foreground md:text-base">
+						Usuarios de Cursor construyen juntos en todo el mundo. Aunque vivimos en distintas zonas horarias, somos una
+						sola comunidad.
+					</p>
 					<WorldEventsCarousel />
 				</CardContent>
 			</Card>
