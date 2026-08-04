@@ -15,7 +15,7 @@ export default function FeaturedSection() {
 			initial={slideUp.initial}
 			animate={slideUp.animate}
 			transition={{ ...transition, delay: transition.duration ? 0.2 : 0 }}
-			className="mb-16"
+			className="px-5 py-12 md:py-17"
 		>
 			<Card>
 				<CardContent className="text-xl md:grid md:grid-cols-2 md:grid-rows-1 flex flex-col gap-6">

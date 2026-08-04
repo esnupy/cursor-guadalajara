@@ -47,7 +47,7 @@ export default function AmbassadorSection() {
 			whileInView={slideUp.animate}
 			viewport={{ once: true, margin: '-50px' }}
 			transition={transition}
-			className="mb-16"
+			className="px-5 py-12 md:py-17"
 		>
 			<h2 className="text-2xl tracking-tight">Conoce al equipo</h2>
 			<p className="mb-6 text-2xl text-muted-foreground">

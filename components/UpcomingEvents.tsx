@@ -39,7 +39,7 @@ export default function UpcomingEvents() {
 			whileInView={slideUp.animate}
 			viewport={{ once: true, margin: '-50px' }}
 			transition={transition}
-			className="mb-16 scroll-mt-20"
+			className="scroll-mt-20 px-5 py-12 md:py-17"
 		>
 			<p className="mb-1 text-2xl text-foreground">Próximos eventos</p>
 			<h2 className="mb-6 text-2xl text-muted-foreground tracking-tight">Qué sigue?</h2>

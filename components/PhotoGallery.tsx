@@ -34,7 +34,7 @@ export default function PhotoGallery({ photos }: PhotoGalleryProps) {
 			transition={transition}
 		>
 			<div className="mb-6">
-				<h2 className="mb-1 text-2xl tracking-tight">Fotos</h2>
+				<h2 className="mb-1 text-2xl tracking-tight">Galería de fotos</h2>
 				<p className="text-xl text-muted-foreground">{photos.length} fotos del evento</p>
 			</div>
 
