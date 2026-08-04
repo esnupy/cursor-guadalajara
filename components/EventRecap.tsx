@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowLeft, Mic, Lightbulb, MessageSquareQuote, Link as LinkIcon } from 'lucide-react';
+import { ArrowLeftIcon, LightbulbIcon, LinkIcon, MicrophoneIcon, QuotesIcon } from '@phosphor-icons/react';
 import PhotoGallery from '@/components/PhotoGallery';
 import { RecapData } from '@/lib/types';
 import { useI18n } from '@/lib/i18n';
@@ -27,7 +27,7 @@ export default function EventRecap({ recap }: EventRecapProps) {
 		>
 			<Button variant="link" asChild className="mb-6 h-auto p-0 text-muted-foreground">
 				<Link href="/#recaps" aria-label={t('recap.backToEvents')}>
-					<ArrowLeft className="size-4" aria-hidden="true" />
+					<ArrowLeftIcon weight="regular" className="size-4" aria-hidden="true" />
 					{t('recap.backToEvents')}
 				</Link>
 			</Button>
@@ -67,7 +67,7 @@ export default function EventRecap({ recap }: EventRecapProps) {
 						<div className="mt-6 pt-6">
 							<Separator className="mb-6" />
 							<div className="mb-4 flex items-center gap-2">
-								<Mic className="size-4 text-primary" />
+								<MicrophoneIcon weight="regular" className="size-4 text-primary" />
 								<h3 className="text-sm font-medium text-foreground">{t('recap.speakers')}</h3>
 							</div>
 							<div className="grid gap-3 sm:grid-cols-2">
@@ -105,7 +105,7 @@ export default function EventRecap({ recap }: EventRecapProps) {
 						<div className="mt-6 pt-6">
 							<Separator className="mb-6" />
 							<div className="mb-4 flex items-center gap-2">
-								<Lightbulb className="size-4 text-primary" />
+								<LightbulbIcon weight="regular" className="size-4 text-primary" />
 								<h3 className="text-sm font-medium text-foreground">{t('recap.projects')}</h3>
 							</div>
 							<div className="grid gap-3 sm:grid-cols-2">
@@ -141,7 +141,7 @@ export default function EventRecap({ recap }: EventRecapProps) {
 						<div className="mt-6 pt-6">
 							<Separator className="mb-6" />
 							<div className="mb-4 flex items-center gap-2">
-								<MessageSquareQuote className="size-4 text-primary" />
+								<QuotesIcon weight="regular" className="size-4 text-primary" />
 								<h3 className="text-sm font-medium text-foreground">{t('recap.highlights')}</h3>
 							</div>
 							<div className="space-y-3">
@@ -161,7 +161,7 @@ export default function EventRecap({ recap }: EventRecapProps) {
 						<div className="mt-6 pt-6">
 							<Separator className="mb-6" />
 							<div className="mb-4 flex items-center gap-2">
-								<LinkIcon className="size-4 text-primary" />
+								<LinkIcon weight="regular" className="size-4 text-primary" />
 								<h3 className="text-sm font-medium text-foreground">{t('recap.resources')}</h3>
 							</div>
 							<ul className="space-y-2">
@@ -174,7 +174,7 @@ export default function EventRecap({ recap }: EventRecapProps) {
 											className="inline-flex items-center gap-1.5 text-sm text-foreground hover:underline"
 										>
 											{resource.label}
-											<LinkIcon className="size-3 text-muted-foreground" />
+											<LinkIcon weight="regular" className="size-3 text-muted-foreground" />
 										</a>
 									</li>
 								))}

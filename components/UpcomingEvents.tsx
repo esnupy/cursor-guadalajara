@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ExternalLink } from 'lucide-react';
+import { ArrowSquareOutIcon } from '@phosphor-icons/react';
 import { upcomingEvents } from '@/content/events';
 import { useI18n } from '@/lib/i18n';
 import type { CursorEvent } from '@/lib/types';
@@ -27,7 +27,7 @@ export default function UpcomingEvents() {
 						aria-label={`${t('home.register')}: ${event.title}`}
 					>
 						{t('home.register')}
-						<ExternalLink className="size-3.5" aria-hidden="true" />
+						<ArrowSquareOutIcon weight="regular" className="size-3.5" aria-hidden="true" />
 					</a>
 				</Button>
 			);

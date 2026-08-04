@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Camera } from 'lucide-react';
+import { CameraIcon } from '@phosphor-icons/react';
 import { useI18n } from '@/lib/i18n';
 import { Card, CardContent } from '@/components/ui/card';
 
@@ -18,7 +18,7 @@ export default function PhotoDisclaimer() {
 			<Card>
 				<CardContent className="pt-8">
 					<div className="mb-4 flex items-center gap-3">
-						<Camera className="size-5 text-foreground" />
+						<CameraIcon weight="regular" className="size-5 text-foreground" />
 						<h2 className="text-xl font-semibold text-foreground">{t('photos.title')}</h2>
 					</div>
 

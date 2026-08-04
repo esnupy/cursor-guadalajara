@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useCallback } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { CaretLeftIcon, CaretRightIcon } from '@phosphor-icons/react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
@@ -90,7 +90,7 @@ export default function SlideLayout({
 						disabled={currentSlide === 1}
 						aria-label="Previous slide"
 					>
-						<ChevronLeft className="size-5" />
+						<CaretLeftIcon weight="regular" className="size-5" />
 						<span className="hidden md:inline">Previous</span>
 					</Button>
 
@@ -122,7 +122,7 @@ export default function SlideLayout({
 						aria-label="Next slide"
 					>
 						<span className="hidden md:inline">Next</span>
-						<ChevronRight className="size-5" />
+						<CaretRightIcon weight="regular" className="size-5" />
 					</Button>
 				</div>
 			</div>

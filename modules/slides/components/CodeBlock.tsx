@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Copy, Check } from 'lucide-react';
+import { CheckIcon, CopyIcon } from '@phosphor-icons/react';
 import { Button } from '@/components/ui/button';
 
 interface CodeBlockProps {
@@ -30,7 +30,11 @@ export default function CodeBlock({ code }: CodeBlockProps) {
 				className="absolute top-4 right-4 opacity-0 transition-opacity group-hover:opacity-100"
 				aria-label="Copy code"
 			>
-				{isCopied ? <Check className="size-5 text-primary" /> : <Copy className="size-5" />}
+				{isCopied ? (
+					<CheckIcon weight="regular" className="size-5 text-primary" />
+				) : (
+					<CopyIcon weight="regular" className="size-5" />
+				)}
 			</Button>
 			<pre className="overflow-x-auto rounded-md border border-border bg-muted p-6">
 				<code className="font-mono text-base whitespace-pre-wrap text-foreground/90 md:text-lg">{code}</code>

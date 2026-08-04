@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
-import { Menu, X } from 'lucide-react';
+import { ListIcon, XIcon } from '@phosphor-icons/react';
 import { useI18n } from '@/lib/i18n';
 import LanguageToggle from '@/components/LanguageToggle';
 import ThemeToggle from '@/components/ThemeToggle';
@@ -119,7 +119,11 @@ export default function Navbar() {
 						<ThemeToggle />
 						<LanguageToggle />
 						<Button variant="ghost" size="icon-sm" onClick={() => setMobileOpen(!mobileOpen)} aria-label="Toggle menu">
-							{mobileOpen ? <X className="size-5" /> : <Menu className="size-5" />}
+							{mobileOpen ? (
+								<XIcon weight="regular" className="size-5" />
+							) : (
+								<ListIcon weight="regular" className="size-5" />
+							)}
 						</Button>
 					</div>
 				</div>
@@ -139,12 +143,7 @@ export default function Navbar() {
 							</a>
 						))}
 						<Button asChild>
-							<a
-								href={siteConfig.lumaUrl}
-								target="_blank"
-								rel="noopener noreferrer"
-								onClick={closeMobile}
-							>
+							<a href={siteConfig.lumaUrl} target="_blank" rel="noopener noreferrer" onClick={closeMobile}>
 								{t('nav.joinUs')}
 							</a>
 						</Button>

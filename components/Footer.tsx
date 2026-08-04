@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { ExternalLink } from 'lucide-react';
+import { ArrowSquareOutIcon } from '@phosphor-icons/react';
 import { useI18n } from '@/lib/i18n';
 import { siteConfig } from '@/content/site.config';
 import { upcomingEvents } from '@/content/events';
@@ -42,7 +42,7 @@ export default function Footer() {
 						className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
 					>
 						{t('footer.allEvents')}
-						<ExternalLink className="size-3" />
+						<ArrowSquareOutIcon weight="regular" className="size-3" />
 					</a>
 					<a
 						href={siteConfig.cursorCommunityUrl}
@@ -51,7 +51,7 @@ export default function Footer() {
 						className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
 					>
 						{t('footer.community')}
-						<ExternalLink className="size-3" />
+						<ArrowSquareOutIcon weight="regular" className="size-3" />
 					</a>
 					<a
 						href="https://x.com/cursor_ai"
@@ -60,7 +60,7 @@ export default function Footer() {
 						className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
 					>
 						{t('footer.followUs')}
-						<ExternalLink className="size-3" />
+						<ArrowSquareOutIcon weight="regular" className="size-3" />
 					</a>
 				</div>
 
@@ -73,7 +73,7 @@ export default function Footer() {
 							aria-label={t('footer.joinNext')}
 						>
 							{t('footer.joinNext')}
-							<ExternalLink className="size-3.5" aria-hidden="true" />
+							<ArrowSquareOutIcon weight="regular" className="size-3.5" aria-hidden="true" />
 						</a>
 					</Button>
 				</div>

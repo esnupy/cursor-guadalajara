@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Calendar, Users, ArrowRight } from 'lucide-react';
+import { ArrowRightIcon, CalendarIcon, UsersIcon } from '@phosphor-icons/react';
 import { pastEvents } from '@/content/events';
 import { useI18n } from '@/lib/i18n';
 import { Card, CardContent } from '@/components/ui/card';
@@ -106,19 +106,22 @@ export default function PastEvents() {
 										<h3 className="mb-1.5 text-lg font-medium text-foreground">{event.title}</h3>
 										<div className="mb-1.5 flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
 											<div className="flex items-center gap-1.5">
-												<Calendar className="size-4" />
+												<CalendarIcon weight="regular" className="size-4" />
 												<span>{displayDate}</span>
 											</div>
 											{event.attendees ? (
 												<div className="flex items-center gap-1.5">
-													<Users className="size-4" />
+													<UsersIcon weight="regular" className="size-4" />
 													<span>{t('home.attendees', { count: String(event.attendees) })}</span>
 												</div>
 											) : null}
 										</div>
 										<div className="flex items-center gap-2 text-sm text-primary">
 											<span>{t('home.viewRecap')}</span>
-											<ArrowRight className="size-4 transition-transform duration-200 ease-out group-hover:translate-x-1" />
+											<ArrowRightIcon
+												weight="regular"
+												className="size-4 transition-transform duration-200 ease-out group-hover:translate-x-1"
+											/>
 										</div>
 									</CardContent>
 								</Card>

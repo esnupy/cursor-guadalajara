@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { Globe, Linkedin } from 'lucide-react';
+import { GlobeIcon, LinkedinLogoIcon } from '@phosphor-icons/react';
 import { siGithub, siX } from 'simple-icons';
 import { ambassadors } from '@/content/ambassadors';
 import { siteConfig } from '@/content/site.config';
@@ -28,9 +28,9 @@ type SocialIconProps = {
 
 function SocialIcon({ kind }: SocialIconProps) {
 	if (kind === 'x') return <BrandIcon iconPath={siX.path} />;
-	if (kind === 'linkedin') return <Linkedin className="size-4" />;
+	if (kind === 'linkedin') return <LinkedinLogoIcon weight="regular" className="size-4" />;
 	if (kind === 'github') return <BrandIcon iconPath={siGithub.path} />;
-	return <Globe className="size-4" />;
+	return <GlobeIcon weight="regular" className="size-4" />;
 }
 
 export default function AmbassadorSection() {

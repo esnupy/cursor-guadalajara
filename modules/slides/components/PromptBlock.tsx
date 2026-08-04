@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Copy, Check, PenLine } from 'lucide-react';
+import { CheckIcon, CopyIcon, PencilSimpleIcon } from '@phosphor-icons/react';
 import { Button } from '@/components/ui/button';
 
 interface PromptBlockProps {
@@ -25,7 +25,7 @@ export default function PromptBlock({ prompt, label = 'Try this in Cursor' }: Pr
 	return (
 		<div className="space-y-3">
 			<div className="flex items-center gap-2 text-sm font-medium text-primary">
-				<PenLine className="size-4" />
+				<PencilSimpleIcon weight="regular" className="size-4" />
 				<span>{label}</span>
 			</div>
 			<div className="group relative">
@@ -36,7 +36,11 @@ export default function PromptBlock({ prompt, label = 'Try this in Cursor' }: Pr
 					className="absolute top-4 right-4 z-10 opacity-0 transition-opacity group-hover:opacity-100"
 					aria-label="Copy prompt"
 				>
-					{isCopied ? <Check className="size-5 text-primary" /> : <Copy className="size-5" />}
+					{isCopied ? (
+						<CheckIcon weight="regular" className="size-5 text-primary" />
+					) : (
+						<CopyIcon weight="regular" className="size-5" />
+					)}
 				</Button>
 				<pre className="overflow-x-auto rounded-md border border-border bg-accent/50 p-6">
 					<code className="font-mono text-base whitespace-pre-wrap text-foreground/90 md:text-lg">{prompt}</code>

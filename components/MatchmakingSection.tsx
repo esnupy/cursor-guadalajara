@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Users } from 'lucide-react';
+import { UsersIcon } from '@phosphor-icons/react';
 import { useI18n } from '@/lib/i18n';
 import { Card, CardContent } from '@/components/ui/card';
 
@@ -18,7 +18,7 @@ export default function MatchmakingSection() {
 			<Card>
 				<CardContent className="pt-8">
 					<div className="mb-6 flex items-center gap-3">
-						<Users className="size-5 text-foreground" />
+						<UsersIcon weight="regular" className="size-5 text-foreground" />
 						<h2 className="text-xl font-semibold text-foreground">{t('matchmaking.title')}</h2>
 					</div>
 

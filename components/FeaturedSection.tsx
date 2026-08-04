@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRightIcon } from '@phosphor-icons/react';
 import { featuredResource } from '@/content/featured';
 import { useI18n } from '@/lib/i18n';
 import { Button } from '@/components/ui/button';
@@ -36,7 +36,7 @@ export default function FeaturedSection() {
 							aria-label={featuredResource.ctaLabel || t('home.viewSlides')}
 						>
 							{featuredResource.ctaLabel || t('home.viewSlides')}
-							<ArrowRight className="size-4" aria-hidden="true" />
+							<ArrowRightIcon weight="regular" className="size-4" aria-hidden="true" />
 						</Link>
 					</Button>
 				</CardContent>

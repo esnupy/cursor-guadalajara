@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight, X } from 'lucide-react';
+import { CaretLeftIcon, CaretRightIcon, XIcon } from '@phosphor-icons/react';
 import { GalleryPhoto } from '@/lib/types';
 import { useI18n } from '@/lib/i18n';
 import { Button } from '@/components/ui/button';
@@ -85,7 +85,7 @@ export default function PhotoGallery({ photos, embedded = false }: PhotoGalleryP
 								onClick={() => setIsFullscreen(false)}
 								aria-label={t('recap.closeGallery')}
 							>
-								<X className="size-5" />
+								<XIcon weight="regular" className="size-5" />
 							</Button>
 
 							<div className="relative mb-4 h-[80vh] w-full">
@@ -120,7 +120,7 @@ export default function PhotoGallery({ photos, embedded = false }: PhotoGalleryP
 										onClick={() => setCurrentIndex((prev) => (prev - 1 + photos.length) % photos.length)}
 										aria-label={t('recap.prevPhoto')}
 									>
-										<ChevronLeft className="size-6" />
+										<CaretLeftIcon weight="regular" className="size-6" />
 									</Button>
 									<Button
 										variant="secondary"
@@ -129,7 +129,7 @@ export default function PhotoGallery({ photos, embedded = false }: PhotoGalleryP
 										onClick={() => setCurrentIndex((prev) => (prev + 1) % photos.length)}
 										aria-label={t('recap.nextPhoto')}
 									>
-										<ChevronRight className="size-6" />
+										<CaretRightIcon weight="regular" className="size-6" />
 									</Button>
 								</>
 							) : null}
