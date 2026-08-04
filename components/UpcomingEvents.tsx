@@ -59,9 +59,9 @@ export default function UpcomingEvents() {
 							<Card className="text-xl">
 								<CardContent className="pt-6">
 									<h3 className="mb-1 tracking-tight">{event.title}</h3>
-									<div className="mb-2 flex items-center gap-2 text-muted-foreground">
+									<div className="md:mb-2 mb-6 flex flex-col md:flex-row md:items-center md:gap-2 text-muted-foreground">
 										<span>{event.displayDate}</span>
-										<span className="text-muted-foreground/50">&middot;</span>
+										<span className="md:block hidden text-muted-foreground/50">&middot;</span>
 										<span>{city}</span>
 									</div>
 									{renderCta(event)}
