@@ -1,48 +1,49 @@
 'use client';
 
-import React from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRightIcon } from '@phosphor-icons/react';
 import { featuredResource } from '@/content/featured';
-import { useI18n } from '@/lib/i18n';
+import { Card, CardContent } from '@/components/ui/card';
+import { useBrandMotion } from '@/lib/motion';
+import Image from 'next/image';
 
-const FeaturedSection: React.FC = () => {
-	const { t } = useI18n();
+export default function FeaturedSection() {
+	const { slideUp, transition } = useBrandMotion();
 
 	return (
 		<motion.section
-			initial={{ opacity: 0, y: 20 }}
-			animate={{ opacity: 1, y: 0 }}
-			transition={{ duration: 0.5, delay: 0.2 }}
+			initial={slideUp.initial}
+			animate={slideUp.animate}
+			transition={{ ...transition, delay: transition.duration ? 0.2 : 0 }}
 			className="mb-16"
 		>
-			<div className="relative overflow-hidden bg-[#1B1913] border border-cursor-border rounded-md p-6 transition-all duration-300 hover:border-cursor-accent-blue/40 hover:shadow-[0_0_30px_rgba(168,180,200,0.08)] group">
-				{/* Glow backdrop */}
-				<div className="pointer-events-none absolute -inset-px rounded-md bg-[radial-gradient(ellipse_at_top_right,rgba(168,180,200,0.08),transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-				<p className="text-xs uppercase tracking-wider text-cursor-text-muted mb-4">{t('home.featured')}</p>
+			<Card>
+				<CardContent className="text-xl grid grid-cols-2 grid-rows-1 gap-6">
+					<div className="flex flex-col justify-center">
+						<h2 className="mb-1 leading-tight tracking-tight">{featuredResource.title}</h2>
+						<p className="mb-6 leading-relaxed text-muted-foreground">{featuredResource.description}</p>
 
-				<h2 className="text-3xl md:text-4xl font-bold tracking-tight text-cursor-text mb-1">
-					{featuredResource.title}
-				</h2>
-				<p className="text-cursor-text-muted leading-relaxed mb-6">
-					{featuredResource.description || t('featured.defaultDescription')}
-				</p>
-
-				<Link
-					href={featuredResource.href}
-					{...(featuredResource.href.startsWith('http')
-						? { target: '_blank', rel: 'noopener noreferrer' }
-						: {})}
-					className="inline-flex items-center gap-2 px-4 py-2 bg-cursor-text text-cursor-bg rounded-md hover:bg-cursor-text-muted transition-colors text-sm font-medium"
-					aria-label={featuredResource.ctaLabel || t('home.viewSlides')}
-				>
-					{featuredResource.ctaLabel || t('home.viewSlides')}
-					<ArrowRight className="w-4 h-4" aria-hidden="true" />
-				</Link>
-			</div>
+						<Link
+							href={featuredResource.href}
+							{...(featuredResource.href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+							aria-label={featuredResource.ctaLabel || 'Ver slides'}
+							className="link"
+						>
+							{featuredResource.ctaLabel || 'Ver slides'}
+							<ArrowRightIcon weight="regular" className="size-4" aria-hidden="true" />
+						</Link>
+					</div>
+					<Image
+						width={533}
+						height={800}
+						src="https://n6j6oimzljzhdeal.public.blob.vercel-storage.com/landing/DSC05014-highres-1785867702029.webp"
+						className="aspect-9/16 w-107.5 object-cover rounded-[4px]"
+						alt="Comunidad Cursor Guadalajara"
+						unoptimized
+					/>
+				</CardContent>
+			</Card>
 		</motion.section>
 	);
-};
-
-export default FeaturedSection;
+}

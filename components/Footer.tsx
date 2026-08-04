@@ -1,99 +1,85 @@
 'use client';
 
-import React from 'react';
 import { motion } from 'framer-motion';
-import Image from 'next/image';
-import { ExternalLink } from 'lucide-react';
-import { useI18n } from '@/lib/i18n';
+import { ArrowRightIcon } from '@phosphor-icons/react';
+import CursorLockupSwap from '@/components/icons/CursorLockupSwap';
 import { siteConfig } from '@/content/site.config';
 import { upcomingEvents } from '@/content/events';
-// import Partners from '@/components/Partners';
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
+import { useBrandMotion } from '@/lib/motion';
+import Link from 'next/link';
+import ThemeToggle from '@/components/ThemeToggle';
 
-const Footer: React.FC = () => {
-	const { t } = useI18n();
+export default function Footer() {
 	const nextEvent = upcomingEvents[0];
+	const { fadeIn, transition } = useBrandMotion();
 
 	return (
 		<motion.footer
-			initial={{ opacity: 0 }}
-			whileInView={{ opacity: 1 }}
+			initial={fadeIn.initial}
+			whileInView={fadeIn.animate}
 			viewport={{ once: true, margin: '-50px' }}
-			transition={{ duration: 0.5 }}
-			className="mt-24 pt-8 border-t border-cursor-border"
+			transition={transition}
+			className="mt-24 pt-8 text-sm"
 		>
-			{/* <Partners /> */}
+			<Separator className="mb-10" />
 
-			<div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 items-start">
-				{/* Branding */}
+			<div className="grid grid-cols-1 items-start gap-8 md:grid-cols-3 md:gap-12">
 				<div>
-					<div className="flex items-center gap-2 mb-2">
-						<Image
-							src="/cursor-logo.svg"
-							alt="Cursor"
-							width={90}
-							height={24}
-							className="h-5 w-auto"
-						/>
-						<span className="text-cursor-text-muted text-sm">
-							{siteConfig.communityNameLocal}
-						</span>
+					<div className="mb-2 flex items-center gap-1.5">
+						<CursorLockupSwap size={22} className="h-5 w-auto" aria-hidden />
+						<span>Community</span>
+						<span className="text-muted-foreground">{siteConfig.communityNameLocal}</span>
 					</div>
-					<p className="text-cursor-text-muted text-sm leading-relaxed">
-						{siteConfig.footerTagline || t('footer.madeWith')}
-					</p>
+					<p className="leading-relaxed text-muted-foreground">{siteConfig.footerTagline}</p>
 				</div>
 
-				{/* Community links */}
 				<div className="flex flex-col gap-2.5">
-					<a
+					<Link
 						href={siteConfig.lumaUrl}
 						target="_blank"
 						rel="noopener noreferrer"
-						className="text-sm text-cursor-text-secondary hover:text-cursor-text transition-colors inline-flex items-center gap-1.5"
+						className="inline-flex items-center gap-1.5 transition-colors hover:text-muted-foreground"
 					>
-						{t('footer.allEvents')}
-						<ExternalLink className="w-3 h-3" />
-					</a>
-					<a
+						Todos los eventos en Luma
+					</Link>
+					<Link
 						href={siteConfig.cursorCommunityUrl}
 						target="_blank"
 						rel="noopener noreferrer"
-						className="text-sm text-cursor-text-secondary hover:text-cursor-text transition-colors inline-flex items-center gap-1.5"
+						className="inline-flex items-center gap-1.5 transition-colors hover:text-muted-foreground"
 					>
-						{t('footer.community')}
-						<ExternalLink className="w-3 h-3" />
-					</a>
-					<a
+						Comunidad Cursor
+					</Link>
+					<Link
 						href="https://x.com/cursor_ai"
 						target="_blank"
 						rel="noopener noreferrer"
-						className="text-sm text-cursor-text-secondary hover:text-cursor-text transition-colors inline-flex items-center gap-1.5"
+						className="inline-flex items-center gap-1.5 transition-colors hover:text-muted-foreground"
 					>
-						{t('footer.followUs')}
-						<ExternalLink className="w-3 h-3" />
-					</a>
+						Sigue a Cursor en X
+					</Link>
 				</div>
 
-				{/* CTA */}
-				<div className="md:text-right">
-					<a
-						href={nextEvent?.lumaUrl || siteConfig.lumaUrl}
-						target="_blank"
-						rel="noopener noreferrer"
-						className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#f54e00] text-white rounded-md hover:bg-[#e04500] transition-colors text-sm font-medium"
-						aria-label={t('footer.joinNext')}
-					>
-						{t('footer.joinNext')}
-						<ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
-					</a>
+				<div>
+					<Button asChild>
+						<a
+							href={nextEvent?.lumaUrl || siteConfig.lumaUrl}
+							target="_blank"
+							rel="noopener noreferrer"
+							aria-label="Únete al próximo evento"
+						>
+							Únete al próximo evento
+							<ArrowRightIcon weight="regular" className="size-3.5" aria-hidden="true" />
+						</a>
+					</Button>
 				</div>
 			</div>
 
-			<p className="text-cursor-text-faint text-xs text-center mt-10 pb-6">
-				{siteConfig.footerTagline || t('footer.madeWith')}
-			</p>
+			<div className="mt-10">
+				<ThemeToggle />
+			</div>
 		</motion.footer>
 	);
-};
-
-export default Footer;
+}

@@ -31,14 +31,6 @@ export interface Ambassador {
 	links: SocialLinks;
 }
 
-export interface Partner {
-	name: string;
-	logo: string;
-	url: string;
-	logoBg?: string;
-	logoHeight?: string;
-}
-
 export interface FeaturedResource {
 	title: string;
 	description: string;

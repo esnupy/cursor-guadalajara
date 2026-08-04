@@ -1,28 +1,31 @@
 'use client';
 
-import React from 'react';
 import { motion } from 'framer-motion';
 import WorldEventsCarousel from '@/components/WorldEventsCarousel';
-import { useI18n } from '@/lib/i18n';
+import { Card, CardContent } from '@/components/ui/card';
+import { useBrandMotion } from '@/lib/motion';
 
-const GlobalEvents: React.FC = () => {
-	const { t } = useI18n();
+export default function GlobalEvents() {
+	const { slideUp, transition } = useBrandMotion();
 
 	return (
 		<motion.section
-			initial={{ opacity: 0, y: 20 }}
-			whileInView={{ opacity: 1, y: 0 }}
+			initial={slideUp.initial}
+			whileInView={slideUp.animate}
 			viewport={{ once: true, margin: '-50px' }}
-			transition={{ duration: 0.5 }}
+			transition={transition}
 			className="mb-16"
 		>
-			<div className="bg-[#1B1913] border border-cursor-border rounded-lg p-6">
-				<h2 className="text-xl md:text-2xl font-semibold text-cursor-text mb-2">{t('worldEvents.title')}</h2>
-				<p className="text-cursor-text-muted text-sm md:text-base mb-6">{t('worldEvents.description')}</p>
-				<WorldEventsCarousel />
-			</div>
+			<Card>
+				<CardContent className="pt-6 text-xl">
+					<h2 className="mb-1 tracking-tight">Café Cursor alrededor del mundo</h2>
+					<p className="mb-6 text-muted-foreground">
+						Usuarios de Cursor construyen juntos en todo el mundo. Aunque vivimos en distintas zonas horarias, somos una
+						sola comunidad.
+					</p>
+					<WorldEventsCarousel />
+				</CardContent>
+			</Card>
 		</motion.section>
 	);
-};
-
-export default GlobalEvents;
+}

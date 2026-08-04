@@ -1,50 +1,60 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight, X } from 'lucide-react';
+import { CaretLeftIcon, CaretRightIcon, XIcon } from '@phosphor-icons/react';
 import Image from 'next/image';
 import { getPhotos } from '@/lib/photos';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { EASE_OUT_SPRING, useBrandMotion } from '@/lib/motion';
 
-const WorldEventsCarousel: React.FC = () => {
+export default function WorldEventsCarousel() {
 	const photos = getPhotos();
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const [isFullscreen, setIsFullscreen] = useState(false);
+	const { prefersReducedMotion } = useBrandMotion();
 
 	if (photos.length === 0) {
 		return null;
 	}
 
 	const currentPhoto = photos[currentIndex];
+	const motionTransition = { duration: prefersReducedMotion ? 0 : 0.3, ease: EASE_OUT_SPRING };
 
 	return (
 		<>
-			<div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
+			<div className="mb-6 grid grid-cols-2 gap-4 md:grid-cols-3">
 				{photos.map((photo, index) => (
 					<motion.div
 						key={index}
-						initial={{ opacity: 0, scale: 0.9 }}
+						initial={prefersReducedMotion ? false : { opacity: 0, scale: 0.9 }}
 						animate={{ opacity: 1, scale: 1 }}
-						transition={{ duration: 0.3, delay: index * 0.05 }}
-						className="relative aspect-square cursor-pointer group overflow-hidden rounded-lg border border-cursor-border"
-						onClick={() => {
-							setCurrentIndex(index);
-							setIsFullscreen(true);
-						}}
+						transition={{ ...motionTransition, delay: prefersReducedMotion ? 0 : index * 0.05 }}
 					>
-						<Image
-							src={photo.src}
-							alt={photo.alt}
-							fill
-							className="object-cover group-hover:scale-110 transition-transform duration-300"
-							sizes="(max-width: 768px) 50vw, 33vw"
-						/>
-						<div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent">
-							<div className="absolute bottom-0 left-0 right-0 p-3">
-								<p className="text-white text-sm font-medium">{photo.location}</p>
-								{photo.date ? <p className="text-white/80 text-xs">{photo.date}</p> : null}
+						<Button
+							variant="outline"
+							className="group relative aspect-square h-auto w-full overflow-hidden p-0 rounded-[4px]"
+							onClick={() => {
+								setCurrentIndex(index);
+								setIsFullscreen(true);
+							}}
+							aria-label={`Ver foto de ${photo.location}`}
+						>
+							<Image
+								src={photo.src}
+								alt={photo.alt}
+								fill
+								className="object-cover transition-transform duration-300 group-hover:scale-110 motion-reduce:transform-none"
+								sizes="(max-width: 768px) 50vw, 33vw"
+							/>
+							<div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/20 to-transparent">
+								<div className="absolute right-0 bottom-0 left-0 p-3 text-left text-base">
+									<p className="text-white">{photo.location}</p>
+									{photo.date ? <p className="text-white/80">{photo.date}</p> : null}
+								</div>
 							</div>
-						</div>
+						</Button>
 					</motion.div>
 				))}
 			</div>
@@ -52,60 +62,69 @@ const WorldEventsCarousel: React.FC = () => {
 			<AnimatePresence>
 				{isFullscreen ? (
 					<div
-						className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
+						className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4"
 						onClick={() => setIsFullscreen(false)}
 					>
 						<motion.div
-							initial={{ opacity: 0, scale: 0.95 }}
+							initial={prefersReducedMotion ? false : { opacity: 0, scale: 0.95 }}
 							animate={{ opacity: 1, scale: 1 }}
-							exit={{ opacity: 0, scale: 0.95 }}
-							className="relative max-w-6xl w-full max-h-[90vh]"
+							exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.95 }}
+							transition={motionTransition}
+							className="relative max-h-[90vh] w-full max-w-6xl"
 							onClick={(event) => event.stopPropagation()}
 						>
-							<button
+							<Button
+								variant="secondary"
+								size="icon"
+								className="absolute top-4 right-4 z-10"
 								onClick={() => setIsFullscreen(false)}
-								className="absolute top-4 right-4 z-10 bg-cursor-bg/80 border border-cursor-border rounded-lg p-2 text-cursor-text hover:bg-cursor-bg transition-colors"
-								aria-label="Close"
+								aria-label="Cerrar"
 							>
-								<X className="w-5 h-5" />
-							</button>
+								<XIcon weight="regular" className="size-5" />
+							</Button>
 
-							<div className="relative w-full h-[80vh] mb-4">
+							<div className="relative mb-4 h-[80vh] w-full">
 								<AnimatePresence mode="wait">
 									<motion.div
 										key={currentIndex}
-										initial={{ opacity: 0, x: 100 }}
+										initial={prefersReducedMotion ? false : { opacity: 0, x: 100 }}
 										animate={{ opacity: 1, x: 0 }}
-										exit={{ opacity: 0, x: -100 }}
-										transition={{ duration: 0.3 }}
-										className="relative w-full h-full"
+										exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, x: -100 }}
+										transition={motionTransition}
+										className="relative size-full"
 									>
 										<Image src={currentPhoto.src} alt={currentPhoto.alt} fill className="object-contain" sizes="90vw" />
 									</motion.div>
 								</AnimatePresence>
 							</div>
 
-							<div className="bg-cursor-bg border border-cursor-border rounded-lg p-4 text-center">
-								<p className="text-cursor-text font-medium mb-1">{currentPhoto.location}</p>
-								<p className="text-cursor-text-muted text-sm">{currentPhoto.date}</p>
-							</div>
+							<Card>
+								<CardContent className="py-4 text-left">
+									<p className="mb-1">{currentPhoto.location}</p>
+									<p className="text-sm text-muted-foreground">{currentPhoto.date}</p>
+								</CardContent>
+							</Card>
 
 							{photos.length > 1 ? (
 								<>
-									<button
+									<Button
+										variant="secondary"
+										size="icon"
+										className="absolute top-1/2 left-4 -translate-y-1/2"
 										onClick={() => setCurrentIndex((prev) => (prev - 1 + photos.length) % photos.length)}
-										className="absolute left-4 top-1/2 -translate-y-1/2 bg-cursor-bg/80 border border-cursor-border rounded-lg p-2 text-cursor-text hover:bg-cursor-bg transition-colors"
-										aria-label="Previous photo"
+										aria-label="Foto anterior"
 									>
-										<ChevronLeft className="w-6 h-6" />
-									</button>
-									<button
+										<CaretLeftIcon weight="regular" className="size-6" />
+									</Button>
+									<Button
+										variant="secondary"
+										size="icon"
+										className="absolute top-1/2 right-4 -translate-y-1/2"
 										onClick={() => setCurrentIndex((prev) => (prev + 1) % photos.length)}
-										className="absolute right-4 top-1/2 -translate-y-1/2 bg-cursor-bg/80 border border-cursor-border rounded-lg p-2 text-cursor-text hover:bg-cursor-bg transition-colors"
-										aria-label="Next photo"
+										aria-label="Foto siguiente"
 									>
-										<ChevronRight className="w-6 h-6" />
-									</button>
+										<CaretRightIcon weight="regular" className="size-6" />
+									</Button>
 								</>
 							) : null}
 						</motion.div>
@@ -114,6 +133,4 @@ const WorldEventsCarousel: React.FC = () => {
 			</AnimatePresence>
 		</>
 	);
-};
-
-export default WorldEventsCarousel;
+}

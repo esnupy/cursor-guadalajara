@@ -65,6 +65,7 @@ const BentoGrid: React.FC<BentoGridProps> = ({
 								className="object-cover"
 								sizes={getSizes(mobile.colSpan ?? 1, mobileCols)}
 								priority={index < 4}
+								unoptimized
 							/>
 						</div>
 					);

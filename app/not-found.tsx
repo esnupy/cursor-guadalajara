@@ -1,22 +1,17 @@
-import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
+import CursorLockupSwap from '@/components/icons/CursorLockupSwap';
 import { siteConfig } from '@/content/site.config';
+import { Button } from '@/components/ui/button';
 
-const NotFound: React.FC = () => {
+export default function NotFound() {
 	return (
-		<main className="min-h-screen bg-cursor-bg text-cursor-text flex flex-col items-center justify-center px-6">
-			<Image src="/cursor-logo.svg" alt="Cursor" width={120} height={32} className="h-8 w-auto mb-12 opacity-40" />
-			<h1 className="text-6xl md:text-8xl font-bold tracking-tight text-cursor-text-faint mb-4">404</h1>
-			<p className="text-cursor-text-muted text-lg mb-8">This page doesn&apos;t exist.</p>
-			<Link
-				href="/"
-				className="inline-flex items-center gap-2 px-5 py-2.5 bg-cursor-text text-cursor-bg rounded-md hover:bg-cursor-text-muted transition-colors text-sm font-medium"
-			>
-				Back to {siteConfig.communityName}
-			</Link>
+		<main className="flex min-h-screen flex-col items-center justify-center bg-background px-[clamp(1.25rem,4vw,4rem)] text-foreground">
+			<CursorLockupSwap size={32} className="mb-12 h-8 w-auto opacity-40" aria-hidden />
+			<h1 className="mb-4 text-6xl tracking-tight text-muted-foreground/50 md:text-8xl">404</h1>
+			<p className="mb-8 text-lg text-muted-foreground">Esta página no existe.</p>
+			<Button asChild>
+				<Link href="/">Volver a {siteConfig.communityNameLocal}</Link>
+			</Button>
 		</main>
 	);
-};
-
-export default NotFound;
+}

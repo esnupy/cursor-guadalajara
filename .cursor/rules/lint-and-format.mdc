@@ -1,0 +1,24 @@
+---
+description: Run ESLint and Prettier after every coding iteration
+alwaysApply: true
+---
+
+# Lint and Format Standard
+
+After completing each coding iteration (before handing work back to the user), always run:
+
+```bash
+bun run fix
+```
+
+This runs ESLint with auto-fix, then Prettier formatting.
+
+If `bun run fix` reports remaining ESLint errors, resolve them manually and run `bun run fix` again until clean.
+
+Before opening a PR or finishing a larger task, also run:
+
+```bash
+bun run check
+```
+
+`check` runs non-mutating verification (`format:check` + `lint`) and must pass with no errors.
