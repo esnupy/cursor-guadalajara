@@ -1,14 +1,15 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Copy, Check, PenLine } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 interface PromptBlockProps {
 	prompt: string;
 	label?: string;
 }
 
-const PromptBlock: React.FC<PromptBlockProps> = ({ prompt, label = 'Try this in Cursor' }) => {
+export default function PromptBlock({ prompt, label = 'Try this in Cursor' }: PromptBlockProps) {
 	const [isCopied, setIsCopied] = useState(false);
 
 	const handleCopy = async () => {
@@ -23,26 +24,24 @@ const PromptBlock: React.FC<PromptBlockProps> = ({ prompt, label = 'Try this in 
 
 	return (
 		<div className="space-y-3">
-			<div className="flex items-center gap-2 text-cursor-accent-blue text-sm font-medium">
-				<PenLine className="w-4 h-4" />
+			<div className="flex items-center gap-2 text-sm font-medium text-primary">
+				<PenLine className="size-4" />
 				<span>{label}</span>
 			</div>
-			<div className="relative group">
-				<button
+			<div className="group relative">
+				<Button
+					variant="secondary"
+					size="icon-sm"
 					onClick={handleCopy}
-					className="absolute top-4 right-4 p-2 rounded bg-cursor-surface-raised hover:bg-cursor-surface text-cursor-text-muted hover:text-cursor-text transition-opacity opacity-0 group-hover:opacity-100 z-10"
+					className="absolute top-4 right-4 z-10 opacity-0 transition-opacity group-hover:opacity-100"
 					aria-label="Copy prompt"
 				>
-					{isCopied ? <Check className="w-5 h-5 text-cursor-accent-green" /> : <Copy className="w-5 h-5" />}
-				</button>
-				<pre className="bg-cursor-accent-blue-bg border border-cursor-border-emphasis p-6 rounded-md overflow-x-auto">
-					<code className="text-base md:text-lg font-mono text-cursor-text-secondary whitespace-pre-wrap">
-						{prompt}
-					</code>
+					{isCopied ? <Check className="size-5 text-primary" /> : <Copy className="size-5" />}
+				</Button>
+				<pre className="overflow-x-auto rounded-md border border-border bg-accent/50 p-6">
+					<code className="font-mono text-base whitespace-pre-wrap text-foreground/90 md:text-lg">{prompt}</code>
 				</pre>
 			</div>
 		</div>
 	);
-};
-
-export default PromptBlock;
+}

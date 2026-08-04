@@ -1,8 +1,10 @@
 'use client';
 
-import React, { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 interface SlideLayoutProps {
 	currentSlide: number;
@@ -11,12 +13,12 @@ interface SlideLayoutProps {
 	storageKey?: string;
 }
 
-const SlideLayout: React.FC<SlideLayoutProps> = ({
+export default function SlideLayout({
 	currentSlide,
 	totalSlides,
 	children,
 	storageKey = 'cursor-ambassador-current-slide',
-}) => {
+}: SlideLayoutProps) {
 	const router = useRouter();
 	const pathname = usePathname();
 	const [isNavigating, setIsNavigating] = useState(false);
@@ -75,53 +77,55 @@ const SlideLayout: React.FC<SlideLayoutProps> = ({
 	}, [currentSlide, storageKey]);
 
 	return (
-		<div className="min-h-screen bg-cursor-bg text-cursor-text flex flex-col">
-			<main className="flex-1 flex items-start justify-center p-6 md:p-10 pt-8 overflow-y-auto pb-32 md:pb-36">
+		<div className="flex min-h-screen flex-col bg-background text-foreground">
+			<main className="flex flex-1 items-start justify-center overflow-y-auto p-6 pt-8 pb-32 md:p-10 md:pb-36">
 				<div className="w-full max-w-6xl pb-16">{children}</div>
 			</main>
 
-			<div className="fixed bottom-0 left-0 right-0 p-4 bg-cursor-bg/90 backdrop-blur-sm border-t border-cursor-border">
-				<div className="max-w-6xl mx-auto flex items-center justify-between">
-					<button
+			<div className="fixed right-0 bottom-0 left-0 border-t border-border bg-background/90 p-4 backdrop-blur-sm">
+				<div className="mx-auto flex max-w-6xl items-center justify-between">
+					<Button
+						variant="secondary"
 						onClick={() => goToSlide(currentSlide - 1)}
 						disabled={currentSlide === 1}
-						className="flex items-center space-x-2 px-4 py-2 rounded-md bg-cursor-surface hover:bg-cursor-surface-raised disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
 						aria-label="Previous slide"
 					>
-						<ChevronLeft className="w-5 h-5" />
+						<ChevronLeft className="size-5" />
 						<span className="hidden md:inline">Previous</span>
-					</button>
+					</Button>
 
-					<div className="flex items-center space-x-2">
+					<div className="flex items-center gap-2">
 						{Array.from({ length: totalSlides }, (_, i) => i + 1).map((slideId) => (
 							<button
 								key={slideId}
+								type="button"
 								onClick={() => goToSlide(slideId)}
-								className={`w-2 h-2 rounded-full transition-all ${
-									slideId === currentSlide ? 'bg-cursor-text w-8' : 'bg-cursor-text-faint hover:bg-cursor-text-muted'
-								}`}
+								className={cn(
+									'h-2 rounded-full transition-all',
+									slideId === currentSlide
+										? 'w-8 bg-foreground'
+										: 'w-2 bg-muted-foreground/40 hover:bg-muted-foreground',
+								)}
 								aria-label={`Go to slide ${slideId}`}
 							/>
 						))}
 					</div>
 
-					<div className="text-sm text-cursor-text-muted hidden md:block">
+					<div className="hidden text-sm text-muted-foreground md:block">
 						{currentSlide} / {totalSlides}
 					</div>
 
-					<button
+					<Button
+						variant="secondary"
 						onClick={() => goToSlide(currentSlide + 1)}
 						disabled={currentSlide >= totalSlides}
-						className="flex items-center space-x-2 px-4 py-2 rounded-md bg-cursor-surface hover:bg-cursor-surface-raised disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
 						aria-label="Next slide"
 					>
 						<span className="hidden md:inline">Next</span>
-						<ChevronRight className="w-5 h-5" />
-					</button>
+						<ChevronRight className="size-5" />
+					</Button>
 				</div>
 			</div>
 		</div>
 	);
-};
-
-export default SlideLayout;
+}

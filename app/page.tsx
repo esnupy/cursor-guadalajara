@@ -45,7 +45,7 @@ function buildHomeJsonLd() {
 }
 
 const Home: React.FC = () => (
-	<main className="min-h-screen bg-cursor-bg text-cursor-text scroll-smooth">
+	<main className="min-h-screen scroll-smooth bg-background text-foreground">
 		<JsonLd data={buildHomeJsonLd()} />
 		<Navbar />
 		<HeroHeader />

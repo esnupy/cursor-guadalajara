@@ -1,13 +1,14 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Copy, Check } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 interface CodeBlockProps {
 	code: string;
 }
 
-const CodeBlock: React.FC<CodeBlockProps> = ({ code }) => {
+export default function CodeBlock({ code }: CodeBlockProps) {
 	const [isCopied, setIsCopied] = useState(false);
 
 	const handleCopy = async () => {
@@ -21,19 +22,19 @@ const CodeBlock: React.FC<CodeBlockProps> = ({ code }) => {
 	};
 
 	return (
-		<div className="relative group">
-			<button
+		<div className="group relative">
+			<Button
+				variant="secondary"
+				size="icon-sm"
 				onClick={handleCopy}
-				className="absolute top-4 right-4 p-2 rounded bg-cursor-surface-raised hover:bg-cursor-surface text-cursor-text-muted hover:text-cursor-text transition-opacity opacity-0 group-hover:opacity-100"
+				className="absolute top-4 right-4 opacity-0 transition-opacity group-hover:opacity-100"
 				aria-label="Copy code"
 			>
-				{isCopied ? <Check className="w-5 h-5 text-cursor-accent-green" /> : <Copy className="w-5 h-5" />}
-			</button>
-			<pre className="bg-cursor-surface p-6 rounded-md border border-cursor-border overflow-x-auto">
-				<code className="text-base md:text-lg font-mono text-cursor-text-secondary whitespace-pre-wrap">{code}</code>
+				{isCopied ? <Check className="size-5 text-primary" /> : <Copy className="size-5" />}
+			</Button>
+			<pre className="overflow-x-auto rounded-md border border-border bg-muted p-6">
+				<code className="font-mono text-base whitespace-pre-wrap text-foreground/90 md:text-lg">{code}</code>
 			</pre>
 		</div>
 	);
-};
-
-export default CodeBlock;
+}

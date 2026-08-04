@@ -1,12 +1,12 @@
 'use client';
 
-import React from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Calendar, Users, ArrowRight } from 'lucide-react';
 import { pastEvents } from '@/content/events';
 import { useI18n } from '@/lib/i18n';
+import { Card, CardContent } from '@/components/ui/card';
 
 const containerVariants = {
 	hidden: {},
@@ -18,7 +18,7 @@ const itemVariants = {
 	visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
 };
 
-const PastEvents: React.FC = () => {
+export default function PastEvents() {
 	const { t, locale } = useI18n();
 
 	if (pastEvents.length === 0) {
@@ -34,15 +34,15 @@ const PastEvents: React.FC = () => {
 			transition={{ duration: 0.5 }}
 			className="mb-16 scroll-mt-20"
 		>
-			<p className="text-xs uppercase tracking-wider text-cursor-text-muted font-medium mb-2">{t('home.pastEvents')}</p>
-			<h2 className="text-2xl md:text-3xl font-bold text-cursor-text mb-6">{t('home.pastEventsHeading')}</h2>
+			<p className="mb-2 text-xs font-medium uppercase tracking-wider text-muted-foreground">{t('home.pastEvents')}</p>
+			<h2 className="mb-6 text-2xl font-bold text-foreground md:text-3xl">{t('home.pastEventsHeading')}</h2>
 
 			<motion.div
 				variants={containerVariants}
 				initial="hidden"
 				whileInView="visible"
 				viewport={{ once: true, margin: '-50px' }}
-				className="space-y-6 -mx-3 sm:mx-0"
+				className="-mx-3 space-y-6 sm:mx-0"
 			>
 				{pastEvents.map((event) => {
 					if (!event.recapPath) return null;
@@ -60,10 +60,8 @@ const PastEvents: React.FC = () => {
 
 					return (
 						<motion.div key={event.id} variants={itemVariants}>
-							<Link href={event.recapPath} className="block group">
-								<div className="relative bg-[#1B1913] border border-cursor-border rounded-none sm:rounded-md overflow-hidden transition-all duration-300 hover:border-[#f54e00]/50 hover:shadow-[0_0_30px_rgba(245,78,0,0.12)]">
-									{/* Glow backdrop */}
-									<div className="pointer-events-none absolute -inset-px sm:rounded-md bg-[radial-gradient(ellipse_at_bottom,rgba(245,78,0,0.06),transparent_60%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
+							<Link href={event.recapPath} className="group block">
+								<Card className="overflow-hidden rounded-none transition-colors hover:border-primary/50 sm:rounded-xl">
 									{event.thumbnail ? (
 										<div className="relative">
 											<div className={`aspect-[2/1] overflow-hidden ${hasGallery ? 'grid grid-cols-3 gap-1' : ''}`}>
@@ -90,7 +88,7 @@ const PastEvents: React.FC = () => {
 													))}
 											</div>
 											{event.host ? (
-												<div className="absolute top-3 right-3 bg-black/60 backdrop-blur-sm rounded-lg p-2 flex items-center gap-2">
+												<div className="absolute top-3 right-3 flex items-center gap-2 rounded-lg bg-black/60 p-2 backdrop-blur-sm">
 													<Image
 														src={event.host.logo}
 														alt={event.host.name}
@@ -104,26 +102,26 @@ const PastEvents: React.FC = () => {
 										</div>
 									) : null}
 
-									<div className="px-5 py-4">
-										<h3 className="text-lg text-cursor-text font-medium mb-1.5">{event.title}</h3>
-										<div className="flex flex-wrap items-center gap-3 text-sm text-cursor-text-muted mb-1.5">
+									<CardContent className="px-5 py-4">
+										<h3 className="mb-1.5 text-lg font-medium text-foreground">{event.title}</h3>
+										<div className="mb-1.5 flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
 											<div className="flex items-center gap-1.5">
-												<Calendar className="w-4 h-4" />
+												<Calendar className="size-4" />
 												<span>{displayDate}</span>
 											</div>
 											{event.attendees ? (
 												<div className="flex items-center gap-1.5">
-													<Users className="w-4 h-4" />
+													<Users className="size-4" />
 													<span>{t('home.attendees', { count: String(event.attendees) })}</span>
 												</div>
 											) : null}
 										</div>
-										<div className="flex items-center gap-2 text-sm text-[#f54e00]">
+										<div className="flex items-center gap-2 text-sm text-primary">
 											<span>{t('home.viewRecap')}</span>
-											<ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200 ease-out" />
+											<ArrowRight className="size-4 transition-transform duration-200 ease-out group-hover:translate-x-1" />
 										</div>
-									</div>
-								</div>
+									</CardContent>
+								</Card>
 							</Link>
 						</motion.div>
 					);
@@ -131,6 +129,4 @@ const PastEvents: React.FC = () => {
 			</motion.div>
 		</motion.section>
 	);
-};
-
-export default PastEvents;
+}

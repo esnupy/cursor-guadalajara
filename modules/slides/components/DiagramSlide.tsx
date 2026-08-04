@@ -1,7 +1,7 @@
 'use client';
 
 import DOMPurify from 'dompurify';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface DiagramSlideProps {
 	src: string;
@@ -18,7 +18,7 @@ function isTrustedSvgSrc(src: string): boolean {
 	}
 }
 
-const DiagramSlide: React.FC<DiagramSlideProps> = ({ src, alt, caption }) => {
+export default function DiagramSlide({ src, alt, caption }: DiagramSlideProps) {
 	const validationError =
 		typeof window !== 'undefined' && !isTrustedSvgSrc(src) ? 'Diagram source must be same-origin' : null;
 	const [fetchKey, setFetchKey] = useState(src);
@@ -62,20 +62,20 @@ const DiagramSlide: React.FC<DiagramSlideProps> = ({ src, alt, caption }) => {
 	}, [src, validationError]);
 
 	if (isLoading) {
-		return <div className="animate-pulse text-cursor-text-muted py-12 text-center">Loading diagram...</div>;
+		return <div className="animate-pulse py-12 text-center text-muted-foreground">Loading diagram...</div>;
 	}
 
 	if (error) {
 		return (
-			<div className="bg-cursor-accent-red-bg border border-cursor-border-emphasis rounded p-4 text-cursor-accent-red text-center">
+			<div className="rounded border border-destructive/30 bg-destructive/10 p-4 text-center text-destructive">
 				<p>Error loading diagram</p>
-				<p className="text-sm mt-2">{error}</p>
+				<p className="mt-2 text-sm">{error}</p>
 			</div>
 		);
 	}
 
 	if (!svgContent) {
-		return <div className="text-cursor-text-muted text-center py-12">{alt}</div>;
+		return <div className="py-12 text-center text-muted-foreground">{alt}</div>;
 	}
 
 	const modifiedSvg = svgContent.replace(
@@ -91,14 +91,12 @@ const DiagramSlide: React.FC<DiagramSlideProps> = ({ src, alt, caption }) => {
 		<div className="flex flex-col items-center justify-center space-y-6">
 			<div className="w-full max-w-4xl">
 				<div
-					className="w-full border border-cursor-border rounded-md overflow-hidden"
+					className="w-full overflow-hidden rounded-md border border-border"
 					style={{ minHeight: '300px' }}
 					dangerouslySetInnerHTML={{ __html: sanitizedSvg }}
 				/>
 			</div>
-			{caption ? <p className="text-cursor-text-muted text-lg text-center max-w-3xl">{caption}</p> : null}
+			{caption ? <p className="max-w-3xl text-center text-lg text-muted-foreground">{caption}</p> : null}
 		</div>
 	);
-};
-
-export default DiagramSlide;
+}

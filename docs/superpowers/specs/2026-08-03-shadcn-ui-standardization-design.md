@@ -10,16 +10,16 @@ Make the codebase look and behave like a regular shadcn/ui project: default desi
 
 ## Decisions
 
-| Topic | Choice |
-| --- | --- |
-| Migration style | Structural only — keep layouts/composition; swap tokens + primitives |
-| Theme | Light + dark (`class` strategy) with `next-themes` |
-| Theme control | Navbar, beside language toggle (desktop + mobile) |
-| Fonts | Default shadcn/font stack for now; drop active Cursor Gothic / BSRU / Thasadith wiring |
-| Slides module | In scope — migrate to same tokens/atoms |
-| Custom interactions | Keep nav, galleries, carousels custom; restyle onto tokens; atoms only where obvious |
-| Approach | Foundation → atoms → restyle features (no compatibility aliases for `cursor-*`) |
-| Token ownership | Use shadcn defaults; user will retune CSS variables later |
+| Topic               | Choice                                                                                 |
+| ------------------- | -------------------------------------------------------------------------------------- |
+| Migration style     | Structural only — keep layouts/composition; swap tokens + primitives                   |
+| Theme               | Light + dark (`class` strategy) with `next-themes`                                     |
+| Theme control       | Navbar, beside language toggle (desktop + mobile)                                      |
+| Fonts               | Default shadcn/font stack for now; drop active Cursor Gothic / BSRU / Thasadith wiring |
+| Slides module       | In scope — migrate to same tokens/atoms                                                |
+| Custom interactions | Keep nav, galleries, carousels custom; restyle onto tokens; atoms only where obvious   |
+| Approach            | Foundation → atoms → restyle features (no compatibility aliases for `cursor-*`)        |
+| Token ownership     | Use shadcn defaults; user will retune CSS variables later                              |
 
 ## Architecture
 

@@ -1,12 +1,12 @@
-import React from 'react';
 import { siteConfig } from '@/content/site.config';
+import { cn } from '@/lib/utils';
 
 type LumaCalendarProps = {
 	className?: string;
 	height?: number;
 };
 
-const LumaCalendar: React.FC<LumaCalendarProps> = ({ className, height = 450 }) => {
+export default function LumaCalendar({ className, height = 450 }: LumaCalendarProps) {
 	if (!siteConfig.lumaCalendarEmbedUrl) {
 		return null;
 	}
@@ -20,14 +20,7 @@ const LumaCalendar: React.FC<LumaCalendarProps> = ({ className, height = 450 }) 
 			aria-hidden="false"
 			tabIndex={0}
 			title={`${siteConfig.communityName} — upcoming events calendar`}
-			className={className}
-			style={{
-				border: '1px solid #bfcbda88',
-				borderRadius: '4px',
-				display: 'block',
-			}}
+			className={cn('block rounded-md border border-border', className)}
 		/>
 	);
-};
-
-export default LumaCalendar;
+}

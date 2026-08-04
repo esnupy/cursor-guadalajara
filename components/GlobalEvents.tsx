@@ -1,11 +1,11 @@
 'use client';
 
-import React from 'react';
 import { motion } from 'framer-motion';
 import WorldEventsCarousel from '@/components/WorldEventsCarousel';
 import { useI18n } from '@/lib/i18n';
+import { Card, CardContent } from '@/components/ui/card';
 
-const GlobalEvents: React.FC = () => {
+export default function GlobalEvents() {
 	const { t } = useI18n();
 
 	return (
@@ -16,13 +16,13 @@ const GlobalEvents: React.FC = () => {
 			transition={{ duration: 0.5 }}
 			className="mb-16"
 		>
-			<div className="bg-[#1B1913] border border-cursor-border rounded-lg p-6">
-				<h2 className="text-xl md:text-2xl font-semibold text-cursor-text mb-2">{t('worldEvents.title')}</h2>
-				<p className="text-cursor-text-muted text-sm md:text-base mb-6">{t('worldEvents.description')}</p>
-				<WorldEventsCarousel />
-			</div>
+			<Card>
+				<CardContent className="pt-6">
+					<h2 className="mb-2 text-xl font-semibold text-foreground md:text-2xl">{t('worldEvents.title')}</h2>
+					<p className="mb-6 text-sm text-muted-foreground md:text-base">{t('worldEvents.description')}</p>
+					<WorldEventsCarousel />
+				</CardContent>
+			</Card>
 		</motion.section>
 	);
-};
-
-export default GlobalEvents;
+}

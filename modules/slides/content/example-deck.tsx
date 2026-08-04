@@ -9,7 +9,7 @@ export const exampleDeck: Slide[] = [
 		content: (
 			<div className="space-y-6">
 				<h1 className="text-4xl md:text-5xl font-bold">Seminar Slides for the Event (Template)</h1>
-				<p className="text-cursor-text-muted text-lg">
+				<p className="text-lg text-muted-foreground">
 					This optional slide engine can be enabled by any ambassador community.
 				</p>
 			</div>

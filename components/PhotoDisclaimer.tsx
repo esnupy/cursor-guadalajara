@@ -1,11 +1,11 @@
 'use client';
 
-import React from 'react';
 import { motion } from 'framer-motion';
 import { Camera } from 'lucide-react';
 import { useI18n } from '@/lib/i18n';
+import { Card, CardContent } from '@/components/ui/card';
 
-const PhotoDisclaimer: React.FC = () => {
+export default function PhotoDisclaimer() {
 	const { t } = useI18n();
 
 	return (
@@ -13,26 +13,30 @@ const PhotoDisclaimer: React.FC = () => {
 			initial={{ opacity: 0, y: 20 }}
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ duration: 0.5, delay: 0.4 }}
-			className="bg-[#1B1913] border border-cursor-border rounded-lg p-8 mb-8"
+			className="mb-8"
 		>
-			<div className="flex items-center gap-3 mb-4">
-				<Camera className="w-5 h-5 text-cursor-text" />
-				<h2 className="text-xl font-semibold text-cursor-text">{t('photos.title')}</h2>
-			</div>
+			<Card>
+				<CardContent className="pt-8">
+					<div className="mb-4 flex items-center gap-3">
+						<Camera className="size-5 text-foreground" />
+						<h2 className="text-xl font-semibold text-foreground">{t('photos.title')}</h2>
+					</div>
 
-			<div className="text-cursor-text-muted space-y-3 text-sm">
-				<p>{t('photos.description')}</p>
-				<div className="bg-cursor-bg-dark border border-cursor-border rounded-lg p-4">
-					<p className="text-cursor-text font-medium mb-2">{t('photos.preference')}</p>
-					<ul className="space-y-1 text-sm list-disc list-inside">
-						<li>{t('photos.option1')}</li>
-						<li>{t('photos.option2')}</li>
-					</ul>
-				</div>
-				<p className="text-xs">{t('photos.thanks')}</p>
-			</div>
+					<div className="space-y-3 text-sm text-muted-foreground">
+						<p>{t('photos.description')}</p>
+						<Card size="sm">
+							<CardContent className="pt-6">
+								<p className="mb-2 font-medium text-foreground">{t('photos.preference')}</p>
+								<ul className="list-inside list-disc space-y-1 text-sm">
+									<li>{t('photos.option1')}</li>
+									<li>{t('photos.option2')}</li>
+								</ul>
+							</CardContent>
+						</Card>
+						<p className="text-xs">{t('photos.thanks')}</p>
+					</div>
+				</CardContent>
+			</Card>
 		</motion.section>
 	);
-};
-
-export default PhotoDisclaimer;
+}

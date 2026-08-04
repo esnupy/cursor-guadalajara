@@ -1,18 +1,20 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 import { GalleryPhoto } from '@/lib/types';
 import { useI18n } from '@/lib/i18n';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
 
 interface PhotoGalleryProps {
 	photos: GalleryPhoto[];
 	embedded?: boolean;
 }
 
-const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos, embedded = false }) => {
+export default function PhotoGallery({ photos, embedded = false }: PhotoGalleryProps) {
 	const { t } = useI18n();
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const [isFullscreen, setIsFullscreen] = useState(false);
@@ -25,20 +27,18 @@ const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos, embedded = false })
 
 	const content = (
 		<>
-			<div className="flex items-baseline justify-between gap-4 mb-6">
+			<div className="mb-6 flex items-baseline justify-between gap-4">
 				<div>
-					<h2
-						className={embedded ? 'text-lg font-semibold text-cursor-text' : 'text-xl font-semibold text-cursor-text'}
-					>
+					<h2 className={embedded ? 'text-lg font-semibold text-foreground' : 'text-xl font-semibold text-foreground'}>
 						{t('recap.galleryTitle')}
 					</h2>
-					<p className="text-cursor-text-muted text-sm mt-1">
+					<p className="mt-1 text-sm text-muted-foreground">
 						{t('recap.gallerySubtitle', { count: String(photos.length) })}
 					</p>
 				</div>
 			</div>
 
-			<div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+			<div className="grid grid-cols-2 gap-4 md:grid-cols-3">
 				{photos.map((photo, index) => (
 					<motion.button
 						key={`${photo.src}-${index}`}
@@ -46,7 +46,7 @@ const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos, embedded = false })
 						initial={{ opacity: 0, scale: 0.98 }}
 						animate={{ opacity: 1, scale: 1 }}
 						transition={{ duration: 0.25, delay: Math.min(index * 0.02, 0.25) }}
-						className="relative aspect-square overflow-hidden rounded-lg border border-cursor-border bg-cursor-bg-dark text-left"
+						className="relative aspect-square overflow-hidden rounded-lg border border-border bg-muted text-left"
 						onClick={() => {
 							setCurrentIndex(index);
 							setIsFullscreen(true);
@@ -57,7 +57,7 @@ const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos, embedded = false })
 							src={photo.src}
 							alt={photo.alt}
 							fill
-							className="object-cover hover:scale-105 transition-transform duration-300"
+							className="object-cover transition-transform duration-300 hover:scale-105"
 							sizes="(max-width: 768px) 50vw, 33vw"
 						/>
 					</motion.button>
@@ -67,7 +67,7 @@ const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos, embedded = false })
 			<AnimatePresence>
 				{isFullscreen ? (
 					<div
-						className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
+						className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4"
 						onClick={() => setIsFullscreen(false)}
 					>
 						<motion.div
@@ -75,18 +75,20 @@ const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos, embedded = false })
 							animate={{ opacity: 1, scale: 1 }}
 							exit={{ opacity: 0, scale: 0.98 }}
 							transition={{ duration: 0.2 }}
-							className="relative max-w-6xl w-full max-h-[90vh]"
+							className="relative max-h-[90vh] w-full max-w-6xl"
 							onClick={(event) => event.stopPropagation()}
 						>
-							<button
+							<Button
+								variant="secondary"
+								size="icon"
+								className="absolute top-4 right-4 z-10"
 								onClick={() => setIsFullscreen(false)}
-								className="absolute top-4 right-4 z-10 bg-cursor-bg/80 border border-cursor-border rounded-lg p-2 text-cursor-text hover:bg-cursor-bg transition-colors"
 								aria-label={t('recap.closeGallery')}
 							>
-								<X className="w-5 h-5" />
-							</button>
+								<X className="size-5" />
+							</Button>
 
-							<div className="relative w-full h-[80vh] mb-4">
+							<div className="relative mb-4 h-[80vh] w-full">
 								<AnimatePresence mode="wait">
 									<motion.div
 										key={currentIndex}
@@ -94,35 +96,41 @@ const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos, embedded = false })
 										animate={{ opacity: 1, x: 0 }}
 										exit={{ opacity: 0, x: -40 }}
 										transition={{ duration: 0.2 }}
-										className="relative w-full h-full"
+										className="relative size-full"
 									>
 										<Image src={currentPhoto.src} alt={currentPhoto.alt} fill className="object-contain" sizes="90vw" />
 									</motion.div>
 								</AnimatePresence>
 							</div>
 
-							<div className="bg-cursor-bg border border-cursor-border rounded-lg p-4 text-center">
-								<p className="text-cursor-text font-medium">
-									{t('recap.photoLabel', { index: String(currentIndex + 1), total: String(photos.length) })}
-								</p>
-							</div>
+							<Card>
+								<CardContent className="py-4 text-center">
+									<p className="font-medium text-foreground">
+										{t('recap.photoLabel', { index: String(currentIndex + 1), total: String(photos.length) })}
+									</p>
+								</CardContent>
+							</Card>
 
 							{photos.length > 1 ? (
 								<>
-									<button
+									<Button
+										variant="secondary"
+										size="icon"
+										className="absolute top-1/2 left-4 -translate-y-1/2"
 										onClick={() => setCurrentIndex((prev) => (prev - 1 + photos.length) % photos.length)}
-										className="absolute left-4 top-1/2 -translate-y-1/2 bg-cursor-bg/80 border border-cursor-border rounded-lg p-2 text-cursor-text hover:bg-cursor-bg transition-colors"
 										aria-label={t('recap.prevPhoto')}
 									>
-										<ChevronLeft className="w-6 h-6" />
-									</button>
-									<button
+										<ChevronLeft className="size-6" />
+									</Button>
+									<Button
+										variant="secondary"
+										size="icon"
+										className="absolute top-1/2 right-4 -translate-y-1/2"
 										onClick={() => setCurrentIndex((prev) => (prev + 1) % photos.length)}
-										className="absolute right-4 top-1/2 -translate-y-1/2 bg-cursor-bg/80 border border-cursor-border rounded-lg p-2 text-cursor-text hover:bg-cursor-bg transition-colors"
 										aria-label={t('recap.nextPhoto')}
 									>
-										<ChevronRight className="w-6 h-6" />
-									</button>
+										<ChevronRight className="size-6" />
+									</Button>
 								</>
 							) : null}
 						</motion.div>
@@ -133,7 +141,7 @@ const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos, embedded = false })
 	);
 
 	if (embedded) {
-		return <div className="border-t border-cursor-border mt-6 pt-6">{content}</div>;
+		return <div className="mt-6 border-t border-border pt-6">{content}</div>;
 	}
 
 	return (
@@ -141,11 +149,11 @@ const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos, embedded = false })
 			initial={{ opacity: 0, y: 20 }}
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ duration: 0.5, delay: 0.1 }}
-			className="bg-[#1B1913] border border-cursor-border rounded-lg p-8 mb-8"
+			className="mb-8"
 		>
-			{content}
+			<Card>
+				<CardContent className="pt-8">{content}</CardContent>
+			</Card>
 		</motion.section>
 	);
-};
-
-export default PhotoGallery;
+}

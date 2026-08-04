@@ -1,9 +1,14 @@
 import type { Metadata } from 'next';
 import { headers } from 'next/headers';
 import { Analytics } from '@vercel/analytics/react';
+import { Geist } from 'next/font/google';
+import { ThemeProvider } from '@/components/theme-provider';
 import { I18nProvider } from '@/lib/i18n';
 import { siteConfig } from '@/content/site.config';
+import { cn } from '@/lib/utils';
 import './globals.css';
+
+const geist = Geist({ subsets: ['latin'], variable: '--font-sans' });
 
 export const metadata: Metadata = {
 	metadataBase: new URL(siteConfig.siteUrl),
@@ -32,9 +37,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 	await headers();
 
 	return (
-		<html lang={siteConfig.defaultLocale}>
+		<html lang={siteConfig.defaultLocale} className={cn('font-sans', geist.variable)} suppressHydrationWarning>
 			<body className="antialiased">
-				<I18nProvider>{children}</I18nProvider>
+				<ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+					<I18nProvider>{children}</I18nProvider>
+				</ThemeProvider>
 				<Analytics />
 			</body>
 		</html>

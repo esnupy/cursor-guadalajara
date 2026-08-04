@@ -1,10 +1,10 @@
 'use client';
 
-import React from 'react';
 import { siteConfig } from '@/content/site.config';
 import { useI18n } from '@/lib/i18n';
+import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 
-const LanguageToggle: React.FC = () => {
+export default function LanguageToggle() {
 	const { locale, setLocale } = useI18n();
 
 	if (siteConfig.locales.length <= 1) {
@@ -12,20 +12,20 @@ const LanguageToggle: React.FC = () => {
 	}
 
 	return (
-		<div className="flex items-center gap-2">
+		<ToggleGroup
+			type="single"
+			value={locale}
+			onValueChange={(value) => {
+				if (value) setLocale(value);
+			}}
+			variant="outline"
+			size="sm"
+		>
 			{siteConfig.locales.map((localeCode) => (
-				<button
-					key={localeCode}
-					onClick={() => setLocale(localeCode)}
-					className={`px-3 py-1.5 rounded text-sm font-medium transition-colors ${
-						locale === localeCode ? 'bg-cursor-text text-cursor-bg' : 'text-cursor-text-muted hover:text-cursor-text'
-					}`}
-				>
+				<ToggleGroupItem key={localeCode} value={localeCode} aria-label={localeCode}>
 					{localeCode.toUpperCase()}
-				</button>
+				</ToggleGroupItem>
 			))}
-		</div>
+		</ToggleGroup>
 	);
-};
-
-export default LanguageToggle;
+}
