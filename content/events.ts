@@ -3,14 +3,6 @@ import { CursorEvent } from '@/lib/types';
 // REPLACE: Replace all sample events, locations, and Luma URLs with real community events.
 export const events: CursorEvent[] = [
 	{
-		id: 'cursor-workshop-first-mvp-2026-08',
-		title: 'Taller de Cursor: Cómo construir tu primer MVP',
-		date: '2026-08-08',
-		displayDate: '8 de Agosto de 2026',
-		location: 'Guadalajara, Jalisco',
-		status: 'upcoming',
-	},
-	{
 		id: 'cursor-meetup-guadalajara-2026',
 		title: 'Cursor Meetup — Guadalajara',
 		date: '2026-08-27',

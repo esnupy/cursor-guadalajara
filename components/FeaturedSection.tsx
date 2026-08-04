@@ -19,7 +19,7 @@ export default function FeaturedSection() {
 			className="mb-16"
 		>
 			<Card>
-				<CardContent className="text-xl grid grid-cols-2 grid-rows-1 gap-6">
+				<CardContent className="text-xl md:grid md:grid-cols-2 md:grid-rows-1 flex flex-col gap-6">
 					<div className="flex flex-col justify-center">
 						<h2 className="mb-1 leading-tight tracking-tight">{featuredResource.title}</h2>
 						<p className="mb-6 leading-relaxed text-muted-foreground">{featuredResource.description}</p>
