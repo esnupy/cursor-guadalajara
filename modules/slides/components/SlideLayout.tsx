@@ -20,7 +20,13 @@ const SlideLayout: React.FC<SlideLayoutProps> = ({
 	const router = useRouter();
 	const pathname = usePathname();
 	const [isNavigating, setIsNavigating] = useState(false);
+	const [prevSlide, setPrevSlide] = useState(currentSlide);
 	const basePath = pathname.replace(/\/\d+$/, '');
+
+	if (currentSlide !== prevSlide) {
+		setPrevSlide(currentSlide);
+		setIsNavigating(false);
+	}
 
 	const goToSlide = useCallback(
 		(slideId: number) => {
@@ -65,7 +71,6 @@ const SlideLayout: React.FC<SlideLayoutProps> = ({
 	}, [handleKeyDown]);
 
 	useEffect(() => {
-		setIsNavigating(false);
 		localStorage.setItem(storageKey, String(currentSlide));
 	}, [currentSlide, storageKey]);
 

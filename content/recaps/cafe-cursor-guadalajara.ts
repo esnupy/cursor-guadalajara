@@ -6,7 +6,7 @@ export const cafeCursorGuadalajaraRecap: RecapData = {
 	date: 'April 25, 2026 · 10:00–16:00',
 	attendees: 55,
 	summary: [
-		"Guadalajara, Cafe Cursor is back! We met at Ventura Café for a Cafe Takeover: bring your laptop, grab a coffee, and spend a few hours shipping projects with Cursor — or just stop by to meet the community.",
+		'Guadalajara, Cafe Cursor is back! We met at Ventura Café for a Cafe Takeover: bring your laptop, grab a coffee, and spend a few hours shipping projects with Cursor — or just stop by to meet the community.',
 		"It wasn't a conference or a formal workshop. Developers, designers, students, and anyone curious about AI shared workflows, sat at community-facilitated tables, and saw how Cursor fits into day-to-day work.",
 		'Cursor credits and coffee were available. Access was organized in blocks: Morning (10am–1pm), Afternoon (1pm–4pm), and Drop-By / General for anyone who just wanted to say hi.',
 	],
@@ -18,7 +18,7 @@ export const cafeCursorGuadalajaraRecap: RecapData = {
 	highlights: [
 		{
 			quote:
-				"I showed up without a clear plan and left with a feature almost done. Best part was asking the people at the next table how they structure their prompts.",
+				'I showed up without a clear plan and left with a feature almost done. Best part was asking the people at the next table how they structure their prompts.',
 			author: 'Morning Block attendee',
 		},
 		{

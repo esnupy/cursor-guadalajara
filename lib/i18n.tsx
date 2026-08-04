@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode } from 'react';
 import { siteConfig } from '@/content/site.config';
 import { localeBundles } from '@/content/locales';
 
@@ -25,14 +25,16 @@ type I18nProviderProps = {
 };
 
 export const I18nProvider: React.FC<I18nProviderProps> = ({ children }) => {
-	const [locale, setLocaleState] = useState<string>(siteConfig.defaultLocale);
-
-	useEffect(() => {
-		const savedLocale = localStorage.getItem('locale');
-		if (savedLocale && siteConfig.locales.includes(savedLocale)) {
-			setLocaleState(savedLocale);
+	const [locale, setLocaleState] = useState<string>(() => {
+		if (typeof window !== 'undefined') {
+			const savedLocale = localStorage.getItem('locale');
+			if (savedLocale && siteConfig.locales.includes(savedLocale)) {
+				return savedLocale;
+			}
 		}
-	}, []);
+
+		return siteConfig.defaultLocale;
+	});
 
 	const setLocale = (nextLocale: string) => {
 		if (!siteConfig.locales.includes(nextLocale)) {

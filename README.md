@@ -7,8 +7,8 @@ This repository is a configurable Next.js template for Cursor Ambassador communi
 ## Quick Start
 
 ```bash
-pnpm install
-pnpm run dev
+bun install
+bun dev
 ```
 
 Open `http://localhost:3000`.
@@ -129,12 +129,12 @@ Language toggle appears when `siteConfig.locales.length > 1`.
 Example `content/locales/index.ts`:
 
 ```ts
-import en from "./en.json";
-import th from "./th.json";
+import en from './en.json';
+import th from './th.json';
 
 export const localeBundles = {
-  en,
-  th,
+	en,
+	th,
 } as const;
 ```
 
@@ -180,13 +180,13 @@ With fully local images, `next.config.js` does not need remote image domains.
 Build command:
 
 ```bash
-pnpm run build
+bun run build
 ```
 
 Start command:
 
 ```bash
-pnpm run start
+bun run start
 ```
 
 ## Contributing

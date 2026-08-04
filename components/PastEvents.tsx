@@ -34,12 +34,8 @@ const PastEvents: React.FC = () => {
 			transition={{ duration: 0.5 }}
 			className="mb-16 scroll-mt-20"
 		>
-			<p className="text-xs uppercase tracking-wider text-cursor-text-muted font-medium mb-2">
-				{t('home.pastEvents')}
-			</p>
-			<h2 className="text-2xl md:text-3xl font-bold text-cursor-text mb-6">
-				{t('home.pastEventsHeading')}
-			</h2>
+			<p className="text-xs uppercase tracking-wider text-cursor-text-muted font-medium mb-2">{t('home.pastEvents')}</p>
+			<h2 className="text-2xl md:text-3xl font-bold text-cursor-text mb-6">{t('home.pastEventsHeading')}</h2>
 
 			<motion.div
 				variants={containerVariants}
@@ -70,9 +66,7 @@ const PastEvents: React.FC = () => {
 									<div className="pointer-events-none absolute -inset-px sm:rounded-md bg-[radial-gradient(ellipse_at_bottom,rgba(245,78,0,0.06),transparent_60%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
 									{event.thumbnail ? (
 										<div className="relative">
-											<div
-												className={`aspect-[2/1] overflow-hidden ${hasGallery ? 'grid grid-cols-3 gap-1' : ''}`}
-											>
+											<div className={`aspect-[2/1] overflow-hidden ${hasGallery ? 'grid grid-cols-3 gap-1' : ''}`}>
 												<div className={`relative ${hasGallery ? 'col-span-2' : ''}`}>
 													<Image
 														src={event.thumbnail}
@@ -120,9 +114,7 @@ const PastEvents: React.FC = () => {
 											{event.attendees ? (
 												<div className="flex items-center gap-1.5">
 													<Users className="w-4 h-4" />
-													<span>
-														{t('home.attendees', { count: String(event.attendees) })}
-													</span>
+													<span>{t('home.attendees', { count: String(event.attendees) })}</span>
 												</div>
 											) : null}
 										</div>

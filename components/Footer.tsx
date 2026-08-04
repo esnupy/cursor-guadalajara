@@ -27,16 +27,8 @@ const Footer: React.FC = () => {
 				{/* Branding */}
 				<div>
 					<div className="flex items-center gap-2 mb-2">
-						<Image
-							src="/cursor-logo.svg"
-							alt="Cursor"
-							width={90}
-							height={24}
-							className="h-5 w-auto"
-						/>
-						<span className="text-cursor-text-muted text-sm">
-							{siteConfig.communityNameLocal}
-						</span>
+						<Image src="/cursor-logo.svg" alt="Cursor" width={90} height={24} className="h-5 w-auto" />
+						<span className="text-cursor-text-muted text-sm">{siteConfig.communityNameLocal}</span>
 					</div>
 					<p className="text-cursor-text-muted text-sm leading-relaxed">
 						{siteConfig.footerTagline || t('footer.madeWith')}

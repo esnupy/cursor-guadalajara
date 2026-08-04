@@ -50,9 +50,7 @@ const AmbassadorSection: React.FC = () => {
 			<p className="text-xs uppercase tracking-wider text-cursor-text-muted font-medium mb-2">
 				{t('ambassadors.title', { communityName: siteConfig.communityName })}
 			</p>
-			<h2 className="text-2xl md:text-3xl font-bold text-cursor-text mb-6">
-				{t('ambassadors.heading')}
-			</h2>
+			<h2 className="text-2xl md:text-3xl font-bold text-cursor-text mb-6">{t('ambassadors.heading')}</h2>
 
 			<div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
 				{ambassadors.map((ambassador, index) => {
@@ -84,9 +82,7 @@ const AmbassadorSection: React.FC = () => {
 								</div>
 								<div>
 									<p className="text-cursor-text font-medium">{ambassador.name}</p>
-									{ambassador.role ? (
-										<p className="text-cursor-text-muted text-sm">{ambassador.role}</p>
-									) : null}
+									{ambassador.role ? <p className="text-cursor-text-muted text-sm">{ambassador.role}</p> : null}
 								</div>
 							</div>
 

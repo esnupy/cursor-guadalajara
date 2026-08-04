@@ -9,13 +9,13 @@ Thanks for helping improve the Cursor Ambassador Site Template.
 3. Install dependencies:
 
    ```bash
-   npm install
+   bun install
    ```
 
 4. Start development:
 
    ```bash
-   npm run dev
+   bun dev
    ```
 
 ## Making Changes
@@ -37,10 +37,10 @@ Thanks for helping improve the Cursor Ambassador Site Template.
 
 1. Create a focused branch from `main`.
 2. Keep changes scoped to one concern where possible.
-3. Run build before submitting:
+3. Run lint and format checks before submitting:
 
    ```bash
-   npm run build
+   bun run check
    ```
 
 4. Open a PR with:

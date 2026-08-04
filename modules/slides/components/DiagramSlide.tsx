@@ -19,32 +19,47 @@ function isTrustedSvgSrc(src: string): boolean {
 }
 
 const DiagramSlide: React.FC<DiagramSlideProps> = ({ src, alt, caption }) => {
+	const validationError =
+		typeof window !== 'undefined' && !isTrustedSvgSrc(src) ? 'Diagram source must be same-origin' : null;
+	const [fetchKey, setFetchKey] = useState(src);
 	const [svgContent, setSvgContent] = useState<string | null>(null);
-	const [isLoading, setIsLoading] = useState(true);
-	const [error, setError] = useState<string | null>(null);
+	const [isLoading, setIsLoading] = useState(!validationError);
+	const [error, setError] = useState<string | null>(validationError);
+
+	if (src !== fetchKey) {
+		setFetchKey(src);
+		setSvgContent(null);
+		setIsLoading(!validationError);
+		setError(validationError);
+	}
 
 	useEffect(() => {
-		if (!isTrustedSvgSrc(src)) {
-			setError('Diagram source must be same-origin');
-			setIsLoading(false);
+		if (validationError) {
 			return;
 		}
 
-		setIsLoading(true);
+		let isCancelled = false;
+
 		fetch(src)
 			.then((res) => {
 				if (!res.ok) throw new Error(`Fetch failed: ${res.status}`);
 				return res.text();
 			})
 			.then((text) => {
+				if (isCancelled) return;
 				setSvgContent(text);
 				setIsLoading(false);
 			})
 			.catch((err) => {
+				if (isCancelled) return;
 				setError(err.message);
 				setIsLoading(false);
 			});
-	}, [src]);
+
+		return () => {
+			isCancelled = true;
+		};
+	}, [src, validationError]);
 
 	if (isLoading) {
 		return <div className="animate-pulse text-cursor-text-muted py-12 text-center">Loading diagram...</div>;

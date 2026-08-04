@@ -45,13 +45,7 @@ const EventRecap: React.FC<EventRecapProps> = ({ recap }) => {
 							rel="noopener noreferrer"
 							className="text-cursor-text hover:underline inline-flex items-center gap-1.5"
 						>
-							<Image
-								src={recap.host.logo}
-								alt={recap.host.name}
-								width={18}
-								height={18}
-								className="rounded-full"
-							/>
+							<Image src={recap.host.logo} alt={recap.host.name} width={18} height={18} className="rounded-full" />
 							{recap.host.name}
 						</a>
 					</div>
@@ -83,13 +77,7 @@ const EventRecap: React.FC<EventRecapProps> = ({ recap }) => {
 								>
 									{speaker.photo ? (
 										<div className="relative w-10 h-10 rounded-full overflow-hidden flex-shrink-0 border border-cursor-border-emphasis">
-											<Image
-												src={speaker.photo}
-												alt={speaker.name}
-												fill
-												className="object-cover"
-												sizes="40px"
-											/>
+											<Image src={speaker.photo} alt={speaker.name} fill className="object-cover" sizes="40px" />
 										</div>
 									) : null}
 									<div className="min-w-0">
@@ -122,10 +110,7 @@ const EventRecap: React.FC<EventRecapProps> = ({ recap }) => {
 						</div>
 						<div className="grid gap-3 sm:grid-cols-2">
 							{recap.projects.map((project) => (
-								<div
-									key={project.name}
-									className="bg-cursor-bg-dark border border-cursor-border rounded-md p-4"
-								>
+								<div key={project.name} className="bg-cursor-bg-dark border border-cursor-border rounded-md p-4">
 									{project.url ? (
 										<a
 											href={project.url}
@@ -163,13 +148,9 @@ const EventRecap: React.FC<EventRecapProps> = ({ recap }) => {
 									key={index}
 									className="bg-cursor-bg-dark border-l-2 border-cursor-accent-purple/40 rounded-r-md px-4 py-3"
 								>
-									<p className="text-cursor-text-secondary text-sm italic">
-										&ldquo;{highlight.quote}&rdquo;
-									</p>
+									<p className="text-cursor-text-secondary text-sm italic">&ldquo;{highlight.quote}&rdquo;</p>
 									{highlight.author ? (
-										<p className="text-cursor-text-faint text-xs mt-1.5">
-											&mdash; {highlight.author}
-										</p>
+										<p className="text-cursor-text-faint text-xs mt-1.5">&mdash; {highlight.author}</p>
 									) : null}
 								</blockquote>
 							))}

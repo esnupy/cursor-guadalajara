@@ -52,9 +52,7 @@ const UpcomingEvents: React.FC = () => {
 			<p className="text-xs uppercase tracking-wider text-cursor-text-muted font-medium mb-2">
 				{t('home.upcomingEvents')}
 			</p>
-			<h2 className="text-2xl md:text-3xl font-bold text-cursor-text mb-6">
-				{t('home.upcomingHeading')}
-			</h2>
+			<h2 className="text-2xl md:text-3xl font-bold text-cursor-text mb-6">{t('home.upcomingHeading')}</h2>
 
 			<div className="flex flex-col gap-6">
 				{upcomingEvents.map((event, index) => {
