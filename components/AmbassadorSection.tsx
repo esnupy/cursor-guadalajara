@@ -12,11 +12,12 @@ import { useBrandMotion } from '@/lib/motion';
 
 type BrandIconProps = {
 	iconPath: string;
+	className?: string;
 };
 
-function BrandIcon({ iconPath }: BrandIconProps) {
+function BrandIcon({ iconPath, className }: BrandIconProps) {
 	return (
-		<svg viewBox="0 0 24 24" aria-hidden="true" className="size-4">
+		<svg viewBox="0 0 24 24" aria-hidden="true" className={className}>
 			<path d={iconPath} fill="currentColor" />
 		</svg>
 	);
@@ -27,9 +28,9 @@ type SocialIconProps = {
 };
 
 function SocialIcon({ kind }: SocialIconProps) {
-	if (kind === 'x') return <BrandIcon iconPath={siX.path} />;
+	if (kind === 'x') return <BrandIcon iconPath={siX.path} className="size-2.5" />;
 	if (kind === 'linkedin') return <LinkedinLogoIcon weight="regular" className="size-4" />;
-	if (kind === 'github') return <BrandIcon iconPath={siGithub.path} />;
+	if (kind === 'github') return <BrandIcon iconPath={siGithub.path} className="size-3" />;
 	return <GlobeIcon weight="regular" className="size-4" />;
 }
 

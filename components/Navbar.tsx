@@ -71,7 +71,7 @@ export default function Navbar() {
 					scrolled ? 'border-border bg-background/90 shadow-sm' : 'border-transparent bg-background/80',
 				)}
 			>
-				<div className="flex h-14 items-center justify-between px-[clamp(1.25rem,4vw,4rem)]">
+				<div className="mx-auto flex h-14 w-full max-w-325 items-center justify-between px-[clamp(1.25rem,4vw,4rem)]">
 					<a href="#" className="flex items-center gap-1.5">
 						<CursorLockupSwap size={28} className="h-6 w-auto shrink-0 md:h-7" aria-hidden />
 						<span className="text-lg tracking-tight text-foreground md:text-xl">Community</span>
@@ -92,7 +92,7 @@ export default function Navbar() {
 									href={href}
 									className={cn(
 										'text-sm transition-colors',
-										isActive ? 'font-medium text-foreground' : 'text-muted-foreground hover:text-foreground',
+										isActive ? 'font-medium text-foreground' : 'text-foreground hover:text-muted-foreground',
 									)}
 								>
 									{label}
@@ -127,7 +127,7 @@ export default function Navbar() {
 
 			{mobileOpen && (
 				<div className="fixed inset-0 top-14 z-30 bg-background/95 backdrop-blur-md sm:hidden">
-					<div className="flex flex-col items-start gap-6 px-[clamp(1.25rem,4vw,4rem)] pt-12">
+					<div className="mx-auto flex w-full max-w-325 flex-col items-start gap-6 px-[clamp(1.25rem,4vw,4rem)] pt-12">
 						{NAV_LINKS.map(({ href, label }) => (
 							<a
 								key={href}

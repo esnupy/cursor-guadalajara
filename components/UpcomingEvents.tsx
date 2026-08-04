@@ -10,7 +10,7 @@ import { Badge } from '@/components/ui/badge';
 import { useBrandMotion } from '@/lib/motion';
 
 export default function UpcomingEvents() {
-	const { slideUp, transition, prefersReducedMotion } = useBrandMotion();
+	const { slideUp, transition } = useBrandMotion();
 
 	if (upcomingEvents.length === 0) {
 		return null;
@@ -59,15 +59,9 @@ export default function UpcomingEvents() {
 							viewport={{ once: true, margin: '-50px' }}
 							transition={{ ...transition, delay: transition.duration ? index * 0.08 : 0 }}
 						>
-							<Card variant="accentEdge">
+							<Card>
 								<CardContent className="pt-6">
 									<div className="mb-2 flex items-center gap-2 text-sm text-muted-foreground">
-										<span className="relative flex size-2.5">
-											{!prefersReducedMotion ? (
-												<span className="absolute inline-flex size-full animate-ping rounded-full bg-cursor-accent opacity-75" />
-											) : null}
-											<span className="relative inline-flex size-2.5 rounded-full bg-cursor-accent" />
-										</span>
 										<span>{event.displayDate}</span>
 										<span className="text-muted-foreground/50">&middot;</span>
 										<span>{city}</span>
