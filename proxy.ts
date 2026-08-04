@@ -9,7 +9,7 @@ export function proxy(request: NextRequest) {
 		`default-src 'self'`,
 		`script-src 'self' 'nonce-${nonce}' 'strict-dynamic' https://va.vercel-scripts.com${isDev ? " 'unsafe-eval'" : ''}`,
 		`style-src 'self' 'unsafe-inline'`,
-		`img-src 'self' https://images.unsplash.com https://images.lumacdn.com https://luma.com https://lu.ma data: blob:`,
+		`img-src 'self' https://images.unsplash.com https://images.lumacdn.com https://*.public.blob.vercel-storage.com https://luma.com https://lu.ma data: blob:`,
 		`font-src 'self'`,
 		`connect-src 'self' https://vitals.vercel-insights.com https://luma.com https://lu.ma`,
 		`frame-src https://luma.com https://lu.ma`,

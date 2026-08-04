@@ -37,6 +37,10 @@ const nextConfig = {
 				protocol: 'https',
 				hostname: 'images.lumacdn.com',
 			},
+			{
+				protocol: 'https',
+				hostname: 'n6j6oimzljzhdeal.public.blob.vercel-storage.com',
+			},
 		],
 	},
 };

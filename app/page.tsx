@@ -56,7 +56,6 @@ const Home: React.FC = () => (
 			<FeaturedSection />
 			<SectionDivider />
 			<UpcomingEvents />
-			<LumaCalendar />
 			<SectionDivider />
 			<PastEvents />
 			<SectionDivider />

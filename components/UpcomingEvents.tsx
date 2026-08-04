@@ -1,13 +1,12 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ArrowSquareOutIcon } from '@phosphor-icons/react';
+import { ArrowRightIcon, ArrowSquareOutIcon } from '@phosphor-icons/react';
 import { upcomingEvents } from '@/content/events';
 import type { CursorEvent } from '@/lib/types';
-import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { useBrandMotion } from '@/lib/motion';
+import Link from 'next/link';
 
 export default function UpcomingEvents() {
 	const { slideUp, transition } = useBrandMotion();
@@ -19,20 +18,20 @@ export default function UpcomingEvents() {
 	const renderCta = (event: CursorEvent) => {
 		if (event.lumaUrl) {
 			return (
-				<Button asChild>
-					<a href={event.lumaUrl} target="_blank" rel="noopener noreferrer" aria-label={`Regístrate: ${event.title}`}>
-						Regístrate
-						<ArrowSquareOutIcon weight="regular" className="size-3.5" aria-hidden="true" />
-					</a>
-				</Button>
+				<Link
+					href={event.lumaUrl}
+					target="_blank"
+					rel="noopener noreferrer"
+					aria-label={`Regístrate: ${event.title}`}
+					className="link"
+				>
+					Regístrate
+					<ArrowRightIcon weight="regular" className="size-3.5" aria-hidden="true" />
+				</Link>
 			);
 		}
 
-		return (
-			<Badge variant="outline" size="lg" aria-label={`${event.title}: Próximamente`}>
-				Próximamente
-			</Badge>
-		);
+		return <span className="text-base text-cursor-accent">Próximamente</span>;
 	};
 
 	return (
@@ -44,8 +43,8 @@ export default function UpcomingEvents() {
 			transition={transition}
 			className="mb-16 scroll-mt-20"
 		>
-			<p className="mb-2 text-sm text-muted-foreground">Próximos eventos</p>
-			<h2 className="mb-6 text-2xl tracking-tight md:text-3xl">Qué sigue</h2>
+			<p className="mb-1 text-2xl text-foreground">Próximos eventos</p>
+			<h2 className="mb-6 text-2xl text-muted-foreground tracking-tight">Qué sigue?</h2>
 
 			<div className="flex flex-col gap-6">
 				{upcomingEvents.map((event, index) => {
@@ -59,14 +58,14 @@ export default function UpcomingEvents() {
 							viewport={{ once: true, margin: '-50px' }}
 							transition={{ ...transition, delay: transition.duration ? index * 0.08 : 0 }}
 						>
-							<Card>
+							<Card className="text-xl">
 								<CardContent className="pt-6">
-									<div className="mb-2 flex items-center gap-2 text-sm text-muted-foreground">
+									<h3 className="mb-1 tracking-tight">{event.title}</h3>
+									<div className="mb-2 flex items-center gap-2 text-muted-foreground">
 										<span>{event.displayDate}</span>
 										<span className="text-muted-foreground/50">&middot;</span>
 										<span>{city}</span>
 									</div>
-									<h3 className="mb-3 text-2xl tracking-tight">{event.title}</h3>
 									{renderCta(event)}
 								</CardContent>
 							</Card>

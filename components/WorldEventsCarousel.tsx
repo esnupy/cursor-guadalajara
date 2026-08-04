@@ -34,7 +34,7 @@ export default function WorldEventsCarousel() {
 					>
 						<Button
 							variant="outline"
-							className="group relative aspect-square h-auto w-full overflow-hidden p-0"
+							className="group relative aspect-square h-auto w-full overflow-hidden p-0 rounded-[4px]"
 							onClick={() => {
 								setCurrentIndex(index);
 								setIsFullscreen(true);
@@ -48,10 +48,10 @@ export default function WorldEventsCarousel() {
 								className="object-cover transition-transform duration-300 group-hover:scale-110 motion-reduce:transform-none"
 								sizes="(max-width: 768px) 50vw, 33vw"
 							/>
-							<div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent">
-								<div className="absolute right-0 bottom-0 left-0 p-3 text-left">
-									<p className="text-sm text-white">{photo.location}</p>
-									{photo.date ? <p className="text-xs text-white/80">{photo.date}</p> : null}
+							<div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/20 to-transparent">
+								<div className="absolute right-0 bottom-0 left-0 p-3 text-left text-base">
+									<p className="text-white">{photo.location}</p>
+									{photo.date ? <p className="text-white/80">{photo.date}</p> : null}
 								</div>
 							</div>
 						</Button>

@@ -7,6 +7,13 @@
 @source '../components';
 @source '../modules';
 
+@layer utilities {
+	.link {
+		@apply text-cursor-accent text-base flex items-center gap-1 hover:opacity-75;
+	}
+}
+
+/*noinspection CssUnresolvedCustomProperty*/
 @theme inline {
 	--font-heading: var(--font-cursor-gothic), Helvetica, Arial, sans-serif;
 	--font-sans: var(--font-cursor-gothic), Helvetica, Arial, sans-serif;
@@ -90,7 +97,7 @@
 	--secondary: #e6e5e0;
 	--secondary-foreground: #26251e;
 	--muted: #e6e5e0;
-	--muted-foreground: #92918c;
+	--muted-foreground: #7a7973;
 	--accent: #d3d2cd;
 	--accent-foreground: #26251e;
 	--cursor-accent: #f54e00;

@@ -49,10 +49,10 @@ export default function AmbassadorSection() {
 			transition={transition}
 			className="mb-16"
 		>
-			<p className="mb-2 text-sm text-muted-foreground">
-				Embajadores de la comunidad de Cursor en {siteConfig.communityNameLocal}
+			<h2 className="text-2xl tracking-tight">Conoce al equipo</h2>
+			<p className="mb-6 text-2xl text-muted-foreground">
+				Embajadores de la comunidad de Cursor en {siteConfig.communityNameLocal}.
 			</p>
-			<h2 className="mb-6 text-2xl tracking-tight md:text-3xl">Conoce al equipo</h2>
 
 			<div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
 				{ambassadors.map((ambassador, index) => {
@@ -85,7 +85,7 @@ export default function AmbassadorSection() {
 										</div>
 										<div>
 											<p>{ambassador.name}</p>
-											{ambassador.role ? <p className="text-sm text-muted-foreground">{ambassador.role}</p> : null}
+											{ambassador.role ? <p className="text-muted-foreground">{ambassador.role}</p> : null}
 										</div>
 									</div>
 

@@ -1,13 +1,14 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ArrowSquareOutIcon } from '@phosphor-icons/react';
+import { ArrowRightIcon, ArrowSquareOutIcon } from '@phosphor-icons/react';
 import CursorLockupSwap from '@/components/icons/CursorLockupSwap';
 import { siteConfig } from '@/content/site.config';
 import { upcomingEvents } from '@/content/events';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { useBrandMotion } from '@/lib/motion';
+import Link from 'next/link';
 
 export default function Footer() {
 	const nextEvent = upcomingEvents[0];
@@ -19,47 +20,45 @@ export default function Footer() {
 			whileInView={fadeIn.animate}
 			viewport={{ once: true, margin: '-50px' }}
 			transition={transition}
-			className="mt-24 pt-8"
+			className="mt-24 pt-8 text-sm"
 		>
 			<Separator className="mb-10" />
 
 			<div className="grid grid-cols-1 items-start gap-8 md:grid-cols-3 md:gap-12">
 				<div>
-					<div className="mb-2 flex items-center gap-2">
+					<div className="mb-2 flex items-center gap-1.5">
 						<CursorLockupSwap size={22} className="h-5 w-auto" aria-hidden />
-						<span className="text-sm text-muted-foreground">{siteConfig.communityNameLocal}</span>
+						<span>Community</span>
+						<span className="text-muted-foreground">{siteConfig.communityNameLocal}</span>
 					</div>
-					<p className="text-sm leading-relaxed text-muted-foreground">{siteConfig.footerTagline}</p>
+					<p className="leading-relaxed text-muted-foreground">{siteConfig.footerTagline}</p>
 				</div>
 
 				<div className="flex flex-col gap-2.5">
-					<a
+					<Link
 						href={siteConfig.lumaUrl}
 						target="_blank"
 						rel="noopener noreferrer"
-						className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
+						className="inline-flex items-center gap-1.5 transition-colors hover:text-muted-foreground"
 					>
 						Todos los eventos en Luma
-						<ArrowSquareOutIcon weight="regular" className="size-3" />
-					</a>
-					<a
+					</Link>
+					<Link
 						href={siteConfig.cursorCommunityUrl}
 						target="_blank"
 						rel="noopener noreferrer"
-						className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
+						className="inline-flex items-center gap-1.5 transition-colors hover:text-muted-foreground"
 					>
 						Comunidad Cursor
-						<ArrowSquareOutIcon weight="regular" className="size-3" />
-					</a>
-					<a
+					</Link>
+					<Link
 						href="https://x.com/cursor_ai"
 						target="_blank"
 						rel="noopener noreferrer"
-						className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
+						className="inline-flex items-center gap-1.5 transition-colors hover:text-muted-foreground"
 					>
 						Sigue a Cursor en X
-						<ArrowSquareOutIcon weight="regular" className="size-3" />
-					</a>
+					</Link>
 				</div>
 
 				<div>
@@ -71,13 +70,11 @@ export default function Footer() {
 							aria-label="Únete al próximo evento"
 						>
 							Únete al próximo evento
-							<ArrowSquareOutIcon weight="regular" className="size-3.5" aria-hidden="true" />
+							<ArrowRightIcon weight="regular" className="size-3.5" aria-hidden="true" />
 						</a>
 					</Button>
 				</div>
 			</div>
-
-			<p className="mt-10 pb-6 text-left text-xs text-muted-foreground/70">{siteConfig.footerTagline}</p>
 		</motion.footer>
 	);
 }

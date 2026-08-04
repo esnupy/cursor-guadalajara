@@ -17,8 +17,8 @@ export default function GlobalEvents() {
 			className="mb-16"
 		>
 			<Card>
-				<CardContent className="pt-6">
-					<h2 className="mb-2 text-xl tracking-tight md:text-2xl">Cafe Cursor alrededor del mundo</h2>
+				<CardContent className="pt-6 text-xl">
+					<h2 className="mb-1 tracking-tight">Café Cursor alrededor del mundo</h2>
 					<p className="mb-6 text-muted-foreground">
 						Usuarios de Cursor construyen juntos en todo el mundo. Aunque vivimos en distintas zonas horarias, somos una
 						sola comunidad.
