@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { ArrowLeftIcon, LightbulbIcon, LinkIcon, MicrophoneIcon, QuotesIcon } from '@phosphor-icons/react';
 import PhotoGallery from '@/components/PhotoGallery';
 import { RecapData } from '@/lib/types';
-import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { useBrandMotion } from '@/lib/motion';
