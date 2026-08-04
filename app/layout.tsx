@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { headers } from 'next/headers';
 import { Analytics } from '@vercel/analytics/react';
 import { Geist } from 'next/font/google';
+import { ThemeFavicon } from '@/components/ThemeFavicon';
 import { ThemeProvider } from '@/components/theme-provider';
 import { I18nProvider } from '@/lib/i18n';
 import { siteConfig } from '@/content/site.config';
@@ -28,6 +29,31 @@ export const metadata: Metadata = {
 		title: siteConfig.siteTitle,
 		description: siteConfig.siteDescription,
 	},
+	icons: {
+		icon: [
+			{
+				url: '/favicons/favicon-light.svg',
+				type: 'image/svg+xml',
+				media: '(prefers-color-scheme: light)',
+			},
+			{
+				url: '/favicons/favicon.svg',
+				type: 'image/svg+xml',
+				media: '(prefers-color-scheme: dark)',
+			},
+			{
+				url: '/favicons/favicon-light.ico',
+				sizes: 'any',
+				media: '(prefers-color-scheme: light)',
+			},
+			{
+				url: '/favicons/favicon.ico',
+				sizes: 'any',
+				media: '(prefers-color-scheme: dark)',
+			},
+		],
+		apple: '/favicons/apple-touch-icon.png',
+	},
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
@@ -39,7 +65,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 	return (
 		<html lang={siteConfig.defaultLocale} className={cn('font-sans', geist.variable)} suppressHydrationWarning>
 			<body className="antialiased">
+				{/* External self-hosted script: allowed by script-src 'self' without a CSP nonce. */}
+				<script async src="/theme-favicon.bootstrap.js" />
 				<ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+					<ThemeFavicon />
 					<I18nProvider>{children}</I18nProvider>
 				</ThemeProvider>
 				<Analytics />
