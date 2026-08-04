@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { ListIcon, XIcon } from '@phosphor-icons/react';
-import ThemeToggle from '@/components/ThemeToggle';
 import CursorLockupSwap from '@/components/icons/CursorLockupSwap';
 import { Button } from '@/components/ui/button';
 import { siteConfig } from '@/content/site.config';
@@ -104,11 +103,9 @@ export default function Navbar() {
 								Únete
 							</a>
 						</Button>
-						<ThemeToggle />
 					</div>
 
-					<div className="flex items-center gap-1 sm:hidden">
-						<ThemeToggle />
+					<div className="flex items-center sm:hidden">
 						<Button
 							variant="ghost"
 							size="icon-sm"

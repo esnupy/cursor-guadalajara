@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { useBrandMotion } from '@/lib/motion';
 import Link from 'next/link';
+import ThemeToggle from '@/components/ThemeToggle';
 
 export default function Footer() {
 	const nextEvent = upcomingEvents[0];
@@ -74,6 +75,10 @@ export default function Footer() {
 						</a>
 					</Button>
 				</div>
+			</div>
+
+			<div className="mt-10">
+				<ThemeToggle />
 			</div>
 		</motion.footer>
 	);
