@@ -1,7 +1,7 @@
 import 'dotenv/config';
 
 import { neon } from '@neondatabase/serverless';
-import { readFileSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 async function migrate() {
@@ -11,14 +11,21 @@ async function migrate() {
 	}
 
 	const sql = neon(url);
-	const migrationSql = readFileSync(join(process.cwd(), 'lib/db/migrations', '0000_init.sql'), 'utf8');
-	const statements = migrationSql
-		.split(';')
-		.map((statement) => statement.trim())
-		.filter(Boolean);
+	const migrationsDir = join(process.cwd(), 'lib/db/migrations');
+	const files = readdirSync(migrationsDir)
+		.filter((file) => file.endsWith('.sql'))
+		.sort();
 
-	for (const statement of statements) {
-		await sql.query(statement);
+	for (const file of files) {
+		const migrationSql = readFileSync(join(migrationsDir, file), 'utf8');
+		const statements = migrationSql
+			.split(';')
+			.map((statement) => statement.trim())
+			.filter(Boolean);
+
+		for (const statement of statements) {
+			await sql.query(statement);
+		}
 	}
 
 	console.log('Migration applied successfully');
