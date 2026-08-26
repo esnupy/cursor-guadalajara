@@ -8,6 +8,13 @@ import { siteConfig } from '@/content/site.config';
 const pageDescription =
 	'Primer meetup técnico de Cursor en Guadalajara. Cuatro charlas relámpago el 27 de agosto de 2026 en AstraZeneca GITC. El cupo está lleno.';
 
+const ogImage = {
+	url: meetupPromo.ogImage.src,
+	width: meetupPromo.ogImage.width,
+	height: meetupPromo.ogImage.height,
+	alt: meetupPromo.ogImage.alt,
+};
+
 export const metadata: Metadata = {
 	title: `${meetupPromo.title} | ${siteConfig.communityName}`,
 	description: pageDescription,
@@ -17,6 +24,13 @@ export const metadata: Metadata = {
 		locale: 'es_MX',
 		type: 'website',
 		url: meetupPromo.path,
+		images: [ogImage],
+	},
+	twitter: {
+		card: 'summary_large_image',
+		title: meetupPromo.title,
+		description: pageDescription,
+		images: [ogImage],
 	},
 };
 
@@ -29,7 +43,10 @@ function buildMeetupJsonLd() {
 		startDate: meetupPromo.startDateTime,
 		endDate: meetupPromo.endDateTime,
 		url: `${siteConfig.siteUrl}${meetupPromo.path}`,
-		image: meetupPromo.speakers.map((speaker) => `${siteConfig.siteUrl}${speaker.photo}`),
+		image: [
+			`${siteConfig.siteUrl}${meetupPromo.ogImage.src}`,
+			...meetupPromo.speakers.map((speaker) => `${siteConfig.siteUrl}${speaker.photo}`),
+		],
 		eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
 		eventStatus: 'https://schema.org/EventScheduled',
 		location: {

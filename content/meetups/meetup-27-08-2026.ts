@@ -18,6 +18,12 @@ export const meetupPromo = {
 	endDateTime: '2026-08-27T20:00:00-06:00',
 	soldOut: true,
 	lumaUrl: 'https://luma.com/hpk7julv',
+	ogImage: {
+		src: '/images/meetup-27-08-2026/og.jpg',
+		alt: 'Cursor Meetup Guadalajara, 27 de agosto de 2026',
+		width: 1024,
+		height: 536,
+	},
 	location: {
 		name: 'AstraZeneca GITC Guadalajara',
 		address: 'Blvd. Puerta de Hierro 4965, Puerta de Hierro, 45116 Zapopan, Jal.',
