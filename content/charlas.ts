@@ -13,7 +13,7 @@ export const CHARLAS_NIVELES = ['intro', 'intermedio', 'avanzado'] as const;
 export type CharlaNivel = (typeof CHARLAS_NIVELES)[number];
 
 export const charlasCall = {
-	open: true,
+	open: false,
 	eventId: CHARLAS_EVENT_ID,
 	source: CHARLAS_SOURCE,
 	skillName: CHARLAS_SKILL_NAME,

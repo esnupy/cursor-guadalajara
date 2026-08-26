@@ -27,12 +27,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
 			priority: 1,
 		},
 		{
-			url: `${BASE_URL}/charlas`,
-			lastModified: new Date(),
-			changeFrequency: 'weekly',
-			priority: 0.8,
-		},
-		{
 			url: `${BASE_URL}${meetupPromo.path}`,
 			lastModified: new Date(),
 			changeFrequency: 'weekly',

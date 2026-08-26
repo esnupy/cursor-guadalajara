@@ -12,7 +12,6 @@ import { cn } from '@/lib/utils';
 const NAV_LINKS = [
 	{ href: '/#upcoming', label: 'Próximos eventos', sectionId: 'upcoming' },
 	{ href: '/#recaps', label: 'Eventos pasados', sectionId: 'recaps' },
-	{ href: '/charlas', label: 'Da una charla' },
 ] as const;
 
 /**
@@ -48,7 +47,7 @@ const useScrollState = () => {
 };
 
 /**
- * Sticky site navigation shared by the homepage and /charlas.
+ * Sticky site navigation.
  */
 export default function Navbar() {
 	const { scrolled, activeSection } = useScrollState();
@@ -93,10 +92,7 @@ export default function Navbar() {
 
 					<div className="hidden items-center gap-4 sm:flex">
 						{NAV_LINKS.map((link) => {
-							const isActive =
-								link.href === '/charlas'
-									? pathname === '/charlas'
-									: pathname === '/' && 'sectionId' in link && activeSection === link.sectionId;
+							const isActive = pathname === '/' && activeSection === link.sectionId;
 							return (
 								<Link
 									key={link.href}
