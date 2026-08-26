@@ -1,4 +1,5 @@
 import { ambassadors } from '@/content/ambassadors';
+import { featuredResource } from '@/content/featured';
 import { skillhellTalk } from '@/content/talks/skillhell';
 
 const juan = ambassadors.find((ambassador) => ambassador.name === 'Juan Daniel Martinez');
@@ -20,14 +21,38 @@ export const meetupPromo = {
 	location: {
 		name: 'AstraZeneca GITC Guadalajara',
 		address: 'Blvd. Puerta de Hierro 4965, Puerta de Hierro, 45116 Zapopan, Jal.',
-		mapsUrl: 'https://maps.google.com/?q=Blvd.+Puerta+de+Hierro+4965,+Puerta+de+Hierro,+45116+Zapopan,+Jal.',
+		entrance: 'Avenida Acueducto',
+		latitude: 20.7109842,
+		longitude: -103.4113136,
+		mapsUrl: 'https://www.google.com/maps/search/?api=1&query=AstraZeneca+GITC+Guadalajara',
+		mapsEmbedUrl: 'https://www.google.com/maps?q=AstraZeneca+GITC+Guadalajara&hl=es-419&z=17&output=embed',
 	},
 	summary: [
 		'Después de Café Cursor, el siguiente paso es un espacio más técnico: cuatro charlas relámpago de 20 minutos sobre cómo usar Cursor en el flujo de trabajo.',
 		'AstraZeneca Guadalajara nos abre las puertas del GITC para recibirnos.',
 	],
 	accessNote:
-		'El cupo está lleno. Por protocolos de la sede, quien ya tiene lugar tiene que estar registrado en Luma para poder entrar — sin excepciones, incluyendo a quien trabaja en AstraZeneca.',
+		'El cupo está lleno. En el lobby checan tu nombre con el de tu registro en el evento de Luma. Sin ese registro no se permite la entrada.',
+	access: {
+		lead: 'La única forma de entrar al edificio es por Avenida Acueducto. No entres por Puerta de Hierro ni por ningún otro acceso. Es una regla de seguridad de la sede.',
+		steps: [
+			'Llega por Avenida Acueducto. Cualquier otro acceso está cerrado para el meetup.',
+			'Camina por la acera peatonal. El video marca el camino desde la avenida hasta la puerta.',
+			'En el elevador presiona Arriba y después Nivel 1. El lobby está en ese piso.',
+			'En el lobby checan tu nombre con el que te registraste en el evento de Luma. Lleva una identificación oficial, pasaporte o un documento que confirme tu identidad.',
+		],
+		video: {
+			src: '/videos/meetup-27-08-2026/acueducto-acceso.mp4',
+			poster: '/videos/meetup-27-08-2026/acueducto-acceso.jpg',
+			title: 'Recorrido de acceso por Avenida Acueducto',
+			caption: 'Recorrido del equipo de AstraZeneca, de Avenida Acueducto al lobby.',
+		},
+		whatsapp: {
+			href: featuredResource.href,
+			label: 'Pedir ayuda en WhatsApp',
+			note: 'Si no das con el edificio o el lobby, o tienes cualquier otro problema, escríbenos al grupo de whatsapp y te podemos orientar.',
+		},
+	},
 	agenda: [
 		{ time: '17:30', label: 'Llegada, check-in y networking' },
 		{ time: '17:50', label: 'Bloque 1 — dos charlas relámpago' },

@@ -43,6 +43,11 @@ function buildMeetupJsonLd() {
 				postalCode: '45116',
 				addressCountry: 'MX',
 			},
+			geo: {
+				'@type': 'GeoCoordinates',
+				latitude: meetupPromo.location.latitude,
+				longitude: meetupPromo.location.longitude,
+			},
 		},
 		organizer: {
 			'@type': 'Organization',

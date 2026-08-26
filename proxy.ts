@@ -12,8 +12,9 @@ export function proxy(request: NextRequest) {
 		`style-src 'self' 'unsafe-inline'`,
 		`img-src 'self' https://images.unsplash.com https://images.lumacdn.com https://*.public.blob.vercel-storage.com https://luma.com https://lu.ma data: blob:`,
 		`font-src 'self'`,
+		`media-src 'self'`,
 		`connect-src 'self' https://vitals.vercel-insights.com https://luma.com https://lu.ma${neonAuthOrigin ? ` ${neonAuthOrigin}` : ''}`,
-		`frame-src https://luma.com https://lu.ma`,
+		`frame-src https://luma.com https://lu.ma https://www.google.com https://maps.google.com https://www.google.com.mx`,
 		`frame-ancestors 'none'`,
 		`object-src 'none'`,
 		`base-uri 'self'`,
@@ -36,7 +37,7 @@ export function proxy(request: NextRequest) {
 export const config = {
 	matcher: [
 		{
-			source: '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
+			source: '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|mp4|webm)$).*)',
 			missing: [
 				{ type: 'header', key: 'next-router-prefetch' },
 				{ type: 'header', key: 'purpose', value: 'prefetch' },
