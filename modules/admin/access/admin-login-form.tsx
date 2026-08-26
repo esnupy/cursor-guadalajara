@@ -5,26 +5,13 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { authClient } from '@/lib/auth/client';
-import { devLoginAction } from '@/modules/admin/access/login-actions';
+import { devLoginAction, tempLoginAction } from '@/modules/admin/access/login-actions';
 
 export function AdminLoginForm({ devBypass }: { devBypass: boolean }) {
 	const [email, setEmail] = useState('');
+	const [accessCode, setAccessCode] = useState('');
 	const [error, setError] = useState<string | null>(null);
 	const [isPending, setIsPending] = useState(false);
-
-	async function handleGitHubSignIn() {
-		setIsPending(true);
-		setError(null);
-		const { error: signInError } = await authClient.signIn.social({
-			provider: 'github',
-			callbackURL: '/admin/auth/complete',
-		});
-		if (signInError) {
-			setError(signInError.message ?? 'No se pudo iniciar sesión con GitHub');
-			setIsPending(false);
-		}
-	}
 
 	async function handleDevLogin(event: React.FormEvent<HTMLFormElement>) {
 		event.preventDefault();
@@ -32,6 +19,18 @@ export function AdminLoginForm({ devBypass }: { devBypass: boolean }) {
 		setError(null);
 
 		const result = await devLoginAction(email);
+		if (result?.error) {
+			setError(result.error);
+			setIsPending(false);
+		}
+	}
+
+	async function handleTempLogin(event: React.FormEvent<HTMLFormElement>) {
+		event.preventDefault();
+		setIsPending(true);
+		setError(null);
+
+		const result = await tempLoginAction(email, accessCode);
 		if (result?.error) {
 			setError(result.error);
 			setIsPending(false);
@@ -64,9 +63,33 @@ export function AdminLoginForm({ devBypass }: { devBypass: boolean }) {
 						</Button>
 					</form>
 				) : (
-					<Button type="button" className="w-full" onClick={handleGitHubSignIn} disabled={isPending}>
-						Continuar con GitHub
-					</Button>
+					<form className="space-y-4" onSubmit={handleTempLogin}>
+						<div className="space-y-2">
+							<Label htmlFor="email">Correo autorizado</Label>
+							<Input
+								id="email"
+								type="email"
+								value={email}
+								onChange={(event) => setEmail(event.target.value)}
+								placeholder="tu@correo.com"
+								required
+							/>
+						</div>
+						<div className="space-y-2">
+							<Label htmlFor="access-code">Código de acceso</Label>
+							<Input
+								id="access-code"
+								type="password"
+								value={accessCode}
+								onChange={(event) => setAccessCode(event.target.value)}
+								autoComplete="current-password"
+								required
+							/>
+						</div>
+						<Button type="submit" className="w-full" disabled={isPending}>
+							Entrar
+						</Button>
+					</form>
 				)}
 
 				{error ? <p className="text-sm text-destructive">{error}</p> : null}

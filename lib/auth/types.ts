@@ -5,5 +5,5 @@ export type { AccessRole };
 export type AdminSession = {
 	email: string;
 	role: AccessRole;
-	authSource: 'neon' | 'dev';
+	authSource: 'neon' | 'dev' | 'temp';
 };

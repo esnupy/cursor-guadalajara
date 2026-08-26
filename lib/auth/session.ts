@@ -10,6 +10,7 @@ import {
 import { collectCandidateEmails } from '@/lib/auth/github-emails';
 import { resolveGrantByEmail, resolveGrantFromEmails } from '@/lib/auth/grants';
 import { getAuth } from '@/lib/auth/server';
+import { clearTempSession, getTempSessionEmail, setTempSession } from '@/lib/auth/temp-access';
 import type { AccessRole, AdminSession } from '@/lib/auth/types';
 
 export async function getAdminSession(): Promise<AdminSession | null> {
@@ -28,6 +29,20 @@ export async function getAdminSession(): Promise<AdminSession | null> {
 			};
 		}
 		return null;
+	}
+
+	// TODO: Drop this temp-cookie branch when Neon GitHub OAuth is restored.
+	const tempEmail = await getTempSessionEmail();
+	if (tempEmail) {
+		const grant = await resolveGrantByEmail(tempEmail);
+		if (!grant) {
+			return null;
+		}
+		return {
+			email: grant.email,
+			role: grant.role,
+			authSource: 'temp',
+		};
 	}
 
 	const auth = getAuth();
@@ -86,12 +101,31 @@ export async function establishDevSessionFromEmail(email: string): Promise<Admin
 	};
 }
 
+export async function establishTempSessionFromEmail(email: string): Promise<AdminSession | null> {
+	const grant = await resolveGrantByEmail(email);
+	if (!grant) {
+		return null;
+	}
+
+	await setTempSession(grant.email);
+	return {
+		email: grant.email,
+		role: grant.role,
+		authSource: 'temp',
+	};
+}
+
 export async function signOutAdmin(): Promise<void> {
 	if (isDevBypassEnabled()) {
 		await clearDevSession();
 		return;
 	}
 
-	const auth = getAuth();
-	await auth.signOut();
+	await clearTempSession();
+	try {
+		const auth = getAuth();
+		await auth.signOut();
+	} catch {
+		// Neon Auth is currently pointed at the development branch.
+	}
 }

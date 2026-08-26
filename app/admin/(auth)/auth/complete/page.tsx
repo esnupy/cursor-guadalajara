@@ -8,6 +8,7 @@ import { isDevBypassEnabled } from '@/lib/auth/dev-bypass';
 export const dynamic = 'force-dynamic';
 
 export default async function AdminAuthCompletePage() {
+	// TODO: GitHub OAuth completion path — unused until Neon Auth on main is restored.
 	if (isDevBypassEnabled()) {
 		redirect('/admin/login');
 	}
