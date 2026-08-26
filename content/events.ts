@@ -1,15 +1,18 @@
+import { meetupPromo } from '@/content/meetups/meetup-27-08-2026';
 import { CursorEvent } from '@/lib/types';
 
 // REPLACE: Replace all sample events, locations, and Luma URLs with real community events.
 export const events: CursorEvent[] = [
 	{
-		id: 'cursor-meetup-guadalajara-2026',
-		title: 'Cursor Meetup — Guadalajara',
-		date: '2026-08-27',
-		displayDate: '27 de Agosto de 2026',
-		location: 'AstraZeneca GITC Guadalajara',
+		id: meetupPromo.id,
+		title: meetupPromo.title,
+		date: meetupPromo.date,
+		displayDate: meetupPromo.displayDate,
+		location: meetupPromo.location.name,
 		status: 'upcoming',
-		lumaUrl: 'https://luma.com/hpk7julv',
+		lumaUrl: meetupPromo.lumaUrl,
+		promoPath: meetupPromo.path,
+		soldOut: meetupPromo.soldOut,
 	},
 	{
 		id: 'cafe-cursor-guadalajara-2026-04',

@@ -30,7 +30,11 @@ function buildHomeJsonLd() {
 				name: event.location,
 			},
 			organizer: org,
-			...(event.lumaUrl ? { url: event.lumaUrl } : {}),
+			...(event.promoPath
+				? { url: `${siteConfig.siteUrl}${event.promoPath}` }
+				: event.lumaUrl
+					? { url: event.lumaUrl }
+					: {}),
 			eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
 			eventStatus: 'https://schema.org/EventScheduled',
 		}));

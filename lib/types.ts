@@ -10,6 +10,8 @@ export interface CursorEvent {
 	attendees?: number;
 	location: string;
 	lumaUrl?: string;
+	promoPath?: string;
+	soldOut?: boolean;
 	recapPath?: string;
 	thumbnail?: string;
 	galleryImages?: string[];

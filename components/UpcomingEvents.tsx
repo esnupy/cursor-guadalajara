@@ -1,7 +1,8 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ArrowUpRightIcon } from '@phosphor-icons/react';
+import Link from 'next/link';
+import { ArrowRightIcon, ArrowUpRightIcon } from '@phosphor-icons/react';
 import { upcomingEvents } from '@/content/events';
 import type { CursorEvent } from '@/lib/types';
 import { Card, CardContent } from '@/components/ui/card';
@@ -14,6 +15,19 @@ export default function UpcomingEvents() {
 	}
 
 	const renderCta = (event: CursorEvent) => {
+		if (event.promoPath) {
+			return (
+				<Link href={event.promoPath} aria-label={`Ver evento: ${event.title}`} className="link">
+					Ver evento
+					<ArrowRightIcon weight="regular" className="size-3.5" aria-hidden="true" />
+				</Link>
+			);
+		}
+
+		if (event.soldOut) {
+			return <span className="text-base text-cursor-accent">Cupo lleno</span>;
+		}
+
 		if (event.lumaUrl) {
 			return (
 				<a

@@ -54,9 +54,11 @@ export default function CharlasLanding() {
 			</p>
 			{event.lumaUrl ? (
 				<p className="mt-4 max-w-3xl text-muted-foreground">
-					¿Solo quieres ir? El registro de asistencia está en Luma.{' '}
+					{event.soldOut
+						? 'El meetup ya está lleno. Si ya tienes lugar, el pase de acceso está en Luma. '
+						: '¿Solo quieres ir? El registro de asistencia está en Luma. '}
 					<a href={event.lumaUrl} target="_blank" rel="noopener noreferrer" className="link inline-flex">
-						Regístrate en {siteConfig.communityName}
+						{event.soldOut ? 'Abrir Luma' : `Regístrate en ${siteConfig.communityName}`}
 						<ArrowUpRightIcon weight="regular" className="size-3.5" aria-hidden="true" />
 					</a>
 				</p>

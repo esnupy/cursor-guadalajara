@@ -61,14 +61,20 @@ export default function Footer() {
 
 				<div>
 					<Button asChild>
-						<a
-							href={nextEvent?.lumaUrl || siteConfig.lumaUrl}
-							target="_blank"
-							rel="noopener noreferrer"
-							aria-label="Únete al próximo evento"
-						>
-							Únete al próximo evento <ArrowUpRightIcon size={20} />
-						</a>
+						{nextEvent?.promoPath ? (
+							<Link href={nextEvent.promoPath} aria-label="Ver el próximo evento">
+								Ver el próximo evento
+							</Link>
+						) : (
+							<a
+								href={nextEvent?.lumaUrl || siteConfig.lumaUrl}
+								target="_blank"
+								rel="noopener noreferrer"
+								aria-label="Únete al próximo evento"
+							>
+								Únete al próximo evento <ArrowUpRightIcon size={20} />
+							</a>
+						)}
 					</Button>
 				</div>
 			</div>

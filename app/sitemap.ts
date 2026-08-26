@@ -1,5 +1,7 @@
 import { MetadataRoute } from 'next';
+import { meetupPromo } from '@/content/meetups/meetup-27-08-2026';
 import { recapsBySlug } from '@/content/recaps';
+import { skillhellTalk } from '@/content/talks/skillhell';
 
 import { siteConfig } from '@/content/site.config';
 
@@ -29,6 +31,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
 			lastModified: new Date(),
 			changeFrequency: 'weekly',
 			priority: 0.8,
+		},
+		{
+			url: `${BASE_URL}${meetupPromo.path}`,
+			lastModified: new Date(),
+			changeFrequency: 'weekly',
+			priority: 0.9,
+		},
+		{
+			url: `${BASE_URL}${skillhellTalk.path}`,
+			lastModified: new Date(),
+			changeFrequency: 'monthly' as const,
+			priority: 0.6,
 		},
 		...recapEntries,
 	];
