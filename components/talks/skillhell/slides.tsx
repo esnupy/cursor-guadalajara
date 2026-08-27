@@ -3,19 +3,13 @@
 import Image from 'next/image';
 import { useState, type ReactNode } from 'react';
 import { ArrowUpRightIcon } from '@phosphor-icons/react';
-import {
-	easingDemoGifAlt,
-	easingDemoGifSrc,
-	easingTree,
-	mapItems,
-	skillhellSpeaker,
-	skillhellTalk,
-} from '@/content/talks/skillhell';
+import { mapItems, skillhellSpeaker, skillhellTalk } from '@/content/talks/skillhell';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import CursorLockupSwap from '@/components/icons/CursorLockupSwap';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import EasingCurve from '@/components/talks/skillhell/EasingCurve';
+import EasingDecisionTree from '@/components/talks/skillhell/EasingDecisionTree';
 
 const display = 'leading-[1.12] tracking-tight text-balance';
 const padding = 'p-[clamp(1.25rem,4vw,3.5rem)]';
@@ -127,32 +121,6 @@ function MapSlide({ step = 0 }: { step?: number }) {
 					);
 				})}
 			</div>
-		</div>
-	);
-}
-
-function EasingTreeSlide() {
-	return (
-		<div className={cn(padding, 'grid h-full min-h-0 w-full flex-1 items-start gap-6 lg:grid-cols-2 lg:gap-10')}>
-			<pre className="overflow-x-auto font-mono text-xl leading-relaxed whitespace-pre text-foreground">
-				{easingTree}
-			</pre>
-			{easingDemoGifSrc ? (
-				<div className="relative aspect-video overflow-hidden rounded-card border border-border">
-					<Image
-						src={easingDemoGifSrc}
-						alt={easingDemoGifAlt}
-						fill
-						unoptimized
-						className="object-cover"
-						sizes="(max-width: 1024px) 100vw, 40vw"
-					/>
-				</div>
-			) : (
-				<div className="flex aspect-video items-center justify-center rounded-card bg-muted px-6 text-center">
-					<p className="text-muted-foreground">GIF · demo de easing</p>
-				</div>
-			)}
 		</div>
 	);
 }
@@ -291,7 +259,7 @@ export const skillhellSlides = [
 			</Container>
 		),
 	},
-	{ id: 'easing-arbol', content: <EasingTreeSlide /> },
+	{ id: 'easing-arbol', content: <EasingDecisionTree /> },
 	{
 		id: 'razonamiento',
 		content: (

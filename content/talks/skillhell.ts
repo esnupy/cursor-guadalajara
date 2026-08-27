@@ -7,14 +7,6 @@ export const skillhellTalk = {
 	path: '/meetup-27-08-2026/del-skillhell-al-skillhalla',
 };
 
-/**
- * Pega el GIF en `public/images/talks/` y pon aquí la ruta.
- * Ejemplo: '/images/talks/easing-demo.gif'
- */
-export const easingDemoGifSrc: string | null = null;
-
-export const easingDemoGifAlt = 'Demo de easing recorriendo el árbol de decisión';
-
 export const easingTree = `¿El elemento entra o sale del viewport?
 ├── Sí → ease-out
 └── No

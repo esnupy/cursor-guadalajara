@@ -86,7 +86,8 @@
 	}
 }
 
-:root {
+:root,
+.theme-light {
 	--background: #f7f7f3;
 	--foreground: #26251e;
 	--card: #f2f1ed;
@@ -122,6 +123,10 @@
 	--sidebar-accent-foreground: #26251e;
 	--sidebar-border: #edece8;
 	--sidebar-ring: #26251e;
+}
+
+.theme-light {
+	color-scheme: light;
 }
 
 .dark {

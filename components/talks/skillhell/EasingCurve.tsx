@@ -97,7 +97,15 @@ function Handle({
 	);
 }
 
-export default function EasingCurve({ className }: { className?: string }) {
+export default function EasingCurve({
+	className,
+	target = TARGET,
+	animatePanel = true,
+}: {
+	className?: string;
+	target?: readonly [number, number, number, number];
+	animatePanel?: boolean;
+}) {
 	const prefersReducedMotion = useReducedMotion();
 	const svgRef = useRef<SVGSVGElement>(null);
 	const labelRef = useRef<HTMLParagraphElement>(null);
@@ -126,14 +134,16 @@ export default function EasingCurve({ className }: { className?: string }) {
 	const handleLine1 = useMotionTemplate`M ${PAD} ${PAD + GRAPH} L ${p1.svgX} ${p1.svgY}`;
 	const handleLine2 = useMotionTemplate`M ${PAD + GRAPH} ${PAD} L ${p2.svgX} ${p2.svgY}`;
 
+	const [targetX1, targetY1, targetX2, targetY2] = target;
+
 	useEffect(() => {
 		syncLabel();
 
 		if (prefersReducedMotion) {
-			p1.x.jump(TARGET[0]);
-			p1.y.jump(TARGET[1]);
-			p2.x.jump(TARGET[2]);
-			p2.y.jump(TARGET[3]);
+			p1.x.jump(targetX1);
+			p1.y.jump(targetY1);
+			p2.x.jump(targetX2);
+			p2.y.jump(targetY2);
 			syncLabel();
 			return;
 		}
@@ -142,16 +152,16 @@ export default function EasingCurve({ className }: { className?: string }) {
 		const springSoft = { type: 'spring' as const, stiffness: 90, damping: 16, mass: 1 };
 
 		const controls = [
-			animate(p1.x, TARGET[0], { ...spring, delay: 0.12 }),
-			animate(p1.y, TARGET[1], { ...springSoft, delay: 0.18 }),
-			animate(p2.x, TARGET[2], { ...spring, delay: 0.22 }),
-			animate(p2.y, TARGET[3], { ...springSoft, delay: 0.28 }),
+			animate(p1.x, targetX1, { ...spring, delay: 0.12 }),
+			animate(p1.y, targetY1, { ...springSoft, delay: 0.18 }),
+			animate(p2.x, targetX2, { ...spring, delay: 0.22 }),
+			animate(p2.y, targetY2, { ...springSoft, delay: 0.28 }),
 		];
 
 		return () => {
 			controls.forEach((c) => c.stop());
 		};
-	}, [p1.x, p1.y, p2.x, p2.y, prefersReducedMotion, syncLabel]);
+	}, [p1.x, p1.y, p2.x, p2.y, prefersReducedMotion, syncLabel, targetX1, targetY1, targetX2, targetY2]);
 
 	const clientToUnit = useCallback((clientX: number, clientY: number): Point | null => {
 		const svg = svgRef.current;
@@ -214,9 +224,13 @@ export default function EasingCurve({ className }: { className?: string }) {
 				'rounded-card border border-border bg-background p-5 shadow-sm',
 				className,
 			)}
-			initial={prefersReducedMotion ? false : { opacity: 0, scale: 0.94, y: 12 }}
+			initial={animatePanel && !prefersReducedMotion ? { opacity: 0, scale: 0.94, y: 12 } : false}
 			animate={{ opacity: 1, scale: 1, y: 0 }}
-			transition={prefersReducedMotion ? { duration: 0 } : { type: 'spring', stiffness: 160, damping: 22, mass: 0.9 }}
+			transition={
+				prefersReducedMotion || !animatePanel
+					? { duration: 0 }
+					: { type: 'spring', stiffness: 160, damping: 22, mass: 0.9 }
+			}
 		>
 			<svg
 				ref={svgRef}
