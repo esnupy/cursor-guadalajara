@@ -248,7 +248,7 @@ export default function EasingDecisionTree() {
 			</div>
 
 			<div
-				className="relative flex h-full w-full items-center justify-center bg-cover bg-right"
+				className="relative flex h-full w-full items-center justify-center bg-cover bg-center"
 				style={{ backgroundImage: "url('/images/deck/deck-6.webp')" }}
 			>
 				<AnimatePresence mode="wait">

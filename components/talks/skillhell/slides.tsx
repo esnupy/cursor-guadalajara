@@ -164,12 +164,12 @@ function QuestionsSlide() {
 
 function CtaSlide() {
 	return (
-		<div className={bodyFrame}>
-			<Badge variant="brand" className="mb-4">
-				Esta semana
-			</Badge>
-			<p className={cn(display, 'text-foreground')}>Una cosa que Cursor te asume mal.</p>
-			<p className={cn(display, 'mt-[0.35em] text-muted-foreground')}>Escríbele el árbol.</p>
+		<div className={cn(bodyFrame, display)}>
+			<p className="mb-4 text-4xl text-cursor-accent">De tarea</p>
+			<p className={cn(display, 'text-foreground text-5xl')}>Identifica una cosa que tu agente de IA te asume mal.</p>
+			<p className={cn(display, 'mt-[0.35em] text-muted-foreground text-4xl')}>
+				Evalúa si un árbol de decisión es la opción ideal, y escríbelo.
+			</p>
 		</div>
 	);
 }
@@ -265,7 +265,12 @@ export const skillhellSlides = [
 		content: (
 			<Container>
 				<div className={bodyFrame}>
-					<Lines lines={['El resultado sigue siendo distinto.', 'El razonamiento ya es tuyo.']} />
+					<Lines
+						lines={[
+							'El razonamiento ya es tuyo. Pusiste un pedacito de tu mente en la skill.',
+							'Sin una dirección clara, a veces queda bien, a veces queda mal. Pero nunca sabes por qué.',
+						]}
+					/>
 				</div>
 			</Container>
 		),
