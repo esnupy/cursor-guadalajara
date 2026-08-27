@@ -15,6 +15,7 @@ import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import CursorLockupSwap from '@/components/icons/CursorLockupSwap';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import EasingCurve from '@/components/talks/skillhell/EasingCurve';
 
 const display = 'leading-[1.12] tracking-tight text-balance';
 const padding = 'p-[clamp(1.25rem,4vw,3.5rem)]';
@@ -282,9 +283,11 @@ export const skillhellSlides = [
 					/>
 				</div>
 				<div
-					className="w-full h-full bg-cover bg-right"
+					className="relative flex h-full w-full items-center justify-center bg-cover bg-right"
 					style={{ backgroundImage: "url('/images/deck/deck-5.webp')" }}
-				></div>
+				>
+					<EasingCurve />
+				</div>
 			</Container>
 		),
 	},
