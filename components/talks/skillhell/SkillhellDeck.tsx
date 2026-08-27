@@ -1,13 +1,80 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from 'react';
 import { CaretLeftIcon, CaretRightIcon, CornersInIcon, CornersOutIcon } from '@phosphor-icons/react';
+import { skillhellLora } from '@/components/talks/skillhell/font';
 import { skillhellSlides } from '@/components/talks/skillhell/slides';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
 
 const LAST_INDEX = skillhellSlides.length - 1;
+const SLIDE_HASH = /^#slide-(\d+)$/;
+
+function parseSlideHash(hash: string) {
+	const match = SLIDE_HASH.exec(hash);
+	if (!match) {
+		return null;
+	}
+
+	const slideNumber = Number.parseInt(match[1], 10);
+	if (slideNumber < 1) {
+		return null;
+	}
+
+	return Math.min(slideNumber, skillhellSlides.length) - 1;
+}
+
+function slideHash(index: number) {
+	return `#slide-${index + 1}`;
+}
+
+const slideHashListeners = new Set<() => void>();
+
+function subscribeSlideHash(onStoreChange: () => void) {
+	const onHashChange = () => onStoreChange();
+	slideHashListeners.add(onStoreChange);
+	window.addEventListener('hashchange', onHashChange);
+	return () => {
+		slideHashListeners.delete(onStoreChange);
+		window.removeEventListener('hashchange', onHashChange);
+	};
+}
+
+function getSlideIndexFromLocation() {
+	return parseSlideHash(window.location.hash) ?? 0;
+}
+
+function replaceSlideHash(index: number) {
+	const nextHash = slideHash(index);
+	if (window.location.hash === nextHash) {
+		return false;
+	}
+
+	const nextUrl = `${window.location.pathname}${window.location.search}${nextHash}`;
+	window.history.replaceState(null, '', nextUrl);
+	return true;
+}
+
+function setSlideIndex(index: number) {
+	if (!replaceSlideHash(index)) {
+		return;
+	}
+
+	for (const listener of slideHashListeners) {
+		listener();
+	}
+}
+
+type SkillhellSlide = (typeof skillhellSlides)[number];
+
+function getSlideSteps(slide: SkillhellSlide) {
+	return 'steps' in slide ? slide.steps : 0;
+}
+
+function renderSlideContent(slide: SkillhellSlide, step: number): ReactNode {
+	return typeof slide.content === 'function' ? slide.content(step) : slide.content;
+}
 
 type WebkitDocument = Document & {
 	webkitFullscreenElement?: Element | null;
@@ -64,20 +131,45 @@ function isTypingTarget(target: EventTarget | null) {
 
 export default function SkillhellDeck() {
 	const stageRef = useRef<HTMLDivElement>(null);
-	const [index, setIndex] = useState(0);
+	const index = useSyncExternalStore(subscribeSlideHash, getSlideIndexFromLocation, () => 0);
+	const [step, setStep] = useState(0);
 	const [isNativeFullscreen, setIsNativeFullscreen] = useState(false);
 	const [isFakeFullscreen, setIsFakeFullscreen] = useState(false);
 
 	const isFullscreen = isNativeFullscreen || isFakeFullscreen;
 	const slide = skillhellSlides[index];
+	const lastStep = getSlideSteps(slide);
+	const isFirstPosition = index === 0 && step === 0;
+	const isLastPosition = index === LAST_INDEX && step >= lastStep;
 
 	const goPrev = useCallback(() => {
-		setIndex((current) => Math.max(0, current - 1));
-	}, []);
+		if (step > 0) {
+			setStep(step - 1);
+			return;
+		}
+
+		if (index === 0) {
+			return;
+		}
+
+		const previousIndex = index - 1;
+		setSlideIndex(previousIndex);
+		setStep(getSlideSteps(skillhellSlides[previousIndex]));
+	}, [index, step]);
 
 	const goNext = useCallback(() => {
-		setIndex((current) => Math.min(LAST_INDEX, current + 1));
-	}, []);
+		if (step < lastStep) {
+			setStep(step + 1);
+			return;
+		}
+
+		if (index >= LAST_INDEX) {
+			return;
+		}
+
+		setSlideIndex(index + 1);
+		setStep(0);
+	}, [index, lastStep, step]);
 
 	const toggleFullscreen = useCallback(async () => {
 		const stage = stageRef.current;
@@ -101,6 +193,21 @@ export default function SkillhellDeck() {
 			setIsFakeFullscreen(true);
 		}
 	}, [isFakeFullscreen]);
+
+	useEffect(() => {
+		if (parseSlideHash(window.location.hash) === null) {
+			replaceSlideHash(index);
+		}
+	}, [index]);
+
+	useEffect(() => {
+		const onHashChange = () => {
+			setStep(0);
+		};
+
+		window.addEventListener('hashchange', onHashChange);
+		return () => window.removeEventListener('hashchange', onHashChange);
+	}, []);
 
 	useEffect(() => {
 		const syncFullscreen = () => {
@@ -149,22 +256,29 @@ export default function SkillhellDeck() {
 			aria-roledescription="presentación"
 			aria-label="Presentación Del skillhell al skillhalla"
 			className={cn(
-				'flex min-h-[min(70vh,42rem)] flex-col bg-background text-foreground',
-				'rounded-card border border-border',
-				'fullscreen:h-full fullscreen:min-h-full fullscreen:rounded-none fullscreen:border-0',
-				'[&:-webkit-full-screen]:h-full [&:-webkit-full-screen]:min-h-full [&:-webkit-full-screen]:rounded-none [&:-webkit-full-screen]:border-0',
-				isFakeFullscreen && 'fixed inset-0 z-50 min-h-0 rounded-none border-0',
+				skillhellLora.className,
+				'mx-auto flex w-full max-w-480 flex-col bg-background text-foreground',
+				'fullscreen:h-full fullscreen:max-w-none',
+				'[&:-webkit-full-screen]:h-full [&:-webkit-full-screen]:max-w-none',
+				isFakeFullscreen && 'fixed inset-0 z-50 max-w-none',
 			)}
 		>
-			<div className="flex min-h-0 flex-1 flex-col p-[clamp(1.25rem,4vw,3.5rem)]">
+			<div className={cn('flex w-full items-center justify-center', isFullscreen && 'min-h-0 flex-1')}>
 				<div
-					key={slide.id}
-					role="group"
-					aria-roledescription="slide"
-					aria-label={`Slide ${index + 1} de ${skillhellSlides.length}`}
-					className="flex min-h-0 flex-1 flex-col overflow-y-auto"
+					className={cn(
+						'aspect-video w-full max-w-480 overflow-hidden rounded-card border border-border bg-background',
+						isFullscreen && 'w-[min(100%,1920px,calc((100dvh-4.5rem)*16/9))]',
+					)}
 				>
-					{slide.content}
+					<div
+						key={slide.id}
+						role="group"
+						aria-roledescription="slide"
+						aria-label={`Slide ${index + 1} de ${skillhellSlides.length}`}
+						className="flex h-full min-h-0 flex-col overflow-y-auto"
+					>
+						{renderSlideContent(slide, step)}
+					</div>
 				</div>
 			</div>
 
@@ -177,7 +291,7 @@ export default function SkillhellDeck() {
 						variant="outline"
 						size="icon-lg"
 						onClick={goPrev}
-						disabled={index === 0}
+						disabled={isFirstPosition}
 						aria-label="Slide anterior"
 					>
 						<CaretLeftIcon weight="regular" className="size-5" />
@@ -187,7 +301,7 @@ export default function SkillhellDeck() {
 						variant="outline"
 						size="icon-lg"
 						onClick={goNext}
-						disabled={index === LAST_INDEX}
+						disabled={isLastPosition}
 						aria-label="Slide siguiente"
 					>
 						<CaretRightIcon weight="regular" className="size-5" />
