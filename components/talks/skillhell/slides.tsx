@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { useState, type ReactNode } from 'react';
 import { ArrowUpRightIcon } from '@phosphor-icons/react';
 import {
 	easingDemoGifAlt,
@@ -12,47 +13,126 @@ import {
 } from '@/content/talks/skillhell';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
+import CursorLockupSwap from '@/components/icons/CursorLockupSwap';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 
-const display = 'text-[clamp(1.75rem,4.2vw,3.25rem)] leading-[1.12] tracking-tight text-balance';
-const bodyFrame = 'flex h-full min-h-0 flex-1 flex-col items-start justify-start';
+const display = 'leading-[1.12] tracking-tight text-balance';
+const padding = 'p-[clamp(1.25rem,4vw,3.5rem)]';
+const bodyFrame = cn(padding, 'flex h-full min-h-0 flex-1 flex-col items-start justify-start');
 
-function Lines({ lines }: { lines: readonly [string, string] }) {
+function Container({ children }: { children: ReactNode }) {
 	return (
-		<div className={bodyFrame}>
-			<p className={cn(display, 'text-foreground')}>{lines[0]}</p>
-			<p className={cn(display, 'mt-[0.35em] text-muted-foreground')}>{lines[1]}</p>
+		<div className={cn(display, 'relative grid grid-cols-2 grid-rows-1 w-full h-full')}>
+			{children}
+			<CursorLockupSwap size={40} className="absolute bottom-4 right-4" />
 		</div>
+	);
+}
+
+function Lines({ lines }: { lines: readonly string[] }) {
+	return (
+		<>
+			<p className="text-5xl text-foreground">{lines[0]}</p>
+			{lines.slice(1).map((line, i) => (
+				<p key={`line-${line}-${i}`} className={cn(display, 'mt-8 text-muted-foreground text-4xl')}>
+					{line}
+				</p>
+			))}
+		</>
 	);
 }
 
 function TitleSlide() {
 	return (
-		<div className="flex h-full min-h-0 flex-1 flex-col items-center justify-center text-center">
-			<h1 className={cn(display, 'max-w-5xl text-foreground')}>{skillhellTalk.title}</h1>
-			<p className={cn(display, 'mt-[0.35em] text-muted-foreground')}>{skillhellTalk.event}</p>
-			<p className={cn(display, 'text-muted-foreground')}>{skillhellTalk.date}</p>
+		<div
+			className={cn(padding, 'flex h-full min-h-0 flex-1 flex-col items-start justify-start bg-cover')}
+			style={{ backgroundImage: "url('/images/deck/deck-1.webp')" }}
+		>
+			<CursorLockupSwap size={90} className="mb-6" />
+			{skillhellTalk.title.map((item, index) => (
+				<h1 key={`title-cover-${index}`} className={cn(display, 'max-w-5xl text-5xl text-foreground')}>
+					{item}
+				</h1>
+			))}
 		</div>
 	);
 }
 
-function MapSlide() {
+function MapCardExample({ src, alt, label }: { src: string; alt: string; label: string }) {
+	const [failed, setFailed] = useState(false);
+
+	if (!src || failed) {
+		return (
+			<div className="flex h-full items-center justify-center bg-muted px-6 text-center">
+				<p className="text-3xl text-muted-foreground">{label} · ejemplo</p>
+			</div>
+		);
+	}
+
+	return (
+		<Image
+			src={src}
+			alt={alt}
+			fill
+			className="object-cover object-left"
+			sizes="(max-width: 1024px) 100vw, 40vw"
+			onError={() => setFailed(true)}
+		/>
+	);
+}
+
+function hasMapExample(
+	item: (typeof mapItems)[number],
+): item is (typeof mapItems)[number] & { exampleSrc: string; exampleAlt: string } {
+	return 'exampleSrc' in item && Boolean(item.exampleSrc);
+}
+
+const mapExampleCount = mapItems.filter(hasMapExample).length;
+
+function MapSlide({ step = 0 }: { step?: number }) {
 	return (
 		<div className={bodyFrame}>
-			<ul className="grid w-full gap-8 sm:grid-cols-2 sm:gap-x-10 sm:gap-y-8">
-				{mapItems.map((item) => (
-					<li key={item.label}>
-						<p className={cn(display, 'text-foreground')}>{item.label}</p>
-						<p className={cn(display, 'mt-[0.2em] text-muted-foreground')}>{item.detail}</p>
-					</li>
-				))}
-			</ul>
+			<p className="mb-16 shrink-0 text-5xl">4 Cualidades de una buena skill</p>
+			<div className="grid min-h-0 w-full flex-1 grid-cols-2 grid-rows-2 gap-8 sm:gap-x-10 sm:gap-y-8">
+				{mapItems.map((item, index) => {
+					const example = hasMapExample(item) ? item : null;
+					const examplesBefore = mapItems.slice(0, index).filter(hasMapExample).length;
+					const showExample = Boolean(example) && step > examplesBefore;
+
+					return (
+						<Card key={item.label} className="relative h-full min-h-0">
+							<div
+								aria-hidden={showExample}
+								className={cn(
+									'flex h-full flex-col transition-opacity duration-500 ease-out-spring',
+									showExample && 'opacity-0',
+								)}
+							>
+								<CardHeader className="text-4xl">{item.label}</CardHeader>
+								<CardContent className="mt-4 text-3xl text-muted-foreground">{item.detail}</CardContent>
+							</div>
+							{example ? (
+								<div
+									aria-hidden={!showExample}
+									className={cn(
+										'absolute inset-0 transition-opacity duration-500 ease-out-spring',
+										showExample ? 'opacity-100' : 'pointer-events-none opacity-0',
+									)}
+								>
+									<MapCardExample src={example.exampleSrc} alt={example.exampleAlt} label={item.label} />
+								</div>
+							) : null}
+						</Card>
+					);
+				})}
+			</div>
 		</div>
 	);
 }
 
 function EasingTreeSlide() {
 	return (
-		<div className="grid h-full min-h-0 w-full flex-1 items-start gap-6 lg:grid-cols-2 lg:gap-10">
+		<div className={cn(padding, 'grid h-full min-h-0 w-full flex-1 items-start gap-6 lg:grid-cols-2 lg:gap-10')}>
 			<pre className="overflow-x-auto font-mono text-xl leading-relaxed whitespace-pre text-foreground">
 				{easingTree}
 			</pre>
@@ -129,29 +209,95 @@ export const skillhellSlides = [
 	{ id: 'titulo', content: <TitleSlide /> },
 	{
 		id: 'skillhell',
-		content: <Lines lines={['Hay demasiadas skills.', 'La más viral no tiene que encajar en tu flujo.']} />,
+		content: (
+			<Container>
+				<div className={bodyFrame}>
+					<Lines
+						lines={['Hay demasiadas skills.', 'Las más virales no necesariamente tienen que encajar en tu flujo.']}
+					/>
+				</div>
+			</Container>
+		),
 	},
 	{
 		id: 'asunciones',
-		content: <Lines lines={['Si hay un hueco, el modelo lo rellena.', 'No con lo que querías.']} />,
+		content: (
+			<Container>
+				<div className={bodyFrame}>
+					<Lines
+						lines={['Assumptions', 'Si hay un hueco, el modelo lo rellena, pero no siempre como tú lo tenías pensado.']}
+					/>
+				</div>
+			</Container>
+		),
 	},
 	{
 		id: 'proceso',
-		content: <Lines lines={['Una skill no pide el mismo resultado.', 'Pide el mismo proceso.']} />,
+		content: (
+			<Container>
+				<div className={bodyFrame}>
+					<div className="h-full w-full">
+						<Lines lines={['Qué hace una skill?', 'Una skill no pide el mismo resultado. Pide el mismo proceso.']} />
+						<p className="text-muted-foreground text-4xl mt-8 italic">
+							&quot;Sirve para que el razonamiento sea el mismo. El mismo árbol. Las mismas preguntas. Tú pones el
+							criterio. El modelo camina por ahí.&quot;
+						</p>
+					</div>
+				</div>
+			</Container>
+		),
 	},
-	{ id: 'mapa', content: <MapSlide /> },
+	{ id: 'mapa', steps: mapExampleCount, content: (step: number) => <MapSlide step={step} /> },
 	{
 		id: 'tesis',
-		content: <Lines lines={['Skillhalla es un árbol de decisión.', 'El modelo camina el mismo camino.']} />,
+		content: (
+			<Container>
+				<div className={bodyFrame}>
+					<Lines
+						lines={[
+							'Para mí, el Skillhalla fueron los árboles de decisión.',
+							'El modelo camina el mismo camino que tú le dictas.',
+						]}
+					/>
+				</div>
+				<div
+					aria-hidden={true}
+					className="w-full h-full bg-cover bg-right"
+					style={{ backgroundImage: "url('/images/deck/deck-4.webp')" }}
+				/>
+			</Container>
+		),
 	},
 	{
 		id: 'easing-problema',
-		content: <Lines lines={['Sin skill, cada diálogo sale con una curva distinta.', 'Nunca sabes cuál.']} />,
+		content: (
+			<Container>
+				<div className={bodyFrame}>
+					<Lines
+						lines={[
+							'Easings. El problema',
+							'Con una skill sin dirección, cada elemento sale con una curva distinta.',
+							'Nunca sabes cuál.',
+						]}
+					/>
+				</div>
+				<div
+					className="w-full h-full bg-cover bg-right"
+					style={{ backgroundImage: "url('/images/deck/deck-5.webp')" }}
+				></div>
+			</Container>
+		),
 	},
 	{ id: 'easing-arbol', content: <EasingTreeSlide /> },
 	{
 		id: 'razonamiento',
-		content: <Lines lines={['El resultado sigue siendo distinto.', 'El razonamiento ya es tuyo.']} />,
+		content: (
+			<Container>
+				<div className={bodyFrame}>
+					<Lines lines={['El resultado sigue siendo distinto.', 'El razonamiento ya es tuyo.']} />
+				</div>
+			</Container>
+		),
 	},
 	{ id: 'cta', content: <CtaSlide /> },
 	{ id: 'preguntas', content: <QuestionsSlide /> },
