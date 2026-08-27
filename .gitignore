@@ -165,6 +165,9 @@ yarn-error.log*
 # local env files
 .env*.local
 
+# Guest CSVs contain PII. Import locally; never commit.
+/data/
+
 # vercel
 .vercel
 

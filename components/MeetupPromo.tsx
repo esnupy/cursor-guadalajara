@@ -5,9 +5,11 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowLeftIcon, ArrowRightIcon, ArrowUpRightIcon, MapPinIcon } from '@phosphor-icons/react';
+import CapGiveaway from '@/components/CapGiveaway';
 import SectionDivider from '@/components/SectionDivider';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
+import { capGiveaway } from '@/content/caps';
 import { meetupPromo } from '@/content/meetups/meetup-27-08-2026';
 import { useBrandMotion } from '@/lib/motion';
 
@@ -60,6 +62,12 @@ export default function MeetupPromo() {
 					<p key={paragraph}>{paragraph}</p>
 				))}
 			</div>
+
+			<MeetupSection title={capGiveaway.title}>
+				<CapGiveaway />
+			</MeetupSection>
+
+			<SectionDivider />
 
 			<MeetupSection title="Sede">
 				<Card>
