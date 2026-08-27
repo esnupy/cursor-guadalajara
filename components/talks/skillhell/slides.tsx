@@ -2,9 +2,7 @@
 
 import Image from 'next/image';
 import { useState, type ReactNode } from 'react';
-import { ArrowUpRightIcon } from '@phosphor-icons/react';
 import { mapItems, skillhellSpeaker, skillhellTalk } from '@/content/talks/skillhell';
-import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import CursorLockupSwap from '@/components/icons/CursorLockupSwap';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
@@ -127,36 +125,37 @@ function MapSlide({ step = 0 }: { step?: number }) {
 
 function QuestionsSlide() {
 	const speaker = skillhellSpeaker;
-	const links = [
-		{ href: speaker.links.linkedin, label: 'LinkedIn' },
-		{ href: speaker.links.x, label: 'X' },
-		{ href: speaker.links.github, label: 'GitHub' },
-		{ href: speaker.links.website, label: 'juanda.dev' },
-	].filter((link): link is { href: string; label: string } => Boolean(link.href));
+	const portfolioUrl = speaker.links.website ?? 'https://www.juanda.dev/';
 
 	return (
-		<div className={bodyFrame}>
-			<p className={cn(display, 'mb-8 text-foreground')}>Preguntas</p>
-			<div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:gap-8">
+		<div className={cn(bodyFrame, display, 'text-5xl')}>
+			<p className={cn(display, 'mb-8 text-foreground')}>Gracias!</p>
+			<div className="flex flex-col gap-8 sm:flex-row sm:items-center sm:gap-10">
 				<div className="relative size-28 shrink-0 overflow-hidden rounded-full border border-border sm:size-36">
 					<Image src={speaker.photo} alt={speaker.name} fill className="object-cover" sizes="144px" />
 				</div>
-				<div>
+				<div className="min-w-0">
 					<p className={cn(display, 'text-foreground')}>{speaker.name}</p>
 					{speaker.role ? <p className={cn(display, 'text-muted-foreground')}>{speaker.role}</p> : null}
-					{links.length > 0 ? (
-						<ul className="mt-4 flex flex-wrap gap-x-5 gap-y-2">
-							{links.map((link) => (
-								<li key={link.label}>
-									<a href={link.href} target="_blank" rel="noopener noreferrer" className="link">
-										{link.label}
-										<ArrowUpRightIcon weight="regular" className="size-4" aria-hidden="true" />
-									</a>
-								</li>
-							))}
-						</ul>
-					) : null}
 				</div>
+				<figure className="flex shrink-0 flex-col items-center gap-3 sm:ml-4">
+					<a
+						href={portfolioUrl}
+						target="_blank"
+						rel="noopener noreferrer"
+						className="relative block size-44 overflow-hidden rounded-card border border-border bg-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:size-52"
+						aria-label="Abrir juanda.dev"
+					>
+						<Image
+							src="/images/deck/portfolio-qr.png"
+							alt="Código QR a juanda.dev"
+							fill
+							className="object-cover"
+							sizes="208px"
+							priority
+						/>
+					</a>
+				</figure>
 			</div>
 		</div>
 	);
@@ -164,12 +163,29 @@ function QuestionsSlide() {
 
 function CtaSlide() {
 	return (
-		<div className={cn(bodyFrame, display)}>
-			<p className="mb-4 text-4xl text-cursor-accent">De tarea</p>
-			<p className={cn(display, 'text-foreground text-5xl')}>Identifica una cosa que tu agente de IA te asume mal.</p>
-			<p className={cn(display, 'mt-[0.35em] text-muted-foreground text-4xl')}>
-				Evalúa si un árbol de decisión es la opción ideal, y escríbelo.
-			</p>
+		<div className={cn(bodyFrame, display, 'gap-10 lg:flex-row lg:items-start lg:justify-between')}>
+			<div className="min-w-0 flex-1">
+				<p className="mb-4 text-4xl text-cursor-accent">De tarea</p>
+				<p className={cn(display, 'text-foreground text-5xl')}>Identifica una cosa que tu agente de IA te asume mal.</p>
+				<p className={cn(display, 'mt-[0.35em] text-muted-foreground text-4xl')}>
+					Evalúa si un árbol de decisión es la opción ideal, y escríbelo.
+				</p>
+			</div>
+			<figure className="flex shrink-0 flex-col items-start gap-3">
+				<div className="relative size-56 overflow-hidden rounded-card border border-border bg-background">
+					<Image
+						src="/images/deck/cta-slide-8-qr.png"
+						alt="Código QR al slide del árbol de decisión"
+						fill
+						className="object-cover"
+						sizes="224px"
+						priority
+					/>
+				</div>
+				<figcaption className="max-w-56 text-2xl text-muted-foreground text-center">
+					Escanea para copiar el árbol
+				</figcaption>
+			</figure>
 		</div>
 	);
 }

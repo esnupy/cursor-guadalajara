@@ -1,8 +1,8 @@
 'use client';
 
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import { CursorIcon, HandPointingIcon, MoonIcon, SunIcon } from '@phosphor-icons/react';
-import { useEffect, useState, type ReactNode } from 'react';
+import { CheckIcon, CopyIcon, HandPointingIcon, MoonIcon, SunIcon } from '@phosphor-icons/react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import CursorLockupSwap from '@/components/icons/CursorLockupSwap';
 import EasingCurve from '@/components/talks/skillhell/EasingCurve';
 import { Button } from '@/components/ui/button';
@@ -188,6 +188,8 @@ export default function EasingDecisionTree() {
 	const prefersReducedMotion = useReducedMotion();
 	const reduceMotion = Boolean(prefersReducedMotion);
 	const [phaseIndex, setPhaseIndex] = useState(-1);
+	const [copied, setCopied] = useState(false);
+	const copiedResetRef = useRef<number | null>(null);
 
 	useEffect(() => {
 		let cancelled = false;
@@ -221,6 +223,27 @@ export default function EasingDecisionTree() {
 		};
 	}, [reduceMotion]);
 
+	useEffect(() => {
+		return () => {
+			if (copiedResetRef.current !== null) {
+				window.clearTimeout(copiedResetRef.current);
+			}
+		};
+	}, []);
+
+	const copyTree = async () => {
+		try {
+			await navigator.clipboard.writeText(easingTree);
+			setCopied(true);
+			if (copiedResetRef.current !== null) {
+				window.clearTimeout(copiedResetRef.current);
+			}
+			copiedResetRef.current = window.setTimeout(() => setCopied(false), 2000);
+		} catch {
+			setCopied(false);
+		}
+	};
+
 	const phase = phaseIndex >= 0 ? PHASES[phaseIndex] : undefined;
 	const highlighted = new Set(phase?.highlight ?? []);
 	const example = phase?.example ?? null;
@@ -242,8 +265,25 @@ export default function EasingDecisionTree() {
 						</span>
 					))}
 				</pre>
+				<Button
+					type="button"
+					variant="outline"
+					size="lg"
+					className="mt-6"
+					onClick={() => {
+						void copyTree();
+					}}
+					aria-label={copied ? 'Árbol copiado' : 'Copiar el markdown del árbol de decisión'}
+				>
+					{copied ? (
+						<CheckIcon weight="regular" className="size-4" aria-hidden="true" />
+					) : (
+						<CopyIcon weight="regular" className="size-4" aria-hidden="true" />
+					)}
+					{copied ? 'Copiado' : 'Copiar markdown'}
+				</Button>
 				<p className="sr-only" aria-live="polite">
-					{liveLine}
+					{copied ? 'Markdown del árbol copiado al portapapeles.' : liveLine}
 				</p>
 			</div>
 

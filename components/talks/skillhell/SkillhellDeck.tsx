@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from 'react';
 import { CaretLeftIcon, CaretRightIcon, CornersInIcon, CornersOutIcon } from '@phosphor-icons/react';
 import { skillhellLora } from '@/components/talks/skillhell/font';
 import { skillhellSlides } from '@/components/talks/skillhell/slides';
@@ -9,6 +9,62 @@ import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
 
 const LAST_INDEX = skillhellSlides.length - 1;
+const SLIDE_HASH = /^#slide-(\d+)$/;
+
+function parseSlideHash(hash: string) {
+	const match = SLIDE_HASH.exec(hash);
+	if (!match) {
+		return null;
+	}
+
+	const slideNumber = Number.parseInt(match[1], 10);
+	if (slideNumber < 1) {
+		return null;
+	}
+
+	return Math.min(slideNumber, skillhellSlides.length) - 1;
+}
+
+function slideHash(index: number) {
+	return `#slide-${index + 1}`;
+}
+
+const slideHashListeners = new Set<() => void>();
+
+function subscribeSlideHash(onStoreChange: () => void) {
+	const onHashChange = () => onStoreChange();
+	slideHashListeners.add(onStoreChange);
+	window.addEventListener('hashchange', onHashChange);
+	return () => {
+		slideHashListeners.delete(onStoreChange);
+		window.removeEventListener('hashchange', onHashChange);
+	};
+}
+
+function getSlideIndexFromLocation() {
+	return parseSlideHash(window.location.hash) ?? 0;
+}
+
+function replaceSlideHash(index: number) {
+	const nextHash = slideHash(index);
+	if (window.location.hash === nextHash) {
+		return false;
+	}
+
+	const nextUrl = `${window.location.pathname}${window.location.search}${nextHash}`;
+	window.history.replaceState(null, '', nextUrl);
+	return true;
+}
+
+function setSlideIndex(index: number) {
+	if (!replaceSlideHash(index)) {
+		return;
+	}
+
+	for (const listener of slideHashListeners) {
+		listener();
+	}
+}
 
 type SkillhellSlide = (typeof skillhellSlides)[number];
 
@@ -75,7 +131,7 @@ function isTypingTarget(target: EventTarget | null) {
 
 export default function SkillhellDeck() {
 	const stageRef = useRef<HTMLDivElement>(null);
-	const [index, setIndex] = useState(0);
+	const index = useSyncExternalStore(subscribeSlideHash, getSlideIndexFromLocation, () => 0);
 	const [step, setStep] = useState(0);
 	const [isNativeFullscreen, setIsNativeFullscreen] = useState(false);
 	const [isFakeFullscreen, setIsFakeFullscreen] = useState(false);
@@ -97,7 +153,7 @@ export default function SkillhellDeck() {
 		}
 
 		const previousIndex = index - 1;
-		setIndex(previousIndex);
+		setSlideIndex(previousIndex);
 		setStep(getSlideSteps(skillhellSlides[previousIndex]));
 	}, [index, step]);
 
@@ -111,7 +167,7 @@ export default function SkillhellDeck() {
 			return;
 		}
 
-		setIndex(index + 1);
+		setSlideIndex(index + 1);
 		setStep(0);
 	}, [index, lastStep, step]);
 
@@ -137,6 +193,21 @@ export default function SkillhellDeck() {
 			setIsFakeFullscreen(true);
 		}
 	}, [isFakeFullscreen]);
+
+	useEffect(() => {
+		if (parseSlideHash(window.location.hash) === null) {
+			replaceSlideHash(index);
+		}
+	}, [index]);
+
+	useEffect(() => {
+		const onHashChange = () => {
+			setStep(0);
+		};
+
+		window.addEventListener('hashchange', onHashChange);
+		return () => window.removeEventListener('hashchange', onHashChange);
+	}, []);
 
 	useEffect(() => {
 		const syncFullscreen = () => {
