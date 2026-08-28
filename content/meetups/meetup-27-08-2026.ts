@@ -1,4 +1,7 @@
 import { ambassadors } from '@/content/ambassadors';
+import { cursorComoAgenteTalk } from '@/content/talks/cursor-como-agente';
+import { grokBotTalk } from '@/content/talks/grok-bot';
+import { howToBabysitAgentsTalk } from '@/content/talks/how-to-babysit-agents';
 import { skillhellTalk } from '@/content/talks/skillhell';
 
 const juan = ambassadors.find((ambassador) => ambassador.name === 'Juan Daniel Martinez');
@@ -61,6 +64,7 @@ export const meetupPromo = {
 			abstract:
 				'Cómo usar el CLI de Cursor para armar un sistema agéntico con habilidades, memoria y orquestación — sin frameworks ni servicios externos de IA. Una arquitectura framework-free para convertir la terminal en un compañero autónomo.',
 			url: alejandro?.links.linkedin,
+			slidesPath: cursorComoAgenteTalk.path,
 		},
 		{
 			name: 'Rogelio Hernández',
@@ -70,6 +74,7 @@ export const meetupPromo = {
 			abstract:
 				'Cómo pasar de una idea a agentes que hagan lo que esperamos dentro de Cursor: guiar, supervisar y ajustar para obtener mejores resultados y evitar el slop.',
 			url: rogelio?.links.linkedin,
+			slidesPath: howToBabysitAgentsTalk.path,
 		},
 		{
 			name: 'Andrés Fernández',
@@ -78,6 +83,7 @@ export const meetupPromo = {
 			talkTitle: 'GrokBot: cuida mi enfoque, Cursor codea',
 			abstract:
 				'GrokBot para investigar, pensar y mantener el enfoque; Cursor para convertir esas decisiones en producto. Cómo combinar ambas herramientas para ir de una idea a algo construido sin perderse en el camino.',
+			slidesPath: grokBotTalk.path,
 		},
 	],
 } as const;

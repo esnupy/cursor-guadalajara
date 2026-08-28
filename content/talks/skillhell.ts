@@ -5,6 +5,12 @@ export const skillhellTalk = {
 	event: 'Meetup Guadalajara',
 	date: '27 de agosto de 2026',
 	path: '/meetup-27-08-2026/del-skillhell-al-skillhalla',
+	ogImage: {
+		src: '/images/meetup-27-08-2026/del-skillhell-al-skillhalla/og.png',
+		alt: 'From Skillhell to Skillhalla — Cursor Meetup Guadalajara, 27 de agosto de 2026',
+		width: 1600,
+		height: 837,
+	},
 };
 
 export const easingTree = `¿El elemento entra o sale del viewport?

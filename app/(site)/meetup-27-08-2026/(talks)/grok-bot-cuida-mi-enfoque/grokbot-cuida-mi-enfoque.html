@@ -1,0 +1,1736 @@
+<!doctype html>
+<html lang="es-MX">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="color-scheme" content="light" />
+		<link rel="icon" href="assets/cursor-cube.svg" type="image/svg+xml" />
+		<title>GrokBot: cuida mi enfoque, Cursor codea. — Andrés Fernández</title>
+		<style>
+			@font-face {
+				font-family: 'Cursor Gothic';
+				src: url('assets/CursorGothic-Regular.woff2') format('woff2');
+				font-weight: 400;
+				font-style: normal;
+				font-display: swap;
+			}
+			@font-face {
+				font-family: 'Cursor Gothic';
+				src: url('assets/CursorGothic-Bold.woff2') format('woff2');
+				font-weight: 700;
+				font-style: normal;
+				font-display: swap;
+			}
+			@font-face {
+				font-family: 'Cursor Mono';
+				src: url('assets/CursorMono-Regular.otf') format('opentype');
+				font-weight: 400;
+				font-style: normal;
+				font-display: swap;
+			}
+
+			:root {
+				--paper: #f7f7f4;
+				--ink: #26251e;
+				--muted: #77756d;
+				--line: #d8d7d1;
+				--card: #f0efeb;
+				--card-2: #e6e5e0;
+				--night: #14120b;
+				--night-card: #1d1b15;
+				--night-line: #3a3833;
+				--snow: #edecec;
+				--orange: #f54e00;
+				--orange-soft: #fbdbcc;
+				--green: #2c9f28;
+				--blue: #2268ff;
+				--sky: #31a8bf;
+				--lavender: #8c89e7;
+				--scale: 1;
+			}
+
+			* {
+				box-sizing: border-box;
+			}
+			html,
+			body {
+				width: 100%;
+				height: 100%;
+				margin: 0;
+				overflow: hidden;
+				background: #0d0c08;
+			}
+			body {
+				font-family: 'Cursor Gothic', Arial, sans-serif;
+				color: var(--ink);
+				-webkit-font-smoothing: antialiased;
+			}
+
+			.deck {
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				width: 1920px;
+				height: 1080px;
+				transform: translate(-50%, -50%) scale(var(--scale));
+				transform-origin: center;
+				background: var(--paper);
+				box-shadow: 0 40px 110px rgba(0, 0, 0, 0.48);
+				overflow: hidden;
+			}
+
+			.slide {
+				position: absolute;
+				inset: 0;
+				display: none;
+				overflow: hidden;
+				background: var(--paper);
+				padding: 94px 112px 84px;
+				isolation: isolate;
+			}
+			.slide.active {
+				display: block;
+				animation: enter 0.32s cubic-bezier(0.22, 0.75, 0.25, 1) both;
+			}
+			.slide.dark {
+				color: var(--snow);
+				background: var(--night);
+			}
+			@keyframes enter {
+				from {
+					opacity: 0.25;
+					transform: translateX(18px);
+				}
+				to {
+					opacity: 1;
+					transform: none;
+				}
+			}
+
+			.slide::before {
+				content: '';
+				position: absolute;
+				inset: 0;
+				z-index: -2;
+				pointer-events: none;
+				background-image:
+					linear-gradient(to right, rgba(38, 37, 30, 0.032) 1px, transparent 1px),
+					linear-gradient(to bottom, rgba(38, 37, 30, 0.032) 1px, transparent 1px);
+				background-size: 96px 96px;
+				mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.82), transparent 78%);
+			}
+			.slide.dark::before {
+				background-image:
+					linear-gradient(to right, rgba(237, 236, 236, 0.035) 1px, transparent 1px),
+					linear-gradient(to bottom, rgba(237, 236, 236, 0.035) 1px, transparent 1px);
+			}
+
+			h1,
+			h2,
+			h3,
+			p {
+				margin: 0;
+			}
+			h1 {
+				font-size: 116px;
+				line-height: 0.94;
+				letter-spacing: -0.058em;
+				font-weight: 700;
+			}
+			h2 {
+				font-size: 76px;
+				line-height: 0.98;
+				letter-spacing: -0.048em;
+				font-weight: 700;
+			}
+			h3 {
+				font-size: 38px;
+				line-height: 1.06;
+				letter-spacing: -0.025em;
+			}
+			p {
+				font-size: 32px;
+				line-height: 1.28;
+				letter-spacing: -0.015em;
+			}
+			.eyebrow {
+				font-family: 'Cursor Mono', ui-monospace, monospace;
+				text-transform: uppercase;
+				letter-spacing: 0.12em;
+				font-size: 20px;
+				color: var(--orange);
+				margin-bottom: 28px;
+			}
+			.muted {
+				color: var(--muted);
+			}
+			.dark .muted {
+				color: #a7a59e;
+			}
+			.accent {
+				color: var(--orange);
+			}
+			.mono {
+				font-family: 'Cursor Mono', ui-monospace, monospace;
+			}
+			.small {
+				font-size: 23px;
+				line-height: 1.3;
+			}
+			.tiny {
+				font-size: 18px;
+				line-height: 1.3;
+			}
+			.lead {
+				font-size: 43px;
+				line-height: 1.16;
+				letter-spacing: -0.03em;
+			}
+			.tight {
+				line-height: 1.02;
+			}
+
+			.topline {
+				position: absolute;
+				top: 42px;
+				left: 112px;
+				right: 112px;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				font-family: 'Cursor Mono', ui-monospace, monospace;
+				font-size: 17px;
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				color: #77756d;
+			}
+			.dark .topline {
+				color: #8e8b84;
+			}
+			.topline img {
+				width: 26px;
+				height: 31px;
+				opacity: 0.72;
+			}
+			.footer {
+				position: absolute;
+				bottom: 30px;
+				left: 112px;
+				right: 112px;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				font-family: 'Cursor Mono', ui-monospace, monospace;
+				font-size: 16px;
+				color: #8b8982;
+			}
+			.footer .rule {
+				width: 78px;
+				height: 2px;
+				background: var(--orange);
+				margin-right: 15px;
+				display: inline-block;
+				vertical-align: middle;
+			}
+
+			.card {
+				background: var(--card);
+				border: 1px solid rgba(38, 37, 30, 0.09);
+				border-radius: 9px;
+				padding: 30px;
+			}
+			.dark .card {
+				background: var(--night-card);
+				border-color: var(--night-line);
+			}
+			.pill {
+				display: inline-flex;
+				align-items: center;
+				gap: 10px;
+				border: 1px solid var(--line);
+				border-radius: 999px;
+				padding: 9px 15px;
+				font-family: 'Cursor Mono', ui-monospace, monospace;
+				font-size: 17px;
+				background: rgba(247, 247, 244, 0.8);
+				white-space: nowrap;
+			}
+			.dark .pill {
+				border-color: var(--night-line);
+				background: var(--night-card);
+			}
+			.pill.orange {
+				color: var(--orange);
+				border-color: rgba(245, 78, 0, 0.36);
+				background: #fff4ed;
+			}
+			.optional-label {
+				display: inline-flex;
+				align-items: center;
+				gap: 10px;
+				border-radius: 999px;
+				background: var(--orange);
+				color: white;
+				padding: 8px 15px 7px;
+				font-family: 'Cursor Mono', ui-monospace, monospace;
+				font-size: 16px;
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+			}
+
+			/* Slide 1 */
+			.title-slide {
+				padding-top: 118px;
+			}
+			.title-slide .brand-lockup {
+				width: 220px;
+				height: auto;
+				margin-bottom: 86px;
+			}
+			.title-slide h1 {
+				max-width: 1440px;
+				position: relative;
+				z-index: 2;
+			}
+			.title-slide .author {
+				position: absolute;
+				left: 112px;
+				bottom: 67px;
+				font-size: 22px;
+			}
+			.title-slide .giant-cube {
+				position: absolute;
+				right: 72px;
+				top: 62px;
+				width: 520px;
+				opacity: 0.035;
+				transform: rotate(-9deg);
+				z-index: -1;
+			}
+			.orange-orbit {
+				position: absolute;
+				right: 88px;
+				bottom: 72px;
+				width: 270px;
+				height: 270px;
+				border: 3px solid var(--orange);
+				border-radius: 50%;
+				opacity: 0.9;
+			}
+			.orange-orbit::after {
+				content: '';
+				position: absolute;
+				width: 22px;
+				height: 22px;
+				border-radius: 50%;
+				background: var(--orange);
+				top: 26px;
+				right: 35px;
+			}
+
+			/* Slide 2 */
+			.meeting-grid {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				height: 100%;
+			}
+			.meme-frame {
+				width: 700px;
+				margin: 0;
+				background: #e8e6df;
+				border-radius: 13px;
+				padding: 24px;
+				box-shadow: 0 30px 80px rgba(0, 0, 0, 0.28);
+				transform: rotate(-1.4deg);
+			}
+			.meme-frame img {
+				display: block;
+				width: 100%;
+				border-radius: 4px;
+				image-rendering: auto;
+			}
+
+			/* Slide 3 */
+			.shadow-title {
+				max-width: 1280px;
+			}
+			.jobline {
+				display: grid;
+				grid-template-columns: repeat(5, 1fr);
+				gap: 18px;
+				margin-top: 86px;
+			}
+			.job {
+				min-height: 292px;
+				border-top: 4px solid var(--orange);
+				background: var(--card);
+				padding: 28px 24px;
+				position: relative;
+			}
+			.job .num {
+				font-family: 'Cursor Mono';
+				color: var(--orange);
+				font-size: 18px;
+				margin-bottom: 55px;
+			}
+			.job h3 {
+				font-size: 34px;
+			}
+			.job p {
+				font-size: 22px;
+				color: var(--muted);
+				margin-top: 15px;
+			}
+			.job::after {
+				content: '→';
+				position: absolute;
+				right: -18px;
+				top: 48%;
+				color: var(--orange);
+				font-size: 32px;
+				z-index: 3;
+			}
+			.job:last-child::after {
+				display: none;
+			}
+			.after-call {
+				margin-top: 46px;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+			}
+			.after-call .line {
+				height: 2px;
+				background: var(--line);
+				flex: 1;
+				margin: 0 30px;
+			}
+
+			/* Slide 4 */
+			.evolution {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 24px;
+				margin-top: 55px;
+				position: relative;
+			}
+			.era {
+				min-height: 330px;
+				padding: 30px;
+				border: 1px solid var(--night-line);
+				background: var(--night-card);
+				position: relative;
+				overflow: hidden;
+			}
+			.era.current {
+				border-color: var(--orange);
+				background: #201912;
+			}
+			.era .step {
+				font-family: 'Cursor Mono';
+				font-size: 17px;
+				color: #8e8b84;
+				text-transform: uppercase;
+				letter-spacing: 0.1em;
+			}
+			.era h3 {
+				margin-top: 34px;
+				font-size: 50px;
+			}
+			.era .promise {
+				font-size: 24px;
+				color: #b9b7b0;
+				margin-top: 13px;
+			}
+			.chaos {
+				margin-top: 38px;
+				display: flex;
+				flex-wrap: wrap;
+				gap: 9px;
+			}
+			.chaos span {
+				font-family: 'Cursor Mono';
+				color: #aaa79f;
+				background: #28261f;
+				border: 1px solid #3d3b34;
+				padding: 7px 10px;
+				font-size: 15px;
+			}
+			.era.current .chaos span {
+				color: #f4cbb6;
+				border-color: #6b3216;
+				background: #2b1d15;
+			}
+			.less-config {
+				position: absolute;
+				right: 27px;
+				bottom: 24px;
+				color: var(--orange);
+				font-size: 19px;
+			}
+			.it-job {
+				margin-top: 32px;
+				border: 1px solid #514d44;
+				background: #0f0e09;
+				padding: 28px 34px;
+				display: grid;
+				grid-template-columns: 65px 1fr;
+				gap: 22px;
+				align-items: center;
+			}
+			.it-job .mark {
+				color: var(--orange);
+				font-size: 56px;
+				line-height: 1;
+			}
+			.it-job p {
+				font-size: 32px;
+				line-height: 1.16;
+			}
+
+			/* Slide 5 */
+			.thesis-wrap {
+				height: 100%;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+			}
+			.plate {
+				font-size: 124px;
+				max-width: 1500px;
+			}
+			.plate .take {
+				color: var(--orange);
+			}
+			.not-more {
+				margin-top: 34px;
+				color: #86837b;
+				font-size: 46px;
+				text-decoration: line-through;
+				text-decoration-thickness: 3px;
+				text-decoration-color: var(--orange);
+			}
+			.useful-agent {
+				margin-top: 70px;
+				display: grid;
+				grid-template-columns: 1fr 1fr 1fr;
+				gap: 20px;
+				width: 1280px;
+			}
+			.useful-agent .piece {
+				border-top: 2px solid var(--line);
+				padding-top: 18px;
+				font-size: 28px;
+			}
+			.useful-agent .piece strong {
+				color: var(--orange);
+				display: block;
+				font-size: 20px;
+				font-family: 'Cursor Mono';
+				margin-bottom: 8px;
+			}
+
+			/* Slide 6 */
+			.operator-shot {
+				height: 660px;
+				margin-top: 34px;
+				border: 1px solid var(--night-line);
+				background: #090909;
+				overflow: hidden;
+				position: relative;
+				box-shadow: 0 28px 70px rgba(0, 0, 0, 0.24);
+			}
+			.operator-shot > img {
+				width: 100%;
+				height: 100%;
+				display: block;
+				object-fit: cover;
+				object-position: center top;
+				opacity: 0.82;
+			}
+			.anatomy-tag {
+				position: absolute;
+				display: flex;
+				align-items: center;
+				gap: 10px;
+				padding: 11px 14px;
+				background: rgba(10, 10, 10, 0.9);
+				border: 1px solid rgba(255, 255, 255, 0.32);
+				color: white;
+				font-family: 'Cursor Mono';
+				font-size: 16px;
+				letter-spacing: 0.01em;
+				box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+			}
+			.anatomy-tag b {
+				width: 27px;
+				height: 27px;
+				display: grid;
+				place-items: center;
+				background: var(--orange);
+				color: white;
+				font-weight: 400;
+			}
+			.tag-agents {
+				left: 24px;
+				top: 34px;
+			}
+			.tag-brief {
+				left: 35%;
+				top: 34px;
+			}
+			.tag-computer {
+				right: 24px;
+				top: 34px;
+			}
+			.tag-routines {
+				right: 24px;
+				bottom: 34px;
+			}
+
+			/* Slide 7 */
+			.agent-gallery {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 22px;
+				margin-top: 44px;
+			}
+			.article-shot {
+				height: 620px;
+				border: 1px solid var(--night-line);
+				background: #050505;
+				overflow: hidden;
+				position: relative;
+			}
+			.article-shot img {
+				width: 100%;
+				height: 100%;
+				display: block;
+				object-fit: contain;
+			}
+			.article-shot::after {
+				content: attr(data-label);
+				position: absolute;
+				left: 14px;
+				top: 14px;
+				padding: 8px 11px;
+				background: var(--orange);
+				color: white;
+				font-family: 'Cursor Mono';
+				font-size: 14px;
+				letter-spacing: 0.05em;
+			}
+
+			/* Slide 8 */
+			.flow-wrap {
+				margin-top: 52px;
+			}
+			.sources {
+				display: grid;
+				grid-template-columns: repeat(5, 1fr);
+				gap: 15px;
+			}
+			.source-card {
+				min-height: 156px;
+				background: white;
+				border: 1px solid var(--line);
+				padding: 22px;
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
+			}
+			.source-card .logos {
+				display: flex;
+				align-items: center;
+				gap: 12px;
+				height: 42px;
+			}
+			.source-card img {
+				width: 36px;
+				height: 36px;
+				object-fit: contain;
+			}
+			.source-card h3 {
+				font-size: 24px;
+			}
+			.slack-mark {
+				width: 36px;
+				height: 36px;
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 3px;
+				transform: rotate(10deg);
+			}
+			.slack-mark i {
+				border-radius: 4px;
+			}
+			.slack-mark i:nth-child(1) {
+				background: #36c5f0;
+			}
+			.slack-mark i:nth-child(2) {
+				background: #2eb67d;
+			}
+			.slack-mark i:nth-child(3) {
+				background: #e01e5a;
+			}
+			.slack-mark i:nth-child(4) {
+				background: #ecb22e;
+			}
+			.monday-mark {
+				display: flex;
+				gap: 4px;
+				align-items: center;
+				height: 36px;
+			}
+			.monday-mark i {
+				width: 9px;
+				height: 31px;
+				border-radius: 8px;
+				transform: rotate(38deg);
+			}
+			.monday-mark i:nth-child(1) {
+				background: #ff3d57;
+			}
+			.monday-mark i:nth-child(2) {
+				background: #ffcb00;
+			}
+			.monday-mark i:nth-child(3) {
+				background: #00d647;
+			}
+			.wave-mark {
+				width: 48px;
+				height: 34px;
+				display: flex;
+				gap: 4px;
+				align-items: center;
+			}
+			.wave-mark i {
+				width: 5px;
+				border-radius: 6px;
+				background: var(--orange);
+			}
+			.wave-mark i:nth-child(1),
+			.wave-mark i:nth-child(5) {
+				height: 12px;
+			}
+			.wave-mark i:nth-child(2),
+			.wave-mark i:nth-child(4) {
+				height: 26px;
+			}
+			.wave-mark i:nth-child(3) {
+				height: 34px;
+			}
+			.flow-arrow {
+				height: 66px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				position: relative;
+			}
+			.flow-arrow::before {
+				content: '';
+				width: 2px;
+				height: 45px;
+				background: var(--orange);
+			}
+			.flow-arrow::after {
+				content: '';
+				position: absolute;
+				bottom: 8px;
+				width: 13px;
+				height: 13px;
+				border-right: 2px solid var(--orange);
+				border-bottom: 2px solid var(--orange);
+				transform: rotate(45deg);
+			}
+			.pipeline {
+				display: grid;
+				grid-template-columns: 1fr 130px 1fr;
+				align-items: stretch;
+				max-width: 1320px;
+				margin: 0 auto;
+			}
+			.pipe-block {
+				min-height: 190px;
+				display: flex;
+				align-items: center;
+				gap: 28px;
+				padding: 30px 36px;
+				border: 1px solid var(--line);
+				background: var(--card);
+			}
+			.pipe-block.signal {
+				background: var(--orange);
+				color: white;
+				border-color: var(--orange);
+			}
+			.pipe-icon {
+				font-size: 52px;
+			}
+			.pipe-block h3 {
+				font-size: 39px;
+			}
+			.pipe-block p {
+				font-size: 21px;
+				margin-top: 9px;
+				opacity: 0.78;
+			}
+			.h-arrow {
+				display: grid;
+				place-items: center;
+				font-size: 56px;
+				color: var(--orange);
+			}
+			.gtd-line {
+				margin-top: 34px;
+				display: flex;
+				align-items: center;
+				gap: 18px;
+				font-size: 26px;
+			}
+			.gtd-line .tag {
+				font-family: 'Cursor Mono';
+				font-size: 16px;
+				color: var(--orange);
+				border: 1px solid var(--orange);
+				padding: 7px 10px;
+			}
+
+			/* Slide 8 */
+			.proof-layout {
+				display: grid;
+				grid-template-columns: 500px 1fr;
+				gap: 28px;
+				margin-top: 45px;
+			}
+			.proof-sources {
+				display: flex;
+				flex-direction: column;
+				gap: 15px;
+			}
+			.proof-source {
+				padding: 22px;
+				background: white;
+				border: 1px solid var(--line);
+			}
+			.proof-source .link {
+				color: var(--blue);
+				font-family: 'Cursor Mono';
+				font-size: 16px;
+				margin-top: 18px;
+				display: block;
+			}
+			.proof-source p {
+				font-size: 23px;
+			}
+			.signal-card {
+				background: #fff;
+				border: 2px solid var(--orange);
+				padding: 26px 30px 25px;
+				position: relative;
+			}
+			.signal-card::before {
+				content: 'MEETING SIGNAL';
+				position: absolute;
+				right: 22px;
+				top: 18px;
+				font-family: 'Cursor Mono';
+				color: var(--orange);
+				font-size: 14px;
+				letter-spacing: 0.1em;
+			}
+			.signal-card h3 {
+				font-size: 42px;
+				max-width: 700px;
+			}
+			.signal-list {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 13px;
+				margin-top: 24px;
+			}
+			.signal-list div {
+				background: var(--card);
+				padding: 19px;
+				min-height: 128px;
+				border-top: 3px solid var(--orange);
+				font-size: 21px;
+				line-height: 1.18;
+			}
+			.recommend {
+				margin-top: 17px;
+				background: var(--night);
+				color: var(--snow);
+				padding: 22px 25px;
+				display: grid;
+				grid-template-columns: 190px 1fr;
+				gap: 20px;
+				align-items: center;
+			}
+			.recommend .label {
+				color: var(--orange);
+				font-family: 'Cursor Mono';
+				font-size: 16px;
+				letter-spacing: 0.08em;
+			}
+			.recommend p {
+				font-size: 24px;
+			}
+			/* Slide 9 */
+			.brief-grid {
+				display: grid;
+				grid-template-columns: 760px 1fr;
+				gap: 35px;
+				margin-top: 40px;
+			}
+			.morning {
+				background: white;
+				border: 1px solid var(--line);
+				padding: 22px;
+				box-shadow: 0 24px 60px rgba(38, 37, 30, 0.08);
+			}
+			.morning-head {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				padding: 0 3px 18px;
+			}
+			.morning-head h3 {
+				font-size: 32px;
+			}
+			.attention {
+				display: flex;
+				flex-direction: column;
+				gap: 11px;
+			}
+			.attention-item {
+				border: 1px solid var(--line);
+				background: var(--paper);
+				padding: 17px 19px;
+				display: grid;
+				grid-template-columns: 42px 1fr;
+				gap: 15px;
+			}
+			.attention-item .n {
+				width: 34px;
+				height: 34px;
+				border-radius: 50%;
+				background: var(--orange);
+				color: white;
+				display: grid;
+				place-items: center;
+				font-family: 'Cursor Mono';
+				font-size: 15px;
+			}
+			.attention-item h3 {
+				font-size: 24px;
+			}
+			.attention-item p {
+				font-size: 18px;
+				color: var(--muted);
+				margin-top: 5px;
+			}
+			.attention-item .rec {
+				margin-top: 8px;
+				font-size: 17px;
+				color: var(--ink);
+			}
+			.source-row {
+				margin-top: 9px;
+				display: flex;
+				gap: 7px;
+			}
+			.source-row span {
+				font-family: 'Cursor Mono';
+				font-size: 13px;
+				color: var(--blue);
+			}
+			.boundaries {
+				display: flex;
+				flex-direction: column;
+				gap: 12px;
+			}
+			.boundary {
+				display: grid;
+				grid-template-columns: 180px 1fr;
+				gap: 20px;
+				padding: 19px 22px;
+				border: 1px solid var(--line);
+				background: var(--card);
+				min-height: 120px;
+			}
+			.boundary h3 {
+				font-size: 24px;
+				color: var(--orange);
+			}
+			.boundary p {
+				font-size: 20px;
+			}
+			.boundary.approval {
+				background: var(--night);
+				color: var(--snow);
+				border-color: var(--night);
+			}
+			.boundary.approval h3 {
+				color: #ff8a52;
+			}
+			.boundary.approval p {
+				color: #d4d2cc;
+			}
+			.judgment-line {
+				margin-top: 26px;
+				font-size: 30px;
+				padding-left: 22px;
+				border-left: 4px solid var(--orange);
+			}
+
+			/* Slide 10 */
+			.challenge {
+				padding-top: 125px;
+			}
+			.challenge h2 {
+				font-size: 104px;
+				max-width: 1460px;
+			}
+			.criteria {
+				display: grid;
+				grid-template-columns: repeat(4, 1fr);
+				gap: 14px;
+				margin-top: 70px;
+			}
+			.criterion {
+				min-height: 160px;
+				border-top: 4px solid var(--orange);
+				background: var(--card);
+				padding: 24px;
+			}
+			.criterion .check {
+				color: var(--orange);
+				font-family: 'Cursor Mono';
+				font-size: 17px;
+			}
+			.criterion h3 {
+				font-size: 29px;
+				margin-top: 24px;
+			}
+			.closing-thought {
+				margin-top: 66px;
+				font-size: 48px;
+				line-height: 1.12;
+				max-width: 1570px;
+			}
+			.closing-thought strong {
+				color: var(--orange);
+			}
+
+			/* Optional slides */
+			.odyssey-layout {
+				display: grid;
+				grid-template-columns: 600px 1fr;
+				gap: 55px;
+				margin-top: 58px;
+			}
+			.poster {
+				background: linear-gradient(145deg, #0d0c08, #252116);
+				border: 1px solid #4a4330;
+				min-height: 540px;
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
+				padding: 35px;
+				position: relative;
+				overflow: hidden;
+			}
+			.poster::before {
+				content: '';
+				position: absolute;
+				width: 480px;
+				height: 480px;
+				border: 1px solid #7b6b46;
+				border-radius: 50%;
+				left: 60px;
+				top: 45px;
+				box-shadow:
+					0 0 0 55px rgba(123, 107, 70, 0.08),
+					0 0 0 110px rgba(123, 107, 70, 0.05);
+			}
+			.poster .odyssey {
+				font-size: 64px;
+				letter-spacing: 0.16em;
+				z-index: 1;
+			}
+			.poster .imax {
+				font-family: 'Cursor Mono';
+				color: var(--orange);
+				font-size: 25px;
+				z-index: 1;
+			}
+			.routine-flow {
+				display: flex;
+				flex-direction: column;
+				gap: 15px;
+			}
+			.routine-step {
+				background: var(--night-card);
+				border: 1px solid var(--night-line);
+				padding: 22px 25px;
+				display: grid;
+				grid-template-columns: 55px 1fr;
+				gap: 17px;
+				align-items: center;
+			}
+			.routine-step .step-icon {
+				width: 45px;
+				height: 45px;
+				border-radius: 50%;
+				border: 1px solid var(--orange);
+				color: var(--orange);
+				display: grid;
+				place-items: center;
+				font-size: 22px;
+			}
+			.routine-step h3 {
+				font-size: 27px;
+			}
+			.routine-step p {
+				font-size: 19px;
+				color: #aaa79f;
+				margin-top: 5px;
+			}
+			.silent {
+				margin-top: 18px;
+				color: var(--orange);
+				font-size: 31px;
+			}
+			.exercise-wrap {
+				height: 100%;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+			}
+			.exercise-wrap h2 {
+				font-size: 92px;
+				max-width: 1550px;
+			}
+			.prompt-grid {
+				margin-top: 70px;
+				display: grid;
+				grid-template-columns: repeat(4, 1fr);
+				gap: 16px;
+			}
+			.prompt {
+				min-height: 205px;
+				background: var(--card);
+				border-top: 4px solid var(--orange);
+				padding: 25px;
+			}
+			.prompt .q {
+				font-family: 'Cursor Mono';
+				color: var(--orange);
+				font-size: 17px;
+			}
+			.prompt h3 {
+				margin-top: 32px;
+				font-size: 31px;
+			}
+			.thirty {
+				position: absolute;
+				right: 112px;
+				bottom: 90px;
+				font-size: 96px;
+				color: var(--orange);
+				font-weight: 700;
+			}
+
+			/* Controls */
+			.controls {
+				position: fixed;
+				right: 18px;
+				bottom: 16px;
+				z-index: 50;
+				display: flex;
+				gap: 8px;
+				align-items: center;
+				padding: 7px;
+				border-radius: 999px;
+				background: rgba(15, 14, 9, 0.72);
+				backdrop-filter: blur(8px);
+				opacity: 0.055;
+				transition: opacity 0.2s;
+			}
+			.controls:hover,
+			.controls:focus-within {
+				opacity: 1;
+			}
+			.controls button {
+				width: 38px;
+				height: 38px;
+				border-radius: 50%;
+				border: 1px solid #5a574f;
+				color: #eee;
+				background: #23211b;
+				cursor: pointer;
+				font-size: 18px;
+			}
+			.controls button:hover {
+				border-color: var(--orange);
+				color: var(--orange);
+			}
+			.counter {
+				min-width: 78px;
+				text-align: center;
+				color: #eee;
+				font-family: 'Cursor Mono';
+				font-size: 14px;
+			}
+			.progress {
+				position: fixed;
+				left: 0;
+				bottom: 0;
+				height: 4px;
+				width: 0;
+				background: var(--orange);
+				z-index: 60;
+				transition: width 0.25s;
+			}
+			.hint {
+				position: fixed;
+				left: 18px;
+				bottom: 14px;
+				z-index: 50;
+				color: #9b9890;
+				font-family: 'Cursor Mono';
+				font-size: 12px;
+				opacity: 0.14;
+			}
+
+			@media (prefers-reduced-motion: reduce) {
+				.slide.active {
+					animation: none;
+				}
+			}
+			@media print {
+				html,
+				body {
+					overflow: visible;
+					background: white;
+				}
+				.deck {
+					position: static;
+					transform: none;
+					width: 1920px;
+					height: auto;
+					box-shadow: none;
+				}
+				.slide {
+					display: block !important;
+					position: relative;
+					width: 1920px;
+					height: 1080px;
+					page-break-after: always;
+				}
+				.controls,
+				.progress,
+				.hint {
+					display: none;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<main class="deck" id="deck" aria-live="polite">
+			<section
+				class="slide title-slide active"
+				data-title="GrokBot: cuida mi enfoque, Cursor codea."
+				aria-label="Diapositiva 1 de 13"
+			>
+				<img class="brand-lockup" src="assets/cursor-lockup.svg" alt="Cursor" />
+				<img class="giant-cube" src="assets/cursor-cube.svg" alt="" aria-hidden="true" />
+				<div class="eyebrow">Cursor Guadalajara · 27 AGO 2026</div>
+				<h1>GrokBot: cuida mi enfoque, <span class="accent">Cursor codea.</span></h1>
+				<p class="author"><strong>Andrés Fernández</strong> · VP of Product</p>
+				<div class="orange-orbit" aria-hidden="true"></div>
+			</section>
+
+			<section class="slide dark" data-title="Lots of meetings factory" aria-label="Diapositiva 2 de 13">
+				<div class="topline"><span>01 · EL PROBLEMA</span><img src="assets/cursor-cube.svg" alt="" /></div>
+				<div class="meeting-grid">
+					<figure class="meme-frame">
+						<img
+							src="assets/meeting-factory.png"
+							alt="Meme de un gato esperando no terminar en una fábrica de muchas juntas"
+						/>
+					</figure>
+				</div>
+				<div class="footer">
+					<span><span class="rule"></span>GROKBOT · CURSOR GUADALAJARA</span><span>02 / 13</span>
+				</div>
+			</section>
+
+			<section class="slide" data-title="Trabajo administrativo" aria-label="Diapositiva 3 de 13">
+				<div class="topline"><span>02 · LA SOMBRA ADMINISTRATIVA</span><img src="assets/cursor-cube.svg" alt="" /></div>
+				<h2 class="shadow-title">El trabajo operativo genera <span class="accent">trabajo administrativo.</span></h2>
+				<div class="jobline">
+					<div class="job">
+						<div class="num">01</div>
+						<h3>Capturar</h3>
+						<p>Compromisos, fechas y decisiones.</p>
+					</div>
+					<div class="job">
+						<div class="num">02</div>
+						<h3>Reconstruir</h3>
+						<p>Encontrar dónde vive el contexto.</p>
+					</div>
+					<div class="job">
+						<div class="num">03</div>
+						<h3>Aclarar</h3>
+						<p>Qué importa y quién es dueño.</p>
+					</div>
+					<div class="job">
+						<div class="num">04</div>
+						<h3>Enrutar</h3>
+						<p>Poner la siguiente acción en su lugar.</p>
+					</div>
+					<div class="job">
+						<div class="num">05</div>
+						<h3>Perseguir</h3>
+						<p>Dar seguimiento hasta cerrar.</p>
+					</div>
+				</div>
+				<div class="after-call">
+					<p class="small muted">La actividad termina.</p>
+					<div class="line"></div>
+					<p class="lead"><strong>La coordinación apenas empieza.</strong></p>
+				</div>
+				<div class="footer">
+					<span><span class="rule"></span>TRABAJO INVISIBLE</span><span>03 / 13</span>
+				</div>
+			</section>
+
+			<section class="slide dark" data-title="OpenClaw a Hermes a Grok Bot" aria-label="Diapositiva 4 de 13">
+				<div class="topline"><span>03 · EVOLUCIÓN</span><img src="assets/cursor-cube.svg" alt="" /></div>
+				<div class="evolution">
+					<div class="era">
+						<div class="step">Paso necesario 01</div>
+						<h3>OpenClaw</h3>
+						<p class="promise">Me enseñó lo que un agente podía absorber.</p>
+						<div class="chaos"><span>hosting</span><span>terminal</span><span>updates</span><span>plugins</span></div>
+					</div>
+					<div class="era">
+						<div class="step">Paso necesario 02</div>
+						<h3>Hermes</h3>
+						<p class="promise">Más confiable, flexible y personalizable.</p>
+						<div class="chaos">
+							<span>models</span><span>reasoning</span><span>memory</span><span>SOUL.md</span><span>skills</span
+							><span>MCPs</span><span>CLIs</span>
+						</div>
+					</div>
+					<div class="era current">
+						<div class="step">Paso necesario 03</div>
+						<h3>Grok Bot</h3>
+						<p class="promise">Menos decisiones para empezar a operar.</p>
+						<div class="chaos"><span>agent</span><span>plugins</span><span>computer</span><span>routines</span></div>
+						<div class="less-config">No magia. Menos configuración.</div>
+					</div>
+				</div>
+				<div class="it-job">
+					<div class="mark">↳</div>
+					<p>
+						“Si para usar mi agente tengo que convertirme en su departamento de TI, no me quitó trabajo:
+						<strong>me dio otro empleo.</strong>”
+					</p>
+				</div>
+				<div class="footer">
+					<span><span class="rule"></span>DE CAPACIDAD A OPERACIÓN</span><span>04 / 13</span>
+				</div>
+			</section>
+
+			<section class="slide" data-title="Quitar trabajo de mi plato" aria-label="Diapositiva 5 de 13">
+				<div class="topline"><span>04 · LA TESIS</span><img src="assets/cursor-cube.svg" alt="" /></div>
+				<div class="thesis-wrap">
+					<h2 class="plate"><span class="take">Quitar trabajo</span><br />de mi plato.</h2>
+					<div class="not-more">No agregarme otra bandeja que administrar.</div>
+					<div class="useful-agent">
+						<div class="piece"><strong>01</strong>Contexto listo</div>
+						<div class="piece"><strong>02</strong>Opciones claras</div>
+						<div class="piece"><strong>03</strong>Una recomendación</div>
+					</div>
+				</div>
+				<div class="footer">
+					<span><span class="rule"></span>IA ÚTIL = MENOS COORDINACIÓN</span><span>05 / 13</span>
+				</div>
+			</section>
+
+			<section class="slide dark" data-title="Anatomía del operador" aria-label="Diapositiva 6 de 13">
+				<div class="topline"><span>05 · EL OPERADOR</span><img src="assets/cursor-cube.svg" alt="" /></div>
+				<h2>La anatomía de un <span class="accent">operador persistente.</span></h2>
+				<div class="operator-shot">
+					<img
+						src="assets/grokbot-operator-anatomy.png"
+						alt="Interfaz de Grok Bot con agentes persistentes, un brief, una computadora con navegador y una rutina programada"
+					/>
+					<div class="anatomy-tag tag-agents"><b>1</b>Agentes persistentes</div>
+					<div class="anatomy-tag tag-brief"><b>2</b>Brief con recomendación</div>
+					<div class="anatomy-tag tag-computer"><b>3</b>Computadora + navegador</div>
+					<div class="anatomy-tag tag-routines"><b>4</b>Rutinas programadas</div>
+				</div>
+				<div class="footer">
+					<span><span class="rule"></span>LA ANATOMÍA DEL OPERADOR</span><span>06 / 13</span>
+				</div>
+			</section>
+
+			<section class="slide dark" data-title="Tres formas de organizar agentes" aria-label="Diapositiva 7 de 13">
+				<div class="topline"><span>06 · EL PATRÓN</span><img src="assets/cursor-cube.svg" alt="" /></div>
+				<h2>Tres formas de <span class="accent">organizar agentes.</span></h2>
+				<div class="agent-gallery">
+					<figure class="article-shot" data-label="01 · ROLES">
+						<img
+							src="assets/grokbot-agents-tutorial.png"
+							alt="Artículo sobre agentes de Grok Bot coordinados por un agente principal"
+						/>
+					</figure>
+					<figure class="article-shot" data-label="02 · EQUIPOS">
+						<img src="assets/grokbot-multiple-teams.png" alt="Artículo sobre varios equipos de Grok Bots" />
+					</figure>
+					<figure class="article-shot" data-label="03 · GRAFO">
+						<img
+							src="assets/grokbot-agent-graph.png"
+							alt="Artículo sobre un grafo de agentes Grok Bot que trabaja continuamente"
+						/>
+					</figure>
+				</div>
+				<div class="footer">
+					<span><span class="rule"></span>CONTEXTO, NO TOUR</span><span>07 / 13</span>
+				</div>
+			</section>
+
+			<section class="slide" data-title="De señales a brief" aria-label="Diapositiva 8 de 13">
+				<div class="topline"><span>07 · EL FLUJO</span><img src="assets/cursor-cube.svg" alt="" /></div>
+				<h2>De señales dispersas a <span class="accent">tres decisiones.</span></h2>
+				<div class="flow-wrap">
+					<div class="sources">
+						<div class="source-card">
+							<div class="logos">
+								<span class="wave-mark"><i></i><i></i><i></i><i></i><i></i></span>
+							</div>
+							<h3>Juntas y transcripciones</h3>
+						</div>
+						<div class="source-card">
+							<div class="logos">
+								<img src="assets/gmail.svg" alt="Gmail" /><span class="slack-mark" aria-label="Slack"
+									><i></i><i></i><i></i><i></i
+								></span>
+							</div>
+							<h3>Email y Slack</h3>
+						</div>
+						<div class="source-card">
+							<div class="logos"><img src="assets/google-calendar.svg" alt="Google Calendar" /></div>
+							<h3>Calendario</h3>
+						</div>
+						<div class="source-card">
+							<div class="logos">
+								<span class="monday-mark" aria-label="monday.com"><i></i><i></i><i></i></span
+								><img src="assets/linear.svg" alt="Linear" />
+							</div>
+							<h3>Sistemas de proyectos</h3>
+						</div>
+						<div class="source-card">
+							<div class="logos">
+								<img src="assets/google-drive.svg" alt="Google Drive" /><img src="assets/supabase.svg" alt="Supabase" />
+							</div>
+							<h3>Conocimiento de empresa</h3>
+						</div>
+					</div>
+					<div class="flow-arrow"></div>
+					<div class="pipeline">
+						<div class="pipe-block signal">
+							<div class="pipe-icon">⌁</div>
+							<div>
+								<h3>Meeting Signals</h3>
+								<p>Decisiones, riesgos, compromisos y cambios que deben durar.</p>
+							</div>
+						</div>
+						<div class="h-arrow">→</div>
+						<div class="pipe-block">
+							<div class="pipe-icon">☀</div>
+							<div>
+								<h3>Morning Brief · ≤ 3</h3>
+								<p>Fuentes enlazadas + siguiente acción recomendada.</p>
+							</div>
+						</div>
+					</div>
+					<div class="gtd-line">
+						<span class="tag">GTD · 30 s</span
+						><span>Grok Bot procesa la entrada; <strong>yo conservo las decisiones.</strong></span>
+					</div>
+				</div>
+				<div class="footer">
+					<span><span class="rule"></span>PROCESAR LA ENTRADA</span><span>08 / 13</span>
+				</div>
+			</section>
+
+			<section class="slide" data-title="La señal Integration" aria-label="Diapositiva 9 de 13">
+				<div class="topline"><span>08 · PRUEBA</span><img src="assets/cursor-cube.svg" alt="" /></div>
+				<h2>Detectó una decisión que <span class="accent">debía durar.</span></h2>
+				<div class="proof-layout">
+					<div class="proof-sources">
+						<div class="proof-source">
+							<p>“Las habilidades no deberían pasar de experimento a Maintenance sin una etapa de adopción.”</p>
+							<span class="link">↗ Transcripción · reunión de producto</span>
+						</div>
+						<div class="proof-source">
+							<p>“Hace falta capacitación recurrente y una revisión de calidad antes de ampliar el acceso.”</p>
+							<span class="link">↗ Nota de seguimiento · fuente interna</span>
+						</div>
+					</div>
+					<div class="signal-card">
+						<h3>Agregar una etapa <span class="accent">Integration</span> antes de Maintenance</h3>
+						<div class="signal-list">
+							<div><strong>30–60 días</strong><br />para estabilizar adopción y operación.</div>
+							<div><strong>Capacitación recurrente</strong><br />para sostener el uso, no solo lanzarlo.</div>
+							<div><strong>Product QA</strong><br />antes de llegar a clientes u organización.</div>
+						</div>
+						<div class="recommend">
+							<div class="label">RECOMENDACIÓN</div>
+							<p>Crear la etapa, asignar dueño, definir checklist de QA y fijar la próxima revisión.</p>
+						</div>
+					</div>
+				</div>
+				<div class="footer">
+					<span><span class="rule"></span>FUENTES RECREADAS Y ANONIMIZADAS</span><span>09 / 13</span>
+				</div>
+			</section>
+
+			<section class="slide" data-title="Brief y límites de decisión" aria-label="Diapositiva 10 de 13">
+				<div class="topline"><span>09 · EL BRIEF</span><img src="assets/cursor-cube.svg" alt="" /></div>
+				<h2>Máximo tres cosas que <span class="accent">necesitan mi atención.</span></h2>
+				<div class="brief-grid">
+					<div class="morning">
+						<div class="morning-head">
+							<h3>☀ Morning Brief</h3>
+							<span class="pill orange">3 de 3</span>
+						</div>
+						<div class="attention">
+							<div class="attention-item">
+								<div class="n">1</div>
+								<div>
+									<h3>Etapa Integration</h3>
+									<p>Decisión durable de gobierno de producto.</p>
+									<div class="rec"><strong>Recomiendo:</strong> aprobar piloto + dueño operativo.</div>
+									<div class="source-row"><span>↗ transcript</span><span>↗ notas</span><span>↗ roadmap</span></div>
+								</div>
+							</div>
+							<div class="attention-item">
+								<div class="n">2</div>
+								<div>
+									<h3>Transferencia de capacidad</h3>
+									<p>El equipo ya preparó opciones; falta elegir una.</p>
+									<div class="rec"><strong>Recomiendo:</strong> opción B; menor riesgo de sobrecarga.</div>
+									<div class="source-row"><span>↗ proyectos</span><span>↗ calendario</span></div>
+								</div>
+							</div>
+							<div class="attention-item">
+								<div class="n">3</div>
+								<div>
+									<h3>Riesgo de lanzamiento</h3>
+									<p>Dos fuentes discrepan sobre la fecha.</p>
+									<div class="rec"><strong>Recomiendo:</strong> confirmar compromiso antes de comunicar.</div>
+									<div class="source-row"><span>↗ email</span><span>↗ Slack</span></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div>
+						<div class="boundaries">
+							<div class="boundary">
+								<h3>Hacer solo</h3>
+								<p>Investigar, monitorear, deduplicar, organizar, preparar borradores y armar contexto.</p>
+							</div>
+							<div class="boundary">
+								<h3>Recomendar</h3>
+								<p>Prioridades, delegación, siguiente acción, postura para una junta y ruta de proyecto.</p>
+							</div>
+							<div class="boundary approval">
+								<h3>Pedir aprobación</h3>
+								<p>Enviar mensajes, cambiar compromisos, decisiones de clientes o personas, dinero e irreversibles.</p>
+							</div>
+						</div>
+						<p class="judgment-line">
+							“No me traigas problemas; tráeme una recomendación. <strong>Pero no remplaces mi juicio.</strong>”
+						</p>
+					</div>
+				</div>
+				<div class="footer">
+					<span><span class="rule"></span>PROACTIVIDAD CON LÍMITES</span><span>10 / 13</span>
+				</div>
+			</section>
+
+			<section class="slide challenge" data-title="Delega una tarea aburrida" aria-label="Diapositiva 11 de 13">
+				<div class="topline"><span>10 · MAÑANA</span><img src="assets/cursor-cube.svg" alt="" /></div>
+				<h2>Delega <span class="accent">una tarea aburrida</span> con la herramienta que ya tengas.</h2>
+				<div class="criteria">
+					<div class="criterion">
+						<div class="check">01 · ✓</div>
+						<h3>Recurrente</h3>
+					</div>
+					<div class="criterion">
+						<div class="check">02 · ✓</div>
+						<h3>Consume tiempo</h3>
+					</div>
+					<div class="criterion">
+						<div class="check">03 · ✓</div>
+						<h3>Observable digitalmente</h3>
+					</div>
+					<div class="criterion">
+						<div class="check">04 · ✓</div>
+						<h3>Revisable, con salida clara</h3>
+					</div>
+				</div>
+				<p class="closing-thought">
+					Su mejor caso de uso de IA probablemente no será el más impresionante. Será
+					<strong>esa tarea aburrida que ya no tengan que volver a hacer.</strong>
+				</p>
+				<div class="footer">
+					<span><span class="rule"></span>FIN DEL DECK REQUERIDO · 17:00</span><span>11 / 13</span>
+				</div>
+			</section>
+
+			<section class="slide dark" data-title="Opcional: Odyssey IMAX" aria-label="Diapositiva opcional 12 de 13">
+				<div class="topline">
+					<span class="optional-label">Opcional · historia de rutina</span><img src="assets/cursor-cube.svg" alt="" />
+				</div>
+				<h2>Odyssey IMAX: alertas <span class="accent">solo cuando importan.</span></h2>
+				<div class="odyssey-layout">
+					<div class="poster">
+						<div class="imax">RUTINA + NAVEGADOR</div>
+						<div class="odyssey">ODYSSEY</div>
+						<div class="small muted">Monitoreo de boletos · ejemplo personal</div>
+					</div>
+					<div>
+						<div class="routine-flow">
+							<div class="routine-step">
+								<div class="step-icon">↻</div>
+								<div>
+									<h3>Revisar en horario</h3>
+									<p>La rutina corre sin que yo abra una pestaña.</p>
+								</div>
+							</div>
+							<div class="routine-step">
+								<div class="step-icon">▣</div>
+								<div>
+									<h3>Fallback al navegador</h3>
+									<p>Si no hay plugin, usa la web como yo la usaría.</p>
+								</div>
+							</div>
+							<div class="routine-step">
+								<div class="step-icon">!</div>
+								<div>
+									<h3>Avisar solo al cumplirse la condición</h3>
+									<p>Formato correcto, cine correcto, función disponible.</p>
+								</div>
+							</div>
+						</div>
+						<p class="silent">El silencio también es una función.</p>
+					</div>
+				</div>
+				<div class="footer">
+					<span><span class="rule"></span>OPCIONAL · +1:15</span><span>12 / 13</span>
+				</div>
+			</section>
+
+			<section class="slide" data-title="Opcional: ejercicio de 30 segundos" aria-label="Diapositiva opcional 13 de 13">
+				<div class="topline">
+					<span class="optional-label">Opcional · ejercicio</span><img src="assets/cursor-cube.svg" alt="" />
+				</div>
+				<div class="exercise-wrap">
+					<div class="eyebrow">Escríbela ahora</div>
+					<h2>¿Qué tarea aburrida podrías <span class="accent">no volver a hacer?</span></h2>
+					<div class="prompt-grid">
+						<div class="prompt">
+							<div class="q">01</div>
+							<h3>¿Se repite?</h3>
+						</div>
+						<div class="prompt">
+							<div class="q">02</div>
+							<h3>¿Te roba tiempo?</h3>
+						</div>
+						<div class="prompt">
+							<div class="q">03</div>
+							<h3>¿Deja huella digital?</h3>
+						</div>
+						<div class="prompt">
+							<div class="q">04</div>
+							<h3>¿Puedes revisar una salida clara?</h3>
+						</div>
+					</div>
+				</div>
+				<div class="thirty">:30</div>
+				<div class="footer">
+					<span><span class="rule"></span>OPCIONAL · +0:30</span><span>13 / 13</span>
+				</div>
+			</section>
+		</main>
+
+		<nav class="controls" aria-label="Controles de presentación">
+			<button id="prev" aria-label="Diapositiva anterior">←</button>
+			<span class="counter" id="counter">1 / 13</span>
+			<button id="next" aria-label="Diapositiva siguiente">→</button>
+			<button id="full" aria-label="Pantalla completa">⛶</button>
+		</nav>
+		<div class="hint">← → navegar · F pantalla completa · Home / End</div>
+		<div class="progress" id="progress"></div>
+
+		<script>
+			(() => {
+				const slides = [...document.querySelectorAll('.slide')];
+				const counter = document.getElementById('counter');
+				const progress = document.getElementById('progress');
+				let index = Math.max(0, Math.min(slides.length - 1, Number(location.hash.replace('#', '')) - 1 || 0));
+
+				function fit() {
+					const scale = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+					document.documentElement.style.setProperty('--scale', scale);
+				}
+				function show(nextIndex, updateHash = true) {
+					index = Math.max(0, Math.min(slides.length - 1, nextIndex));
+					slides.forEach((slide, i) => slide.classList.toggle('active', i === index));
+					counter.textContent = `${index + 1} / ${slides.length}`;
+					progress.style.width = `${((index + 1) / slides.length) * 100}%`;
+					document.title = `${slides[index].dataset.title} — Andrés Fernández`;
+					if (updateHash) history.replaceState(null, '', `#${index + 1}`);
+				}
+				function fullScreen() {
+					if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
+					else document.exitFullscreen?.();
+				}
+				document.getElementById('prev').addEventListener('click', () => show(index - 1));
+				document.getElementById('next').addEventListener('click', () => show(index + 1));
+				document.getElementById('full').addEventListener('click', fullScreen);
+				document.addEventListener('keydown', (event) => {
+					if (['ArrowRight', 'ArrowDown', 'PageDown', ' '].includes(event.key)) {
+						event.preventDefault();
+						show(index + 1);
+					}
+					if (['ArrowLeft', 'ArrowUp', 'PageUp'].includes(event.key)) {
+						event.preventDefault();
+						show(index - 1);
+					}
+					if (event.key === 'Home') {
+						event.preventDefault();
+						show(0);
+					}
+					if (event.key === 'End') {
+						event.preventDefault();
+						show(slides.length - 1);
+					}
+					if (event.key.toLowerCase() === 'f') fullScreen();
+				});
+				window.addEventListener('resize', fit);
+				window.addEventListener('hashchange', () => show(Number(location.hash.replace('#', '')) - 1, false));
+				fit();
+				show(index, false);
+			})();
+		</script>
+	</body>
+</html>

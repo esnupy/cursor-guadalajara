@@ -2,6 +2,9 @@ import { MetadataRoute } from 'next';
 import { privacidad, terminos } from '@/content/legal';
 import { meetupPromo } from '@/content/meetups/meetup-27-08-2026';
 import { recapsBySlug } from '@/content/recaps';
+import { cursorComoAgenteTalk } from '@/content/talks/cursor-como-agente';
+import { grokBotTalk } from '@/content/talks/grok-bot';
+import { howToBabysitAgentsTalk } from '@/content/talks/how-to-babysit-agents';
 import { skillhellTalk } from '@/content/talks/skillhell';
 
 import { siteConfig } from '@/content/site.config';
@@ -12,12 +15,21 @@ const BASE_URL =
 		? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
 		: siteConfig.siteUrl);
 
+const talkPaths = [skillhellTalk.path, cursorComoAgenteTalk.path, howToBabysitAgentsTalk.path, grokBotTalk.path];
+
 export default function sitemap(): MetadataRoute.Sitemap {
 	const recapEntries = Object.values(recapsBySlug).map((recap) => ({
 		url: `${BASE_URL}/recaps/${recap.slug}`,
 		lastModified: new Date(),
 		changeFrequency: 'monthly' as const,
 		priority: 0.7,
+	}));
+
+	const talkEntries = talkPaths.map((path) => ({
+		url: `${BASE_URL}${path}`,
+		lastModified: new Date(),
+		changeFrequency: 'monthly' as const,
+		priority: 0.6,
 	}));
 
 	return [
@@ -33,12 +45,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 			changeFrequency: 'weekly',
 			priority: 0.9,
 		},
-		{
-			url: `${BASE_URL}${skillhellTalk.path}`,
-			lastModified: new Date(),
-			changeFrequency: 'monthly' as const,
-			priority: 0.6,
-		},
+		...talkEntries,
 		...recapEntries,
 		{
 			url: `${BASE_URL}${privacidad.path}`,
