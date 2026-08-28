@@ -16,13 +16,6 @@ const ROLE_PRIORITY: Record<AccessRole, number> = {
 
 export const adminModules: AdminModule[] = [
 	{
-		id: 'caps',
-		label: 'Gorras',
-		href: '/admin/caps',
-		minRole: 'ambassador',
-		description: 'Fila y entrega de gorras del meetup.',
-	},
-	{
 		id: 'access',
 		label: 'Acceso',
 		href: '/admin/access',

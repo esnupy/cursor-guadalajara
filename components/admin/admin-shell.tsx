@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowLeftIcon, BaseballCapIcon, GearSixIcon, SignOutIcon, SquaresFourIcon } from '@phosphor-icons/react';
+import { ArrowLeftIcon, GearSixIcon, SignOutIcon, SquaresFourIcon } from '@phosphor-icons/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -29,7 +29,6 @@ import { signOutAction } from '@/modules/admin/access/actions';
 
 const moduleIcons = {
 	access: GearSixIcon,
-	caps: BaseballCapIcon,
 } as const;
 
 export function AdminShell({ session, children }: { session: AdminSession; children: React.ReactNode }) {

@@ -47,10 +47,9 @@ const useScrollState = () => {
 };
 
 /**
- * Site navigation. Sticky by default; the caps board page turns it off so the
- * 100dvh grid can sit alone in the viewport after a short scroll.
+ * Site navigation.
  */
-export default function Navbar({ sticky = true }: { sticky?: boolean }) {
+export default function Navbar() {
 	const { scrolled, activeSection } = useScrollState();
 	const pathname = usePathname();
 	const [mobileOpen, setMobileOpen] = useState(false);
@@ -77,7 +76,7 @@ export default function Navbar({ sticky = true }: { sticky?: boolean }) {
 			<nav
 				className={cn(
 					'z-40 border-b backdrop-blur-md transition-all duration-300',
-					sticky ? 'sticky top-0' : 'relative',
+					'sticky top-0',
 					scrolled ? 'border-border bg-background/90 shadow-sm' : 'border-transparent bg-background/80',
 				)}
 			>

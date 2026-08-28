@@ -15,7 +15,6 @@
 		"fix": "bun run lint:fix && bun run format",
 		"db:migrate": "bun run lib/db/migrate.ts",
 		"db:seed": "bun run lib/db/seed.ts",
-		"db:import-guests": "bun run lib/db/import-meetup-guests.ts",
 		"test": "bun test"
 	},
 	"dependencies": {

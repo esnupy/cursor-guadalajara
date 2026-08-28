@@ -35,34 +35,7 @@ export const charlaSubmissions = pgTable('charla_submissions', {
 	createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
 });
 
-export const capClaimStatusEnum = pgEnum('cap_claim_status', ['queued', 'delivered', 'skipped']);
-export const capClaimSourceEnum = pgEnum('cap_claim_source', ['luma', 'astrazeneca']);
-
-export const meetupGuests = pgTable('meetup_guests', {
-	email: citext('email').primaryKey(),
-	name: text('name').notNull(),
-	lumaGuestId: text('luma_guest_id'),
-	approvalStatus: text('approval_status'),
-});
-
-export const capClaims = pgTable('cap_claims', {
-	id: uuid('id').defaultRandom().primaryKey(),
-	email: citext('email').notNull().unique(),
-	handle: text('handle').notNull().unique(),
-	name: text('name').notNull(),
-	source: capClaimSourceEnum('source').notNull(),
-	profilePublic: boolean('profile_public').notNull(),
-	status: capClaimStatusEnum('status').notNull().default('queued'),
-	createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
-	resolvedAt: timestamp('resolved_at', { withTimezone: true }),
-	resolvedByEmail: text('resolved_by_email'),
-});
-
 export type AccessRole = (typeof accessRoleEnum.enumValues)[number];
 export type AccessGrant = typeof accessGrants.$inferSelect;
 export type NewAccessGrant = typeof accessGrants.$inferInsert;
 export type CharlaSubmissionRow = typeof charlaSubmissions.$inferSelect;
-export type CapClaimStatus = (typeof capClaimStatusEnum.enumValues)[number];
-export type CapClaimSource = (typeof capClaimSourceEnum.enumValues)[number];
-export type MeetupGuest = typeof meetupGuests.$inferSelect;
-export type CapClaim = typeof capClaims.$inferSelect;

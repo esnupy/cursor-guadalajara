@@ -1,6 +1,5 @@
 import { MetadataRoute } from 'next';
 
-import { capGiveaway } from '@/content/caps';
 import { siteConfig } from '@/content/site.config';
 
 const BASE_URL =
@@ -14,7 +13,7 @@ export default function robots(): MetadataRoute.Robots {
 		rules: {
 			userAgent: '*',
 			allow: '/',
-			disallow: ['/charlas', capGiveaway.boardPath],
+			disallow: ['/charlas'],
 		},
 		sitemap: `${BASE_URL}/sitemap.xml`,
 	};
