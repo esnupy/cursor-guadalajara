@@ -11,6 +11,10 @@
 	.link {
 		@apply text-cursor-accent text-base flex items-center gap-1 hover:opacity-75;
 	}
+
+	.link-inline {
+		@apply text-cursor-accent inline-flex items-center gap-1 hover:opacity-75;
+	}
 }
 
 /*noinspection CssUnresolvedCustomProperty*/

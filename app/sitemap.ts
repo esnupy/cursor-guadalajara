@@ -1,4 +1,5 @@
 import { MetadataRoute } from 'next';
+import { privacidad, terminos } from '@/content/legal';
 import { meetupPromo } from '@/content/meetups/meetup-27-08-2026';
 import { recapsBySlug } from '@/content/recaps';
 import { skillhellTalk } from '@/content/talks/skillhell';
@@ -39,5 +40,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
 			priority: 0.6,
 		},
 		...recapEntries,
+		{
+			url: `${BASE_URL}${privacidad.path}`,
+			lastModified: new Date(privacidad.updatedAt),
+			changeFrequency: 'yearly',
+			priority: 0.3,
+		},
+		{
+			url: `${BASE_URL}${terminos.path}`,
+			lastModified: new Date(terminos.updatedAt),
+			changeFrequency: 'yearly',
+			priority: 0.3,
+		},
 	];
 }

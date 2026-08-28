@@ -8,12 +8,12 @@ export function proxy(request: NextRequest) {
 
 	const csp = [
 		`default-src 'self'`,
-		`script-src 'self' 'nonce-${nonce}' 'strict-dynamic' https://va.vercel-scripts.com${isDev ? " 'unsafe-eval'" : ''}`,
+		`script-src 'self' 'nonce-${nonce}' 'strict-dynamic'${isDev ? " 'unsafe-eval'" : ''}`,
 		`style-src 'self' 'unsafe-inline'`,
 		`img-src 'self' https://images.unsplash.com https://images.lumacdn.com https://*.public.blob.vercel-storage.com https://luma.com https://lu.ma data: blob:`,
 		`font-src 'self'`,
 		`media-src 'self'`,
-		`connect-src 'self' https://vitals.vercel-insights.com https://luma.com https://lu.ma${neonAuthOrigin ? ` ${neonAuthOrigin}` : ''}`,
+		`connect-src 'self' https://luma.com https://lu.ma${neonAuthOrigin ? ` ${neonAuthOrigin}` : ''}`,
 		`frame-src https://luma.com https://lu.ma https://www.google.com https://maps.google.com https://www.google.com.mx`,
 		`frame-ancestors 'none'`,
 		`object-src 'none'`,

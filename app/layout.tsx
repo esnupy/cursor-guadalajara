@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { headers } from 'next/headers';
-import { Analytics } from '@vercel/analytics/react';
 import { ThemeFavicon } from '@/components/ThemeFavicon';
 import { ThemeProvider } from '@/components/theme-provider';
 import { TooltipProvider } from '@/components/ui/tooltip';
@@ -71,7 +70,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 						{children}
 					</TooltipProvider>
 				</ThemeProvider>
-				<Analytics />
 			</body>
 		</html>
 	);

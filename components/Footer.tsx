@@ -57,6 +57,18 @@ export default function Footer() {
 					>
 						Sigue a Cursor en X
 					</Link>
+					<Link
+						href="/privacidad"
+						className="inline-flex items-center gap-1.5 transition-colors hover:text-muted-foreground"
+					>
+						Aviso de privacidad
+					</Link>
+					<Link
+						href="/terminos"
+						className="inline-flex items-center gap-1.5 transition-colors hover:text-muted-foreground"
+					>
+						Términos de uso
+					</Link>
 				</div>
 
 				<div>

@@ -1,5 +1,22 @@
 export type LocaleCode = string;
 
+export type LegalInline =
+	{ type: 'text'; text: string } | { type: 'link'; href: string; label: string; external?: boolean };
+
+export interface LegalSection {
+	title: string;
+	blocks: LegalInline[][];
+}
+
+export interface LegalDocument {
+	path: string;
+	title: string;
+	description: string;
+	updatedAt: string;
+	updatedLabel: string;
+	sections: LegalSection[];
+}
+
 export interface CursorEvent {
 	id: string;
 	title: string;
