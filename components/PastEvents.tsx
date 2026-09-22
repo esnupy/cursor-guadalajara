@@ -4,13 +4,14 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRightIcon, CalendarIcon, UsersIcon } from '@phosphor-icons/react';
-import { pastEvents } from '@/content/events';
+import { getPastEvents } from '@/content/events';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { useBrandMotion } from '@/lib/motion';
 
 export default function PastEvents() {
 	const { slideUp, transition } = useBrandMotion();
+	const pastEvents = getPastEvents();
 
 	if (pastEvents.length === 0) {
 		return null;
@@ -32,13 +33,18 @@ export default function PastEvents() {
 
 			<div className="space-y-6">
 				{pastEvents.map((event, index) => {
-					if (!event.recapPath) return null;
-
-					const displayDate = new Date(`${event.date}T00:00:00`).toLocaleDateString('es-MX', {
-						year: 'numeric',
-						month: 'long',
-						day: 'numeric',
-					});
+					const displayDate = event.date
+						? new Date(`${event.date}T00:00:00`).toLocaleDateString('es-MX', {
+								year: 'numeric',
+								month: 'long',
+								day: 'numeric',
+							})
+						: event.displayDate;
+					const action = event.recapPath
+						? { href: event.recapPath, label: 'Ver resumen' }
+						: event.promoPath
+							? { href: event.promoPath, label: 'Ver evento' }
+							: null;
 
 					const hasGallery = event.galleryImages && event.galleryImages.length > 0;
 
@@ -108,15 +114,17 @@ export default function PastEvents() {
 											</div>
 										) : null}
 									</div>
-									<div className="flex items-center gap-2 text-muted-foreground">
-										<Link href={event.recapPath} className="link">
-											Ver resumen
-											<ArrowRightIcon
-												weight="regular"
-												className="size-4 transition-transform duration-200 group-hover:translate-x-1 motion-reduce:transform-none"
-											/>
-										</Link>
-									</div>
+									{action ? (
+										<div className="flex items-center gap-2 text-muted-foreground">
+											<Link href={action.href} className="link">
+												{action.label}
+												<ArrowRightIcon
+													weight="regular"
+													className="size-4 transition-transform duration-200 group-hover:translate-x-1 motion-reduce:transform-none"
+												/>
+											</Link>
+										</div>
+									) : null}
 								</CardContent>
 							</Card>
 						</motion.div>

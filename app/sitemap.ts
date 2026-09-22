@@ -1,6 +1,5 @@
 import { MetadataRoute } from 'next';
 import { privacidad, terminos } from '@/content/legal';
-import { meetupPromo } from '@/content/meetups/meetup-27-08-2026';
 import { recapsBySlug } from '@/content/recaps';
 import { cursorComoAgenteTalk } from '@/content/talks/cursor-como-agente';
 import { grokBotTalk } from '@/content/talks/grok-bot';
@@ -38,12 +37,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
 			lastModified: new Date(),
 			changeFrequency: 'weekly',
 			priority: 1,
-		},
-		{
-			url: `${BASE_URL}${meetupPromo.path}`,
-			lastModified: new Date(),
-			changeFrequency: 'weekly',
-			priority: 0.9,
 		},
 		...talkEntries,
 		...recapEntries,

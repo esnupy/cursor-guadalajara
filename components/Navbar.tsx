@@ -6,13 +6,12 @@ import { usePathname } from 'next/navigation';
 import { ArrowUpRightIcon, ListIcon, XIcon } from '@phosphor-icons/react';
 import CursorLockupSwap from '@/components/icons/CursorLockupSwap';
 import { Button } from '@/components/ui/button';
+import { getUpcomingEvents } from '@/content/events';
 import { siteConfig } from '@/content/site.config';
 import { cn } from '@/lib/utils';
 
-const NAV_LINKS = [
-	{ href: '/#upcoming', label: 'Próximos eventos', sectionId: 'upcoming' },
-	{ href: '/#recaps', label: 'Eventos pasados', sectionId: 'recaps' },
-] as const;
+const PAST_NAV_LINK = { href: '/#recaps', label: 'Eventos pasados', sectionId: 'recaps' } as const;
+const UPCOMING_NAV_LINK = { href: '/#upcoming', label: 'Próximos eventos', sectionId: 'upcoming' } as const;
 
 /**
  * Tracks header elevation and the in-view home section for nav highlighting.
@@ -53,6 +52,7 @@ export default function Navbar() {
 	const { scrolled, activeSection } = useScrollState();
 	const pathname = usePathname();
 	const [mobileOpen, setMobileOpen] = useState(false);
+	const navLinks = getUpcomingEvents().length > 0 ? [UPCOMING_NAV_LINK, PAST_NAV_LINK] : [PAST_NAV_LINK];
 
 	const closeMobile = useCallback(() => setMobileOpen(false), []);
 
@@ -92,7 +92,7 @@ export default function Navbar() {
 					</Link>
 
 					<div className="hidden items-center gap-4 sm:flex">
-						{NAV_LINKS.map((link) => {
+						{navLinks.map((link) => {
 							const isActive = pathname === '/' && activeSection === link.sectionId;
 							return (
 								<Link
@@ -134,7 +134,7 @@ export default function Navbar() {
 			{mobileOpen && (
 				<div className="fixed inset-0 top-14 z-30 bg-background/95 backdrop-blur-md sm:hidden">
 					<div className="mx-auto flex w-full max-w-325 flex-col items-start gap-6 px-[clamp(1.25rem,4vw,4rem)] pt-12">
-						{NAV_LINKS.map((link) => (
+						{navLinks.map((link) => (
 							<Link
 								key={link.href}
 								href={link.href}

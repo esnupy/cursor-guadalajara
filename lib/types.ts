@@ -32,7 +32,6 @@ export interface CursorEvent {
 	recapPath?: string;
 	thumbnail?: string;
 	galleryImages?: string[];
-	status: 'upcoming' | 'past';
 	host?: { name: string; logo: string; url?: string };
 }
 
@@ -88,6 +87,9 @@ export interface RecapSpeaker {
 	topic: string;
 	photo?: string;
 	url?: string;
+	role?: string;
+	abstract?: string;
+	slidesPath?: string;
 }
 
 export interface RecapProject {
@@ -113,7 +115,7 @@ export interface RecapData {
 	date: string;
 	attendees?: number;
 	summary: string[];
-	host?: { name: string; logo: string; url?: string };
+	host?: { name: string; logo?: string; url?: string };
 	speakers?: RecapSpeaker[];
 	projects?: RecapProject[];
 	highlights?: RecapHighlight[];

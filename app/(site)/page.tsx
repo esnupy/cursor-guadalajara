@@ -10,7 +10,7 @@ import PastEvents from '@/components/PastEvents';
 import GlobalEvents from '@/components/GlobalEvents';
 import JsonLd from '@/components/JsonLd';
 import { siteConfig } from '@/content/site.config';
-import { upcomingEvents } from '@/content/events';
+import { getUpcomingEvents } from '@/content/events';
 
 function buildHomeJsonLd() {
 	const org = {
@@ -19,7 +19,7 @@ function buildHomeJsonLd() {
 		url: siteConfig.siteUrl,
 	};
 
-	const eventItems = upcomingEvents
+	const eventItems = getUpcomingEvents()
 		.filter((event) => Boolean(event.date))
 		.map((event) => ({
 			'@type': 'Event',

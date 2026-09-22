@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import CursorLockupSwap from '@/components/icons/CursorLockupSwap';
 import { siteConfig } from '@/content/site.config';
-import { upcomingEvents } from '@/content/events';
+import { getUpcomingEvents } from '@/content/events';
 import { Button } from '@/components/ui/button';
 import { useBrandMotion } from '@/lib/motion';
 import Link from 'next/link';
@@ -11,7 +11,7 @@ import ThemeToggle from '@/components/ThemeToggle';
 import { ArrowUpRightIcon } from '@phosphor-icons/react';
 
 export default function Footer() {
-	const nextEvent = upcomingEvents[0];
+	const nextEvent = getUpcomingEvents()[0];
 	const { fadeIn, transition } = useBrandMotion();
 
 	return (

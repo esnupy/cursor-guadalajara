@@ -3,12 +3,13 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { ArrowRightIcon, ArrowUpRightIcon } from '@phosphor-icons/react';
-import { upcomingEvents } from '@/content/events';
+import { getUpcomingEvents } from '@/content/events';
 import type { CursorEvent } from '@/lib/types';
 import { Card, CardContent } from '@/components/ui/card';
 import { useBrandMotion } from '@/lib/motion';
 export default function UpcomingEvents() {
 	const { slideUp, transition } = useBrandMotion();
+	const upcomingEvents = getUpcomingEvents();
 
 	if (upcomingEvents.length === 0) {
 		return null;

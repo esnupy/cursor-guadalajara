@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowLeftIcon, ArrowUpRightIcon, MapPinIcon, UsersIcon } from '@phosphor-icons/react';
+import { ArrowLeftIcon, ArrowRightIcon, ArrowUpRightIcon, MapPinIcon, UsersIcon } from '@phosphor-icons/react';
 import PhotoGallery from '@/components/PhotoGallery';
 import SectionDivider from '@/components/SectionDivider';
 import { RecapData } from '@/lib/types';
@@ -76,31 +76,68 @@ export default function EventRecap({ recap }: EventRecapProps) {
 			{recap.speakers && recap.speakers.length > 0 ? (
 				<>
 					<SectionDivider />
-					<RecapSection title="Ponentes">
-						<div className="grid gap-4 sm:grid-cols-2">
-							{recap.speakers.map((speaker) => (
-								<Card key={speaker.name} size="sm">
-									<CardContent className="flex items-start gap-3 pt-6">
-										{speaker.photo ? (
-											<div className="relative size-10 shrink-0 overflow-hidden rounded-full border border-border">
-												<Image src={speaker.photo} alt={speaker.name} fill className="object-cover" sizes="40px" />
-											</div>
-										) : null}
-										<div className="min-w-0">
-											{speaker.url ? (
-												<a href={speaker.url} target="_blank" rel="noopener noreferrer" className="link">
-													{speaker.name}
-													<ArrowUpRightIcon weight="regular" className="size-4" aria-hidden="true" />
-												</a>
-											) : (
+					<RecapSection title={recap.speakers.some((speaker) => speaker.abstract) ? 'Charlas' : 'Ponentes'}>
+						{recap.speakers.some((speaker) => speaker.abstract) ? (
+							<div className="flex flex-col gap-4">
+								{recap.speakers.map((speaker, index) => (
+									<Card key={speaker.name} className="py-0 text-xl">
+										<div className="grid md:grid-cols-[1fr_2fr]">
+											{speaker.photo ? (
+												<div className="relative aspect-square overflow-hidden md:aspect-auto md:h-full md:min-h-80">
+													<Image
+														src={speaker.photo}
+														alt={`Retrato de ${speaker.name}`}
+														fill
+														priority={index < 2}
+														className="object-cover"
+														sizes="(max-width: 768px) 100vw, 40vw"
+													/>
+												</div>
+											) : null}
+											<CardContent className="flex flex-col justify-center py-6">
 												<p>{speaker.name}</p>
-											)}
-											<p className="mt-0.5 text-muted-foreground">{speaker.topic}</p>
+												{speaker.role ? <p className="text-muted-foreground">{speaker.role}</p> : null}
+												<p className="mt-4 tracking-tight">{speaker.topic}</p>
+												{speaker.abstract ? (
+													<p className="mt-1 leading-relaxed text-muted-foreground">{speaker.abstract}</p>
+												) : null}
+												{speaker.slidesPath ? (
+													<Link href={speaker.slidesPath} className="link mt-4">
+														Ver slides
+														<ArrowRightIcon weight="regular" className="size-4" aria-hidden="true" />
+													</Link>
+												) : null}
+											</CardContent>
 										</div>
-									</CardContent>
-								</Card>
-							))}
-						</div>
+									</Card>
+								))}
+							</div>
+						) : (
+							<div className="grid gap-4 sm:grid-cols-2">
+								{recap.speakers.map((speaker) => (
+									<Card key={speaker.name} size="sm">
+										<CardContent className="flex items-start gap-3 pt-6">
+											{speaker.photo ? (
+												<div className="relative size-10 shrink-0 overflow-hidden rounded-full border border-border">
+													<Image src={speaker.photo} alt={speaker.name} fill className="object-cover" sizes="40px" />
+												</div>
+											) : null}
+											<div className="min-w-0">
+												{speaker.url ? (
+													<a href={speaker.url} target="_blank" rel="noopener noreferrer" className="link">
+														{speaker.name}
+														<ArrowUpRightIcon weight="regular" className="size-4" aria-hidden="true" />
+													</a>
+												) : (
+													<p>{speaker.name}</p>
+												)}
+												<p className="mt-0.5 text-muted-foreground">{speaker.topic}</p>
+											</div>
+										</CardContent>
+									</Card>
+								))}
+							</div>
+						)}
 					</RecapSection>
 				</>
 			) : null}
